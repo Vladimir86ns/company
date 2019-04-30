@@ -1,7 +1,7 @@
 // routes
 import Dashboard from 'Routes/dashboard';
 import Crm from 'Routes/crm';
-import Tables from 'Routes/tables';
+import Tables from 'Routes/work-order/all-orders/table';
 import FormElements from 'Routes/work-order/add-new';
 
 export default [

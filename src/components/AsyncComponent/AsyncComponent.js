@@ -42,7 +42,7 @@ const AsyncCrmComponent = Loadable({
 
 // Basic Table
 const AsyncTableComponent = Loadable({
-   loader: () => import("Routes/work-order/all-orders/table"),
+   loader: () => import("Routes/work-order/all-orders"),
    loading: () => <RctPageLoader />,
 });
 

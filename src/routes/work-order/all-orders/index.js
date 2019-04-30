@@ -16,7 +16,7 @@ const Pages = ({ match }) => (
             <meta name="description" content="Reactify Tables" />
         </Helmet>
         <Switch>
-            <Redirect exact from={`${match.url}/`} to={`${match.url}/all-orders/table`} />
+            <Redirect exact from={`${match.url}/`} to={`${match.url}`} />
             <Route path={`${match.url}/all-orders/table`} component={AsyncTableComponent} />
         </Switch>
     </div>

@@ -6,7 +6,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 // async components
 import {
-    AsyncBasicTableComponent
+    AsyncTableComponent
 } from 'Components/AsyncComponent/AsyncComponent';
 
 const Pages = ({ match }) => (
@@ -16,8 +16,8 @@ const Pages = ({ match }) => (
             <meta name="description" content="Reactify Tables" />
         </Helmet>
         <Switch>
-            <Redirect exact from={`${match.url}/`} to={`${match.url}/basic`} />
-            <Route path={`${match.url}/basic`} component={AsyncBasicTableComponent} />
+            <Redirect exact from={`${match.url}/`} to={`${match.url}/all-orders/table`} />
+            <Route path={`${match.url}/all-orders/table`} component={AsyncTableComponent} />
         </Switch>
     </div>
 );

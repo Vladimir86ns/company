@@ -46,7 +46,12 @@ export default {
                "path": "/app/tables/basic",
                "new_item": false,
                "menu_title": "sidebar.allOrders"
-            }
+            },
+            {
+               "path": "/app/forms/text-field",
+               "new_item": false,
+               "menu_title": "sidebar.addNew"
+            },
          ]
       }
    ]

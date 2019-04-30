@@ -46,6 +46,12 @@ const AsyncBasicTableComponent = Loadable({
    loading: () => <RctPageLoader />,
 });
 
+// forms TextField
+const AsyncTextFieldComponent = Loadable({
+   loader: () => import("Routes/work-order/add-new/material-text-field"),
+   loading: () => <RctPageLoader />,
+});
+
 export {
    AsyncEcommerceDashboardComponent,
    AsyncSaasDashboardComponent,
@@ -54,5 +60,6 @@ export {
    AsyncCrmComponent,
 
    //  ********  START FROM HERE
-   AsyncBasicTableComponent
+   AsyncBasicTableComponent,
+   AsyncTextFieldComponent
 };

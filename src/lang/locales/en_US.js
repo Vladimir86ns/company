@@ -764,5 +764,6 @@ module.exports = {
 
    //  ********  START FROM HERE
    "sidebar.workOrder" :"Work Order",
-   "sidebar.allOrders" : "All Orders"
+   "sidebar.allOrders" : "All Orders",
+   "sidebar.addNew" : "Add New"
 }

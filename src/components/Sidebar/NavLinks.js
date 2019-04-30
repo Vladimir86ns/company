@@ -34,5 +34,20 @@ export default {
             },
          ]
       }
+   ],
+   category2: [
+      {
+         "menu_title": "sidebar.workOrder",
+         "menu_icon": "zmdi zmdi-view-dashboard",
+         "new_item": false,
+         "type_multi": null,
+         "child_routes": [
+            {
+               "path": "/app/tables/basic",
+               "new_item": false,
+               "menu_title": "sidebar.allOrders"
+            }
+         ]
+      }
    ]
 }

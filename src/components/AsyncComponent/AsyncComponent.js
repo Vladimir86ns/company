@@ -31,15 +31,28 @@ const AsyncNewsDashboardComponent = Loadable({
    loader: () => import("Routes/dashboard/news"),
    loading: () => <RctPageLoader />,
 });
+
 // crm dashboard
 const AsyncCrmComponent = Loadable({
    loader: () => import("Routes/crm/dashboard"),
    loading: () => <RctPageLoader />,
 });
+
+//  ********  START FROM HERE
+
+// Basic Table
+const AsyncBasicTableComponent = Loadable({
+   loader: () => import("Routes/tables/basic"),
+   loading: () => <RctPageLoader />,
+});
+
 export {
    AsyncEcommerceDashboardComponent,
    AsyncSaasDashboardComponent,
    AsyncAgencyDashboardComponent,
    AsyncNewsDashboardComponent,
-   AsyncCrmComponent
+   AsyncCrmComponent,
+
+   //  ********  START FROM HERE
+   AsyncBasicTableComponent
 };

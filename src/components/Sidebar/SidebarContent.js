@@ -29,7 +29,8 @@ class SidebarContent extends Component {
         return (
             <div className="rct-sidebar-nav">
                 <nav className="navigation">
-                    <List
+                    {/*  TODO sew what with this to do */}
+                    {/* <List
                         className="rct-mainMenu p-0 m-0 list-unstyled"
                         subheader={
                             <ListSubheader className="side-title" component="li">
@@ -41,6 +42,21 @@ class SidebarContent extends Component {
                                 menu={menu}
                                 key={key}
                                 onToggleMenu={() => this.toggleMenu(menu, 'category1')}
+                            />
+                        ))}
+                    </List> */}
+                    <List
+                        className="rct-mainMenu p-0 m-0 list-unstyled"
+                        subheader={
+                            <ListSubheader className="side-title" component="li">
+                                <IntlMessages id="sidebar.workOrder" />
+                            </ListSubheader>}
+                    >
+                        {sidebarMenus.category2.map((menu, key) => (
+                            <NavMenuItem
+                                menu={menu}
+                                key={key}
+                                onToggleMenu={() => this.toggleMenu(menu, 'category2')}
                             />
                         ))}
                     </List>

@@ -41,8 +41,8 @@ const AsyncCrmComponent = Loadable({
 //  ********  START FROM HERE
 
 // Basic Table
-const AsyncBasicTableComponent = Loadable({
-   loader: () => import("Routes/tables/basic"),
+const AsyncTableComponent = Loadable({
+   loader: () => import("Routes/work-order/all-orders/table"),
    loading: () => <RctPageLoader />,
 });
 
@@ -60,6 +60,6 @@ export {
    AsyncCrmComponent,
 
    //  ********  START FROM HERE
-   AsyncBasicTableComponent,
+   AsyncTableComponent,
    AsyncTextFieldComponent
 };

@@ -56,7 +56,7 @@ export default class TextFields extends React.Component {
   render() {
     return (
       <div className="textfields-wrapper">
-        <PageTitleBar title={<IntlMessages id="sidebar.textField" />} match={this.props.match} />
+        {/* <PageTitleBar title={<IntlMessages id="sidebar.textField" />} match={this.props.match} /> */}
         <RctCollapsibleCard heading="Create New">
           <form noValidate autoComplete="off">
             <div className="row">

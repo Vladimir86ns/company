@@ -56,7 +56,7 @@ class BasicTable extends Component {
       const { match } = this.props;
       return (
          <div className="table-wrapper">
-            <PageTitleBar title={<IntlMessages id="sidebar.basic" />} match={match} />
+            {/* <PageTitleBar title={<IntlMessages id="sidebar.basic" />} match={match} /> */}
             <RctCollapsibleCard heading="Work List" fullBlock>
                <div className="table-responsive">
                   <Table>

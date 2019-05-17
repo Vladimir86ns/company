@@ -8,19 +8,33 @@ import Loadable from 'react-loadable';
 // rct page loader
 import RctPageLoader from 'Components/RctPageLoader/RctPageLoader';
 
-// Basic Table
-const AsyncTableComponent = Loadable({
+// Work Order Table
+const AsyncWorkOrderTableComponent = Loadable({
    loader: () => import("Routes/work-order/all-orders"),
    loading: () => <RctPageLoader />,
 });
 
-// forms TextField
-const AsyncTextFieldComponent = Loadable({
-   loader: () => import("Routes/work-order/add-new/material-text-field"),
+// Work Order Form
+const AsyncWorkOrderFormComponent = Loadable({
+   loader: () => import("Routes/work-order/add-new/form"),
+   loading: () => <RctPageLoader />,
+});
+
+// Employees Table
+const AsyncEmployeesTableComponent = Loadable({
+   loader: () => import("Routes/work-order/all-orders"),
+   loading: () => <RctPageLoader />,
+});
+
+// Employees Form
+const AsyncEmployeesFormComponent = Loadable({
+   loader: () => import("Routes/work-order/add-new/form"),
    loading: () => <RctPageLoader />,
 });
 
 export {
-   AsyncTableComponent,
-   AsyncTextFieldComponent
+   AsyncWorkOrderTableComponent,
+   AsyncWorkOrderFormComponent,
+   AsyncEmployeesTableComponent,
+   AsyncEmployeesFormComponent
 };

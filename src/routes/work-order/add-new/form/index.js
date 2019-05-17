@@ -41,7 +41,7 @@ const currencies = [
 export default class TextFields extends React.Component {
 
   state = {
-    name: 'Cat in the Hat',
+    name: '',
     age: '',
     multiline: 'Controlled',
     currency: 'EUR',
@@ -56,13 +56,12 @@ export default class TextFields extends React.Component {
   render() {
     return (
       <div className="textfields-wrapper">
-        {/* <PageTitleBar title={<IntlMessages id="sidebar.textField" />} match={this.props.match} /> */}
-        <RctCollapsibleCard heading="Create New">
+        <RctCollapsibleCard heading="Create New Work Order">
           <form noValidate autoComplete="off">
             <div className="row">
               <div className="col-sm-6 col-md-6 col-xl-3">
                 <div className="form-group">
-                  <TextField id="name" fullWidth label="Name" value={this.state.name} onChange={this.handleChange('name')} />
+                  <TextField id="name" fullWidth label="Name" value={this.state.name} onChange={this.handleChange('name')} autoComplete="on"/>
                 </div>
                 <div className="form-group">
                   <TextField id="uncontrolled" fullWidth label="Uncontrolled" defaultValue="foo" />

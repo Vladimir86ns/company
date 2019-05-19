@@ -9,12 +9,6 @@ import classNames from 'classnames';
 //Charts
 import AgencyWelcomeBarChart from "Components/Charts/AgencyWelcomeBarChart"
 
-//Chart Data
-import {
-	WelcomeBarChart1,
-	WelcomeBarChart2
-} from '../../routes/dashboard/agency/data'
-
 // function to get today weather icon
 function getIcon(id) {
 	if (id >= 200 && id < 300) {
@@ -89,20 +83,10 @@ export default class AgencyWelcomeBlock extends Component {
 							<div className="col-lg-6 col-sm-6 mb-30 mb-sm-0">
 								<span className="fw-semi-bold font-lg d-block mb-5">$21,349.29</span>
 								<span className="d-block fs-12 mb-3">Earned Today</span>
-								<AgencyWelcomeBarChart
-									data={WelcomeBarChart1.data}
-									labels={WelcomeBarChart1.labels}
-									color={WelcomeBarChart1.color}
-								/>
 							</div>
 							<div className="col-lg-6 col-sm-6">
 								<span className="fw-semi-bold font-lg d-block mb-5">15,800</span>
 								<span className="d-block fs-12 mb-3">Items Sold</span>
-								<AgencyWelcomeBarChart
-									data={WelcomeBarChart2.data}
-									labels={WelcomeBarChart2.labels}
-									color={WelcomeBarChart2.color}
-								/>
 							</div>
 						</div>
 					</div>

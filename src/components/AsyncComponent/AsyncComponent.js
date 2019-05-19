@@ -8,38 +8,33 @@ import Loadable from 'react-loadable';
 // rct page loader
 import RctPageLoader from 'Components/RctPageLoader/RctPageLoader';
 
-// ecommerce dashboard
-const AsyncEcommerceDashboardComponent = Loadable({
-   loader: () => import("Routes/dashboard/ecommerce"),
+// Work Order Table
+const AsyncWorkOrderTableComponent = Loadable({
+   loader: () => import("Routes/work-order/all-orders"),
    loading: () => <RctPageLoader />,
 });
 
-// agency dashboard
-const AsyncSaasDashboardComponent = Loadable({
-   loader: () => import("Routes/dashboard/saas"),
+// Work Order Form
+const AsyncWorkOrderFormComponent = Loadable({
+   loader: () => import("Routes/work-order/add-new/form"),
    loading: () => <RctPageLoader />,
 });
 
-// agency dashboard
-const AsyncAgencyDashboardComponent = Loadable({
-   loader: () => import("Routes/dashboard/agency"),
+// Employees Table
+const AsyncEmployeesTableComponent = Loadable({
+   loader: () => import("Routes/work-order/all-orders"),
    loading: () => <RctPageLoader />,
 });
 
-// boxed dashboard
-const AsyncNewsDashboardComponent = Loadable({
-   loader: () => import("Routes/dashboard/news"),
+// Employees Form
+const AsyncEmployeesFormComponent = Loadable({
+   loader: () => import("Routes/work-order/add-new/form"),
    loading: () => <RctPageLoader />,
 });
-// crm dashboard
-const AsyncCrmComponent = Loadable({
-   loader: () => import("Routes/crm/dashboard"),
-   loading: () => <RctPageLoader />,
-});
+
 export {
-   AsyncEcommerceDashboardComponent,
-   AsyncSaasDashboardComponent,
-   AsyncAgencyDashboardComponent,
-   AsyncNewsDashboardComponent,
-   AsyncCrmComponent
+   AsyncWorkOrderTableComponent,
+   AsyncWorkOrderFormComponent,
+   AsyncEmployeesTableComponent,
+   AsyncEmployeesFormComponent
 };

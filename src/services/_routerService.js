@@ -1,14 +1,24 @@
 // routes
-import Dashboard from 'Routes/dashboard';
-import Crm from 'Routes/crm';
+import WorkOrderTables from 'Routes/work-order/all-orders/table';
+import WorkOrderFormElements from 'Routes/work-order/add-new';
+import EmployeesTables from 'Routes/employees/all-employees/table';
+import EmployeesFormElements from 'Routes/employees/add-new';
 
 export default [
    {
-      path: 'dashboard',
-      component: Dashboard
+      path: 'work-order-tables',
+      component: WorkOrderTables
    },
    {
-      path: 'crm',
-      component: Crm
-   }
+      path: 'work-order-forms',
+      component: WorkOrderFormElements
+   },
+   {
+      path: 'employees-tables',
+      component: EmployeesTables
+   },
+   {
+      path: 'employees-forms',
+      component: EmployeesFormElements
+   },
 ]

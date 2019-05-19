@@ -2,35 +2,38 @@
 export default {
    category1: [
       {
-         "menu_title": "sidebar.dashboard",
+         "menu_title": "sidebar.workOrder",
          "menu_icon": "zmdi zmdi-view-dashboard",
-         "new_item": true,
+         "new_item": false,
          "type_multi": null,
          "child_routes": [
             {
-               "menu_title": "sidebar.ecommerce",
+               "path": "/app/work-order-tables/basic",
                "new_item": false,
-               "path": "/app/dashboard/ecommerce",
+               "menu_title": "sidebar.allOrders"
             },
             {
-               "path": "/dashboard/crm/dashboard",
-               "new_item": true,
-               "menu_title": "sidebar.crm"
+               "path": "/app/work-order-forms/text-field",
+               "new_item": false,
+               "menu_title": "sidebar.addNew"
+            },
+         ]
+      },
+      {
+         "menu_title": "sidebar.employees",
+         "menu_icon": "zmdi zmdi-view-dashboard",
+         "new_item": false,
+         "type_multi": null,
+         "child_routes": [
+            {
+               "path": "/app/employees-tables/basic",
+               "new_item": false,
+               "menu_title": "sidebar.allEmployees"
             },
             {
-               "path": "/horizontal/dashboard/saas",
+               "path": "/app/employees-forms/text-field",
                "new_item": false,
-               "menu_title": "sidebar.saas"
-            },
-            {
-               "path": "/agency/dashboard/agency",
-               "new_item": false,
-               "menu_title": "sidebar.agency"
-            },
-            {
-               "path": "/boxed/dashboard/news",
-               "new_item": false,
-               "menu_title": "sidebar.news"
+               "menu_title": "sidebar.addNew"
             },
          ]
       }

@@ -15,12 +15,9 @@ import FormErrorMessage from '../components/Form/FormErrorMessage';
 // app config
 import AppConfig from 'Constants/AppConfig';
 
-// import axios from '../../src/util/index';
-import axios from 'axios';
-
 // redux action
 import {
-	//
+	createUser
 } from '../actions/index';
 
 class SignUp extends Component {
@@ -35,14 +32,7 @@ class SignUp extends Component {
 	 * On User SignUp
 	 */
 	onUserSignUp() {
-		console.log('USAO');
-		const { name, email, password} = this.state;
-		axios.post('http://localhost:8000/api/user/create', {
-			name,
-			email,
-			password
-		}).then(r => console.log(r)).catch(e => console.log(e));
-		// this.props.createAccount(this.state, this.props.history);
+		this.props.createUser(this.state, this.props.history)
 	}
 
 	render() {
@@ -160,5 +150,5 @@ const mapStateToProps = () => {
 };
 
 export default connect(mapStateToProps, {
-	//
+	createUser
 })(SignUp);

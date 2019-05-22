@@ -3,7 +3,7 @@
  */
 const AppConfig = {
    appLogo: require('Assets/img/site-logo.png'),          // App Logo
-   brandName: 'Reactify',                                    // Brand Name
+   brandName: 'Company Manager',                                    // Brand Name
    navCollapsed: false,                                      // Sidebar collapse
    darkMode: false,                                          // Dark Mode
    boxLayout: false,                                         // Box Layout
@@ -20,7 +20,7 @@ const AppConfig = {
       icon: 'en',
    },
    enableUserTour: process.env.NODE_ENV === 'production' ? true : false,  // Enable / Disable User Tour
-   copyRightText: 'Reactify © 2019 All Rights Reserved.',      // Copy Right Text
+   copyRightText: 'Company Manager © 2019 All Rights Reserved.',      // Copy Right Text
    // light theme colors
    themeColors: {
       'primary': '#5D92F4',

@@ -9,19 +9,13 @@ import { NotificationContainer } from 'react-notifications';
 // rct theme provider
 import RctThemeProvider from './RctThemeProvider';
 
-//Horizontal Layout
-import HorizontalLayout from './HorizontalLayout';
-
-//Agency Layout
-import AgencyLayout from './AgencyLayout';
-
 //Main App
 import RctDefaultLayout from './DefaultLayout';
 
-// boxed layout
-import RctBoxedLayout from './RctBoxedLayout';
-// CRM layout
-import CRMLayout from './CRMLayout';
+// app signin
+import AppSignIn from './SignIn';
+import AppSignUp from './SignUp';
+
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
  */
@@ -34,9 +28,17 @@ const InitialPath = ({ component: Component, ...rest }) =>
 class App extends Component {
    render() {
       const { location, match, user } = this.props;
-      if (location.pathname === '/') {
-         return <Redirect to={'/app/dashboard/ecommerce'} />;
+      let account = localStorage.getItem('account_id');
+
+		// TODO make logic for logged in user
+		if (location.pathname === '/') {
+			if (!account) {
+            return (<Redirect to={'/signIn'} />);
+			} else {
+            return <Redirect to={'/app/dashboard/ecommerce'} />;
+			}
       }
+      
       return (
          <RctThemeProvider>
             <NotificationContainer />
@@ -45,10 +47,8 @@ class App extends Component {
                authUser={user}
                component={RctDefaultLayout}
             />
-            <Route path="/horizontal" component={HorizontalLayout} />
-            <Route path="/agency" component={AgencyLayout} />
-            <Route path="/boxed" component={RctBoxedLayout} />
-            <Route path="/dashboard" component={CRMLayout} />
+            <Route path="/signIn" component={AppSignIn} />
+				<Route path="/signUp" component={AppSignUp} />
          </RctThemeProvider>
       );
    }

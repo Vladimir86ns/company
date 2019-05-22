@@ -6,7 +6,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 // async components
 import {
-   AsyncWorkOrderTableComponent
+    AsyncEmployeesTableComponent
 } from 'Components/AsyncComponent/AsyncComponent';
 
 const Pages = ({ match }) => (
@@ -17,7 +17,7 @@ const Pages = ({ match }) => (
         </Helmet>
         <Switch>
             <Redirect exact from={`${match.url}/`} to={`${match.url}`} />
-            <Route path={`${match.url}/all-orders/table`} component={AsyncWorkOrderTableComponent} />
+            <Route path={`${match.url}/all-orders/table`} component={AsyncEmployeesTableComponent} />
         </Switch>
     </div>
 );

@@ -763,10 +763,10 @@ module.exports = {
    "sidebar.reports": "reports",
 
    //  ********  START FROM HERE
-   "sidebar.workOrder" :"Work Order",
-   "sidebar.allOrders" : "All Orders",
-   "sidebar.addNew" : "Add New",
-   "sidebar.employees" :"Employees",
-   "sidebar.allEmployees" : "All Employees",
-   "sidebar.addNew" : "Add New"
+   "sidebar.user_settings" :"User Settings",
+   "sidebar.my_profile" : "My Profile",
+   // "sidebar.add_new_user" : "Add New",
+   "sidebar.company" :"Company",
+   // "sidebar.allEmployees" : "All Employees",
+   "sidebar.company_settings" : "Company Settings"
 }

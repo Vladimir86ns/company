@@ -29,12 +29,13 @@ class SidebarContent extends Component {
         return (
             <div className="rct-sidebar-nav">
                 <nav className="navigation">
+                    {/* NOTICE for now do not need to show sub header */}
                     <List
                         className="rct-mainMenu p-0 m-0 list-unstyled"
-                        subheader={
-                            <ListSubheader className="side-title" component="li">
-                                <IntlMessages id="sidebar.workOrder" />
-                            </ListSubheader>}
+                        // subheader={
+                        //     <ListSubheader className="side-title" component="li">
+                        //         <IntlMessages id="sidebar.workOrder" />
+                        //     </ListSubheader>}
                     >
                         {sidebarMenus.category1.map((menu, key) => (
                             <NavMenuItem

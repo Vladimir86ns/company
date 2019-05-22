@@ -73,7 +73,8 @@ class UserBlock extends Component {
 							tag="div"
 							className="d-flex align-items-center"
 						>
-							<div className="user-profile">
+						{/* TODO add user picture */}
+							{/* <div className="user-profile">
 								<img
 									src={require('Assets/avatars/user-15.jpg')}
 									alt="user profile"
@@ -81,7 +82,7 @@ class UserBlock extends Component {
 									width="50"
 									height="100"
 								/>
-							</div>
+							</div> */}
 							<div className="user-info">
 								<span className="user-name ml-4">Lucile Beck</span>
 								<i className="zmdi zmdi-chevron-down dropdown-icon mx-4"></i>

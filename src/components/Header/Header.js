@@ -109,7 +109,8 @@ class Header extends Component {
 										</Tooltip>
 									</li>
 								}
-								<li className="list-inline-item search-icon d-inline-block">
+								{/* NOTICE for now is not need to show this search */}
+								{/* <li className="list-inline-item search-icon d-inline-block">
 									<SearchForm />
 									<IconButton mini="true" className="search-icon-btn" onClick={() => this.openMobileSearchForm()}>
 										<i className="zmdi zmdi-search"></i>
@@ -118,7 +119,7 @@ class Header extends Component {
 										isOpen={isMobileSearchFormVisible}
 										onClose={() => this.setState({ isMobileSearchFormVisible: false })}
 									/>
-								</li>
+								</li> */}
 							</ul>
 						}
 					</div>

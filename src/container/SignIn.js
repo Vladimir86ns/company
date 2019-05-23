@@ -22,8 +22,8 @@ import AppConfig from 'Constants/AppConfig';
 
 // redux action
 import {
-	//
-} from 'Actions';
+	loginUser
+} from '../actions/index';
 
 //Auth File
 import Auth from '../Auth/Auth';
@@ -33,8 +33,8 @@ const auth = new Auth();
 class SignIn extends Component {
 
 	state = {
-		email: 'demo@example.com',
-		password: 'test#123'
+		email: 'milos@gmail.com',
+		password: 'test123'
 	}
 
 	/**
@@ -42,7 +42,7 @@ class SignIn extends Component {
 	 */
 	onUserLogin() {
 		if (this.state.email !== '' && this.state.password !== '') {
-			this.props.signinUserInFirebase(this.state, this.props.history);
+			this.props.loginUser(this.state, this.props.history);
 		}
 	}
 
@@ -51,11 +51,6 @@ class SignIn extends Component {
 	 */
 	onUserSignUp() {
 		this.props.history.push('/signup');
-	}
-
-	//Auth0 Login
-	loginAuth0() {
-		auth.login();
 	}
 
 	render() {
@@ -147,11 +142,10 @@ class SignIn extends Component {
 }
 
 // map state to props
-const mapStateToProps = ({ authUser }) => {
-	const { user, loading } = authUser;
-	return { user, loading }
+const mapStateToProps = () => {
+	//
 }
 
 export default connect(mapStateToProps, {
-	//
+	loginUser	
 })(SignIn);

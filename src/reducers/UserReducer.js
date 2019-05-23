@@ -3,7 +3,8 @@
  */
 import { NotificationManager } from 'react-notifications';
 import {
-    CREATE_USER
+    CREATE_USER,
+    LOGIN_USER
 } from '../actions/types';
 
 /**
@@ -17,7 +18,11 @@ export default (state = INIT_STATE, action) => {
     switch (action.type) {
 
         case CREATE_USER:
-            console.log('ACTION' , action);
+            return { ...state, 
+                user: action.user
+            };
+        case LOGIN_USER:
+            console.log('LOGIN_USER');
             return { ...state, 
                 user: action.user
             };

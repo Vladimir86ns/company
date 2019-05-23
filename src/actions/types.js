@@ -89,7 +89,7 @@ export const GET_TODOS_SUCCESS = 'GET_TODOS_SUCCESS';
 export const GET_TODOS_FAILURE = 'GET_TODOS_FAILURE';
 
 // Auth Actions
-export const LOGIN_USER = 'LOGIN_USER';
+// export const LOGIN_USER = 'LOGIN_USER';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -126,6 +126,9 @@ export const ON_COMMENT_FEEDBACK = 'ON_COMMENT_FEEDBACK';
 export const ON_DELETE_ITEM_FROM_CART = 'ON_DELETE_ITEM_FROM_CART';
 export const ON_QUANTITY_CHANGE = 'ON_QUANTITY_CHANGE';
 export const ON_ADD_ITEM_TO_CART = 'ON_ADD_ITEM_TO_CART';
+
+// AUTH
+export const LOGIN_USER = 'LOGIN_USER';
 
 // USERS
 export const CREATE_USER = 'CREATE_USER';

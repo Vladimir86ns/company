@@ -22,7 +22,6 @@ export default (state = INIT_STATE, action) => {
                 user: action.user
             };
         case LOGIN_USER:
-            console.log('LOGIN_USER');
             return { ...state, 
                 user: action.user
             };

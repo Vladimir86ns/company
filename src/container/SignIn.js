@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { Form, FormGroup, Input } from 'reactstrap';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import QueueAnim from 'rc-queue-anim';
+import FormErrorMessage from '../components/Form/FormErrorMessage';
 
 // components
 import {
@@ -22,13 +23,9 @@ import AppConfig from 'Constants/AppConfig';
 
 // redux action
 import {
-	loginUser
+	loginUser,
+	loginUserFailureRestart
 } from '../actions/index';
-
-//Auth File
-import Auth from '../Auth/Auth';
-
-const auth = new Auth();
 
 class SignIn extends Component {
 
@@ -41,9 +38,8 @@ class SignIn extends Component {
 	 * On User Login
 	 */
 	onUserLogin() {
-		if (this.state.email !== '' && this.state.password !== '') {
-			this.props.loginUser(this.state, this.props.history);
-		}
+		// TODO add validation here to check is correct.
+		this.props.loginUser(this.state, this.props.history);
 	}
 
 	/**
@@ -53,9 +49,25 @@ class SignIn extends Component {
 		this.props.history.push('/signup');
 	}
 
+	componentDidUpdate(prevProps) {
+		if (prevProps.errorMessages !== this.props.errorMessages) {
+			this.setTimeToRemoveErrorMessage(5000);
+		}
+	  }
+
+	/**
+	 * Set time to remove validation messages.
+	 */
+	setTimeToRemoveErrorMessage(time) {
+		setTimeout(() => {
+			this.props.loginUserFailureRestart();
+		}, time);
+	}
+
 	render() {
 		const { email, password } = this.state;
-		const { loading } = this.props;
+		const { loading, errorMessages } = this.props;
+
 		return (
 			<QueueAnim type="bottom" duration={2000}>
 				<div className="rct-session-wrapper">
@@ -100,6 +112,9 @@ class SignIn extends Component {
 													onChange={(event) => this.setState({ email: event.target.value })}
 												/>
 												<span className="has-icon"><i className="ti-email"></i></span>
+												<FormErrorMessage
+													 message={errorMessages.email}
+												/>
 											</FormGroup>
 											<FormGroup className="has-wrapper">
 												<Input
@@ -112,6 +127,9 @@ class SignIn extends Component {
 													onChange={(event) => this.setState({ password: event.target.value })}
 												/>
 												<span className="has-icon"><i className="ti-lock"></i></span>
+												<FormErrorMessage
+													 message={errorMessages.password}
+												/>
 											</FormGroup>
 											<FormGroup className="mb-15">
 												<Button
@@ -142,10 +160,12 @@ class SignIn extends Component {
 }
 
 // map state to props
-const mapStateToProps = () => {
-	//
+const mapStateToProps = ({ authUser }) => {
+	const { errorMessages } = authUser;
+	return { errorMessages };
 }
 
 export default connect(mapStateToProps, {
-	loginUser	
+	loginUser,
+	loginUserFailureRestart
 })(SignIn);

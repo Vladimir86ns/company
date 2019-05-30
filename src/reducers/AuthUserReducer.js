@@ -6,6 +6,7 @@ import {
     LOGIN_USER,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAILURE,
+    LOGIN_USER_FAILURE_RESTART,
     LOGOUT_USER,
     SIGNUP_USER,
     SIGNUP_USER_SUCCESS,
@@ -19,7 +20,8 @@ import {
  */
 const INIT_STATE = {
     user: localStorage.getItem('user_id'),
-    loading: false
+    loading: false,
+    errorMessages: {}
 };
 
 export default (state = INIT_STATE, action) => {
@@ -33,8 +35,10 @@ export default (state = INIT_STATE, action) => {
             return { ...state, loading: false, user: action.payload };
 
         case LOGIN_USER_FAILURE:
-            NotificationManager.error(action.payload);
-            return { ...state, loading: false };
+            return { ...state, errorMessages: action.payload };
+        
+        case LOGIN_USER_FAILURE_RESTART:
+            return { ...state, errorMessages: {} };
 
         case LOGOUT_USER:
             return { ...state };

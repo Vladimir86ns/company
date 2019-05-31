@@ -2,16 +2,7 @@
  * Material Text Field
  */
 import React from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-
-import Components from './components/componets-field';
-import Layouts from './components/layouts';
-import InputAdornments from './components/input-adornment';
-import FormattedInputs from './components/formated-input';
-
-// page title bar
-import PageTitleBar from 'Components/PageTitleBar/PageTitleBar';
 
 // intl messages
 import IntlMessages from 'Util/IntlMessages';
@@ -19,16 +10,14 @@ import IntlMessages from 'Util/IntlMessages';
 // rct card box
 import RctCollapsibleCard from 'Components/RctCollapsibleCard/RctCollapsibleCard';
 
-export default class TextFields extends React.Component {
+export default class CompanyInformationForm extends React.Component {
 
   state = {
     name: '',
     address: '',
     country: '',
     mobile_phone: '',
-    age: '',
-    multiline: 'Controlled',
-    currency: 'EUR',
+    phone: ''
   };
 
   handleChange = name => event => {

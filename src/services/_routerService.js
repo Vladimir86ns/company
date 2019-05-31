@@ -1,8 +1,8 @@
 // routes
 import WorkOrderTables from 'Routes/company/all-orders/table';
-import WorkOrderFormElements from 'Routes/company/add-new';
-import EmployeesTables from 'Routes/employees/all-employees/table';
-import EmployeesFormElements from 'Routes/employees/add-new';
+import CompanyInformationForm from 'Routes/company/add-new';
+import EmployeesTables from 'Routes/user/all-employees/table';
+import UserInformationForm from 'Routes/user/add-new';
 
 export default [
    {
@@ -10,15 +10,15 @@ export default [
       component: WorkOrderTables
    },
    {
-      path: 'work-order-forms',
-      component: WorkOrderFormElements
+      path: 'company-information-form',
+      component: CompanyInformationForm
    },
    {
       path: 'employees-tables',
       component: EmployeesTables
    },
    {
-      path: 'employees-forms',
-      component: EmployeesFormElements
+      path: 'user-information-form',
+      component: UserInformationForm
    },
 ]

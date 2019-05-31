@@ -6,7 +6,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 // async components
 import {
-	AsyncEmployeesFormComponent
+	AsyncUserInformationFormComponent
 } from 'Components/AsyncComponent/AsyncComponent';
 
 const Forms = ({ match }) => (
@@ -17,7 +17,7 @@ const Forms = ({ match }) => (
 		</Helmet>
 		<Switch>
 			<Redirect exact from={`${match.url}/`} to={`${match.url}/form-elements`} />
-			<Route path={`${match.url}/text-field`} component={AsyncEmployeesFormComponent} />
+			<Route path={`${match.url}/text-field`} component={AsyncUserInformationFormComponent} />
 		</Switch>
 	</div>
 );

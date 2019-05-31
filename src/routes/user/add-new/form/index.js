@@ -10,7 +10,7 @@ import IntlMessages from 'Util/IntlMessages';
 // rct card box
 import RctCollapsibleCard from 'Components/RctCollapsibleCard/RctCollapsibleCard';
 
-export default class TextFields extends React.Component {
+export default class UserInformationForm extends React.Component {
 
   state = {
     first_name: '',

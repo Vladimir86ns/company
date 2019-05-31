@@ -1,6 +1,6 @@
 // routes
-import WorkOrderTables from 'Routes/work-order/all-orders/table';
-import WorkOrderFormElements from 'Routes/work-order/add-new';
+import WorkOrderTables from 'Routes/company/all-orders/table';
+import WorkOrderFormElements from 'Routes/company/add-new';
 import EmployeesTables from 'Routes/employees/all-employees/table';
 import EmployeesFormElements from 'Routes/employees/add-new';
 

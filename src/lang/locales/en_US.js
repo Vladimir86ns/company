@@ -765,8 +765,24 @@ module.exports = {
    //  ********  START FROM HERE
    "sidebar.user_settings" :"User Settings",
    "sidebar.my_profile" : "My Profile",
-   // "sidebar.add_new_user" : "Add New",
    "sidebar.company" :"Company",
-   // "sidebar.allEmployees" : "All Employees",
-   "sidebar.company_settings" : "Company Settings"
+   "sidebar.company_settings" : "Company Settings",
+
+   "form.company.header": "Company Information",
+   "form.company.name": "Name",
+   "form.company.country": "Country",
+   "form.company.city": "City",
+   "form.company.address": "Address",
+   "form.company.phone": "Phone Number",
+   "form.company.mobile_phone": "Mobile Phone",
+
+   "form.user.header": "User Information",
+   "form.user.first_name": "First Name",
+   "form.user.last_name": "Last Name",
+   "form.user.country": "Country",
+   "form.user.city": "City",
+   "form.user.address": "Address",
+   "form.user.phone": "Phone Number",
+   "form.user.mobile_phone": "Mobile Phone",
+   "form.user.gender": "Gender",
 }

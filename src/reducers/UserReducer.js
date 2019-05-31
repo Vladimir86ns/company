@@ -1,10 +1,10 @@
 /**
  * Auth User Reducers
  */
-import { NotificationManager } from 'react-notifications';
 import {
     CREATE_USER,
-    LOGIN_USER
+    LOGIN_USER,
+    HANDLE_USER_SUCCESS
 } from '../actions/types';
 
 /**
@@ -24,6 +24,10 @@ export default (state = INIT_STATE, action) => {
         case LOGIN_USER:
             return { ...state, 
                 user: action.user
+            };
+        case HANDLE_USER_SUCCESS:
+            return { ...state, 
+                user: action.payload
             };
 
         default: return { ...state };

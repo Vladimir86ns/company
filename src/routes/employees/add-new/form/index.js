@@ -2,16 +2,7 @@
  * Material Text Field
  */
 import React from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-
-import Components from './components/componets-field';
-import Layouts from './components/layouts';
-import InputAdornments from './components/input-adornment';
-import FormattedInputs from './components/formated-input';
-
-// page title bar
-import PageTitleBar from 'Components/PageTitleBar/PageTitleBar';
 
 // intl messages
 import IntlMessages from 'Util/IntlMessages';
@@ -19,32 +10,16 @@ import IntlMessages from 'Util/IntlMessages';
 // rct card box
 import RctCollapsibleCard from 'Components/RctCollapsibleCard/RctCollapsibleCard';
 
-const currencies = [
-  {
-    value: 'USD',
-    label: '$',
-  },
-  {
-    value: 'EUR',
-    label: '€',
-  },
-  {
-    value: 'BTC',
-    label: '฿',
-  },
-  {
-    value: 'JPY',
-    label: '¥',
-  },
-];
-
 export default class TextFields extends React.Component {
 
   state = {
-    name: 'Cat in the Hat',
-    age: '',
-    multiline: 'Controlled',
-    currency: 'EUR',
+    first_name: '',
+    last_name: '',
+    country: '',
+    city: '',
+    address: '',
+    phone: '',
+    mobile_phone: ''
   };
 
   handleChange = name => event => {
@@ -56,102 +31,36 @@ export default class TextFields extends React.Component {
   render() {
     return (
       <div className="textfields-wrapper">
-        <RctCollapsibleCard heading="Create New Employee">
+        <RctCollapsibleCard heading={<IntlMessages id={'form.user.header'} />}>
           <form noValidate autoComplete="off">
             <div className="row">
               <div className="col-sm-6 col-md-6 col-xl-3">
                 <div className="form-group">
-                  <TextField id="name" fullWidth label="Name" value={this.state.name} onChange={this.handleChange('name')} />
+                  <TextField id="first_name" fullWidth label={<IntlMessages id={'form.user.first_name'} />} value={this.state.first_name} onChange={this.handleChange('first_name')} />
                 </div>
                 <div className="form-group">
-                  <TextField id="uncontrolled" fullWidth label="Uncontrolled" defaultValue="foo" />
-                </div>
-                <div className="form-group">
-                  <TextField required id="required" fullWidth label="Required" defaultValue="Hello World" />
-                </div>
-                <div className="form-group">
-                  <TextField error id="error" fullWidth label="Error" defaultValue="Hello World" />
-                </div>
-                <div className="form-group">
-                  <TextField id="search" fullWidth label="Search field" type="search" />
+                  <TextField id="address" fullWidth label={<IntlMessages id={'form.user.address'} />} value={this.state.address} onChange={this.handleChange('address')} />
                 </div>
               </div>
               <div className="col-sm-6 col-md-6 col-xl-3">
                 <div className="form-group">
-                  <TextField id="helperText" fullWidth label="Helper text" defaultValue="Default Value" helperText="Some important text" />
+                  <TextField id="last_name" fullWidth label={<IntlMessages id={'form.user.last_name'} />} value={this.state.last_name} onChange={this.handleChange('last_name')} />
                 </div>
                 <div className="form-group">
-                  <TextField id="with-placeholder" fullWidth label="With placeholder" placeholder="Placeholder" />
-                </div>
-                <div className="form-group">
-                  <TextField id="multiline-static" fullWidth label="Multiline" multiline rows="4" defaultValue="Default Value" />
+                  <TextField id="phone" fullWidth label={<IntlMessages id={'form.user.phone'} />} value={this.state.phone} onChange={this.handleChange('phone')} />
                 </div>
               </div>
               <div className="col-sm-6 col-md-6 col-xl-3">
                 <div className="form-group">
-                  <TextField id="select-currency" select label="Select"
-                    value={this.state.currency}
-                    onChange={this.handleChange('currency')}
-                    SelectProps={{
-                      MenuProps: {
-                      },
-                    }}
-                    helperText="Please select your currency"
-                    fullWidth>
-                    {currencies.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                  <TextField id="country" fullWidth label={<IntlMessages id={'form.user.country'} />} value={this.state.country} onChange={this.handleChange('country')} />
                 </div>
                 <div className="form-group">
-                  <TextField id="select-currency-native" select label="Native select"
-                    value={this.state.currency} onChange={this.handleChange('currency')}
-                    SelectProps={{
-                      native: true,
-                    }}
-                    helperText="Please select your currency"
-                    fullWidth>
-                    {currencies.map(option => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </TextField>
-                </div>
-                <div className="form-group">
-                  <TextField
-                    id="full-width"
-                    label="Label"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    placeholder="Placeholder"
-                    helperText="Full width!"
-                    fullWidth
-                  />
+                  <TextField id="mobile_phone" fullWidth label={<IntlMessages id={'form.user.mobile_phone'} />} value={this.state.mobile_phone} onChange={this.handleChange('mobile_phone')} />
                 </div>
               </div>
               <div className="col-sm-6 col-md-6 col-xl-3">
                 <div className="form-group">
-                  <TextField id="password" fullWidth label="Password" autoComplete="current-password" />
-                </div>
-                <div className="form-group">
-                  <TextField id="multiline-flexible" fullWidth label="Multiline" multiline rowsMax="4" value={this.state.multiline}
-                    onChange={this.handleChange('multiline')}
-                  />
-                </div>
-                <div className="form-group">
-                  <TextField id="textarea" fullWidth label="With placeholder multiline" placeholder="Placeholder" multiline />
-                </div>
-                <div className="form-group">
-                  <TextField id="number" fullWidth label="Number" value={this.state.age} onChange={this.handleChange('age')}
-                    type="number"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
+                  <TextField id="city" fullWidth label={<IntlMessages id={'form.user.city'} />} value={this.state.city} onChange={this.handleChange('city')} />
                 </div>
               </div>
             </div>

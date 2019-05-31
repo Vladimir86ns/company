@@ -10,25 +10,25 @@ import RctPageLoader from 'Components/RctPageLoader/RctPageLoader';
 
 // Work Order Table
 const AsyncWorkOrderTableComponent = Loadable({
-   loader: () => import("Routes/work-order/all-orders"),
+   loader: () => import("Routes/company/all-orders"),
    loading: () => <RctPageLoader />,
 });
 
 // Work Order Form
 const AsyncWorkOrderFormComponent = Loadable({
-   loader: () => import("Routes/work-order/add-new/form"),
+   loader: () => import("Routes/company/add-new/form"),
    loading: () => <RctPageLoader />,
 });
 
 // Employees Table
 const AsyncEmployeesTableComponent = Loadable({
-   loader: () => import("Routes/work-order/all-orders"),
+   loader: () => import("Routes/employees/all-employees"),
    loading: () => <RctPageLoader />,
 });
 
 // Employees Form
 const AsyncEmployeesFormComponent = Loadable({
-   loader: () => import("Routes/work-order/add-new/form"),
+   loader: () => import("Routes/employees/add-new/form"),
    loading: () => <RctPageLoader />,
 });
 

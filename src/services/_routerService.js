@@ -10,7 +10,7 @@ export default [
       component: WorkOrderTables
    },
    {
-      path: 'company-information-form',
+      path: 'company-information',
       component: CompanyInformationForm
    },
    {
@@ -18,7 +18,7 @@ export default [
       component: EmployeesTables
    },
    {
-      path: 'user-information-form',
+      path: 'user-information',
       component: UserInformationForm
    },
 ]

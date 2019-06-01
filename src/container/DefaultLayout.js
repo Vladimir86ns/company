@@ -9,19 +9,26 @@ import routerService from "../services/_routerService";
 import IntlMessages from 'Util/IntlMessages';
 
 class DefaultLayout extends Component {
-	render() {
-		const { match } = this.props;
 
-		let welcomeMessage = (<div></div>);
-		// TODO check is does user has all information.
-		if (true) {
-			welcomeMessage = (
+	/**
+	 * Check does user has all information.
+	 * @param {object} user
+	*/
+	checkUserHasAllInformation(user) {
+		if (user && !user.company_settings_done && !user.user_settings_done) {
+			return (
 				<div className="alert alert-info">
 					<p>{ <IntlMessages id={'welcome.company_and_user_information_one'}/> }</p>
 					<p>{ <IntlMessages id={'welcome.company_and_user_information_two'}/> }</p>
 				</div>
 			);
-		}
+		};
+	};
+
+	render() {
+		const { match, user } = this.props;
+
+		let welcomeMessage = this.checkUserHasAllInformation(user);
 
 		return (
 			<RctAppLayout>
@@ -34,4 +41,10 @@ class DefaultLayout extends Component {
 	}
 }
 
-export default withRouter(connect(null)(DefaultLayout));
+// map state to props
+const mapStateToProps = ({ userReducer }) => {
+	const { user } = userReducer;
+	return { user };
+}
+
+export default withRouter(connect(mapStateToProps, null)(DefaultLayout));

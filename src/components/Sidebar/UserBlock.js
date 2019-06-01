@@ -60,6 +60,37 @@ class UserBlock extends Component {
 		NotificationManager.success('Message has been sent successfully!');
 	}
 
+	/**
+	 * Check does user has all information and show dropdown menu if has.
+	 * @param {object} user
+	*/
+	checkUserHasInfo(user) {
+		console.log(user);
+		if (user && user.user_settings_done) {
+			return (
+				<DropdownToggle
+				tag="div"
+				className="d-flex align-items-center"
+				>
+				{/* TODO add user picture */}
+					{/* <div className="user-profile">
+						<img
+							src={require('Assets/avatars/user-15.jpg')}
+							alt="user profile"
+							className="img-fluid rounded-circle"
+							width="50"
+							height="100"
+						/>
+					</div> */}
+					<div className="user-info">
+						<span className="user-name ml-4">{user.first_name} {user.last_name}</span>
+						<i className="zmdi zmdi-chevron-down dropdown-icon mx-4"></i>
+					</div>
+				</DropdownToggle>
+			);
+		}
+	}
+
 	render() {
 		return (
 			<div className="top-sidebar">
@@ -69,30 +100,12 @@ class UserBlock extends Component {
 						toggle={() => this.toggleUserDropdownMenu()}
 						className="rct-dropdown"
 					>
-						<DropdownToggle
-							tag="div"
-							className="d-flex align-items-center"
-						>
-						{/* TODO add user picture */}
-							{/* <div className="user-profile">
-								<img
-									src={require('Assets/avatars/user-15.jpg')}
-									alt="user profile"
-									className="img-fluid rounded-circle"
-									width="50"
-									height="100"
-								/>
-							</div> */}
-							<div className="user-info">
-								<span className="user-name ml-4">Lucile Beck</span>
-								<i className="zmdi zmdi-chevron-down dropdown-icon mx-4"></i>
-							</div>
-						</DropdownToggle>
+						{ this.checkUserHasInfo(this.props.user) }
 						<DropdownMenu>
 							<ul className="list-unstyled mb-0">
 								<li className="p-15 border-bottom user-profile-top bg-primary rounded-top">
-									<p className="text-white mb-0 fs-14">Lucile Beck</p>
-									<span className="text-white fs-14">info@example.com</span>
+									<p className="text-white mb-0 fs-14">{ `${this.props.user.first_name} ${this.props.user.last_name}` }</p>
+									<span className="text-white fs-14">{ this.props.user.email }</span>
 								</li>
 								<li>
 									<Link to={{
@@ -141,8 +154,9 @@ class UserBlock extends Component {
 }
 
 // map state to props
-const mapStateToProps = ({ settings }) => {
-	return settings;
+const mapStateToProps = ({ userReducer }) => {
+	const { user } = userReducer;
+	return { user };
 }
 
 export default connect(mapStateToProps, {

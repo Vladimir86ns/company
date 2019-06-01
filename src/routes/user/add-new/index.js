@@ -16,8 +16,8 @@ const Forms = ({ match }) => (
 			<meta name="description" content="Reactify Form Elements" />
 		</Helmet>
 		<Switch>
-			<Redirect exact from={`${match.url}/`} to={`${match.url}/form-elements`} />
-			<Route path={`${match.url}/text-field`} component={AsyncUserInformationFormComponent} />
+			{/* <Redirect exact from={`${match.url}/`} to={`${match.url}/form-elements`} /> */}
+			<Route path={`${match.url}`} component={AsyncUserInformationFormComponent} />
 		</Switch>
 	</div>
 );

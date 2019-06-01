@@ -10,7 +10,7 @@ import {
 } from '../actions/types';
 
 import {
-    //
+    handleUserSuccess
 } from 'Actions';
 
 
@@ -28,13 +28,12 @@ function* createUserToServer({payload}) {
         // TODO remove status 201 later on when is fixed from API side
         if (newUser.status === responseCodes.HTTP_OK) {
         
-        let { id, account_id, token } = newUser.data;
-        localStorage.setItem('account_id', account_id);
-        localStorage.setItem('user_id', id);
-        localStorage.setItem('token', token);
-        history.push('/app/dashboard/ecommerce');
-
-        // yield put(responseAccountSuccess(newAccount.data, APP_MESSAGES.account.createSuccess));
+            let { id, account_id, token } = newUser.data;
+            localStorage.setItem('account_id', account_id);
+            localStorage.setItem('user_id', id);
+            localStorage.setItem('token', token);
+            history.push('/app/dashboard/ecommerce');
+            yield put(handleUserSuccess(newUser.data));
         } else if (newUser.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
         // yield put(responseAccountNotAcceptable(newAccount.data));
         } else {

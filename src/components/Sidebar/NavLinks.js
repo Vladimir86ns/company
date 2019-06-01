@@ -8,7 +8,7 @@ export default {
          "type_multi": null,
          "child_routes": [
             {
-               "path": "/app/user-information-form/text-field",
+               "path": "/app/user-information",
                "new_item": false,
                "menu_title": "sidebar.my_profile"
             },
@@ -21,7 +21,7 @@ export default {
          "type_multi": null,
          "child_routes": [
             {
-               "path": "/app/company-information-form/text-field",
+               "path": "/app/company-information",
                "new_item": false,
                "menu_title": "sidebar.company_settings"
             },

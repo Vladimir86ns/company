@@ -167,6 +167,7 @@ module.exports = {
         new FriendlyErrorsWebpackPlugin(),
         new CleanWebpackPlugin(pathsToClean, cleanOptions),
         new HtmlWebPackPlugin({
+            chunksSortMode: "none",
             template: "./public/index.html",
             filename: "./index.html",
             favicon: './public/favicon.ico'

@@ -3,6 +3,7 @@
  */
 import {
     LOGIN_USER,
+    HANDLE_USER_SUCCESS,
     LOGIN_USER_FAILURE,
     LOGIN_USER_FAILURE_RESTART
 } from './types';
@@ -13,6 +14,14 @@ import {
 export const loginUser = (user, history) => ({
     type: LOGIN_USER,
     payload: { history, user }
+});
+
+/**
+ * Redux Action Handle User Success.
+ */
+export const handleUserSuccess = (user) => ({
+    type: HANDLE_USER_SUCCESS,
+    payload: user
 });
 
 /**

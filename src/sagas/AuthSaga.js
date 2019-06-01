@@ -8,7 +8,8 @@ import {
 } from 'Actions/types';
 
 import {
-    loginUserFailure
+    loginUserFailure,
+    handleUserSuccess
 } from 'Actions';
 
 import axios from 'axios';
@@ -44,6 +45,7 @@ function* loginUserOnServer({ payload }) {
             localStorage.setItem('user_id', id);
             localStorage.setItem('token', token);
             history.push('/app/dashboard/ecommerce');
+            yield put(handleUserSuccess(response.data));
         } else if (response.status === responseCodes.HTTP_NOT_FOUND) {
             NotificationManager.error(APP_MESSAGES.auth.credentialsError);
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE) {

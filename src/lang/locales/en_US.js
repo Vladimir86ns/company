@@ -763,6 +763,13 @@ module.exports = {
    "sidebar.reports": "reports",
 
    //  ********  START FROM HERE
+   "welcome.company_and_user_information_one": "Welcome to company manager! ",
+   "welcome.company_and_user_information_two": 
+      `
+         You have to add information about the user,
+         and additional information about the company to be able to proceed to all
+         settings in the company manager.
+      `,
    "sidebar.user_settings" :"User Settings",
    "sidebar.my_profile" : "My Profile",
    "sidebar.company" :"Company",

@@ -65,7 +65,6 @@ class UserBlock extends Component {
 	 * @param {object} user
 	*/
 	checkUserHasInfo(user) {
-		console.log(user);
 		if (user && user.user_settings_done) {
 			return (
 				<DropdownToggle

@@ -8,6 +8,10 @@ import { isEmpty } from 'Util/lodashFunctions';
 import IntlMessages from 'Util/IntlMessages';
 import RctCollapsibleCard from 'Components/RctCollapsibleCard/RctCollapsibleCard';
 
+// redux action
+import {
+	getUserByIdAndAccountId
+} from 'Actions/index';
 class UserInformationForm extends React.Component {
 
   state = {
@@ -31,11 +35,18 @@ class UserInformationForm extends React.Component {
     this.getUserInfo();
   }
 
+  componentWillUpdate(nextProps) {
+    if (isEmpty(this.props.user) && !isEmpty(nextProps.user)) {
+      this.getUserInfoToState(nextProps.user);
+    }
+  }
+
   getUserInfo() {
-    if (isEmpty(this.props.user)) {
-      // TODO get user.
+    let { user } = this.props
+    if (isEmpty(user)) {
+      this.props.getUserByIdAndAccountId();
     } else {
-      this.getUserInfoToState();
+      this.getUserInfoToState(user);
     }
   }
 
@@ -43,15 +54,14 @@ class UserInformationForm extends React.Component {
    * Update state with user info.
    *
    */
-  getUserInfoToState() {
+  getUserInfoToState(user) {
     var newState = {...this.state};
 
-    Object.keys(this.props.user).forEach((key) => {
+    Object.keys(user).forEach((key) => {
       if (this.state[key] !== 'undefined') {
-        newState[key] = this.props.user[key] ? this.props.user[key] : '';
+        newState[key] = user[key] ? user[key] : '';
       }
     });
-
     this.setState(newState);
   }
 
@@ -106,5 +116,7 @@ function mapStateToProps({ userReducer }) {
   return { user }
 }
 
-export default connect(mapStateToProps, null)(UserInformationForm)
+export default connect(mapStateToProps, {
+  getUserByIdAndAccountId
+})(UserInformationForm)
 

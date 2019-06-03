@@ -1,5 +1,6 @@
 import {
-    CREATE_USER
+    CREATE_USER,
+    GET_USER
 } from './types';
 
 /**
@@ -8,4 +9,11 @@ import {
 export const createUser = (user, history) => ({
     type: CREATE_USER,
     payload: { user, history }
+});
+
+/**
+ * Get User.
+ */
+export const getUserByIdAndAccountId = () => ({
+    type: GET_USER
 });

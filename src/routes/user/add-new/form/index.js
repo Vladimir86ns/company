@@ -3,18 +3,17 @@
  */
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-
-// intl messages
+import { connect } from 'react-redux';
+import { isEmpty } from 'Util/lodashFunctions';
 import IntlMessages from 'Util/IntlMessages';
-
-// rct card box
 import RctCollapsibleCard from 'Components/RctCollapsibleCard/RctCollapsibleCard';
 
-export default class UserInformationForm extends React.Component {
+class UserInformationForm extends React.Component {
 
   state = {
     first_name: '',
     last_name: '',
+    email: '',
     country: '',
     city: '',
     address: '',
@@ -27,6 +26,34 @@ export default class UserInformationForm extends React.Component {
       [name]: event.target.value,
     });
   };
+
+  componentDidMount() {
+    this.getUserInfo();
+  }
+
+  getUserInfo() {
+    if (isEmpty(this.props.user)) {
+      // TODO get user.
+    } else {
+      this.getUserInfoToState();
+    }
+  }
+
+  /**
+   * Update state with user info.
+   *
+   */
+  getUserInfoToState() {
+    var newState = {...this.state};
+
+    Object.keys(this.props.user).forEach((key) => {
+      if (this.state[key] !== 'undefined') {
+        newState[key] = this.props.user[key] ? this.props.user[key] : '';
+      }
+    });
+
+    this.setState(newState);
+  }
 
   render() {
     return (
@@ -62,6 +89,9 @@ export default class UserInformationForm extends React.Component {
                 <div className="form-group">
                   <TextField id="city" fullWidth label={<IntlMessages id={'form.user.city'} />} value={this.state.city} onChange={this.handleChange('city')} />
                 </div>
+                <div className="form-group">
+                  <TextField id="email" fullWidth label={<IntlMessages id={'form.user.email'} />} value={this.state.email} onChange={this.handleChange('email')} />
+                </div>
               </div>
             </div>
           </form>
@@ -70,3 +100,11 @@ export default class UserInformationForm extends React.Component {
     );
   }
 }
+
+function mapStateToProps({ userReducer }) {
+  const { user } = userReducer;
+  return { user }
+}
+
+export default connect(mapStateToProps, null)(UserInformationForm)
+

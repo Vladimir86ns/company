@@ -46,7 +46,7 @@ class SignIn extends Component {
 	 * On User Sign Up
 	 */
 	onUserSignUp() {
-		this.props.history.push('/signup');
+		this.props.history.push('/signUp');
 	}
 
 	componentDidUpdate(prevProps) {

@@ -38,6 +38,7 @@ class SignUp extends Component {
 	render() {
 		const { name, email, password } = this.state;
 		const { loading, errorMessage } = this.props;
+
 		return (
 			<QueueAnim type="bottom" duration={2000}>
 				<div className="rct-session-wrapper">

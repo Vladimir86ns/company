@@ -780,7 +780,7 @@ module.exports = {
    "form.company.country": "Country",
    "form.company.city": "City",
    "form.company.address": "Address",
-   "form.company.phone": "Phone Number",
+   "form.company.phone_number": "Phone Number",
    "form.company.mobile_phone": "Mobile Phone",
 
    "form.user.header": "User Information",
@@ -789,7 +789,7 @@ module.exports = {
    "form.user.country": "Country",
    "form.user.city": "City",
    "form.user.address": "Address",
-   "form.user.phone": "Phone Number",
+   "form.user.phone_number": "Phone Number",
    "form.user.mobile_phone": "Mobile Phone",
    "form.user.gender": "Gender",
    "form.user.email": "Email",

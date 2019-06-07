@@ -45,7 +45,6 @@ function* loginUserOnServer({ payload }) {
             localStorage.setItem('user_id', id);
             localStorage.setItem('token', token);
             history.push('/app/dashboard/ecommerce');
-            console.log(response.data);
             yield put(handleUserSuccess(response.data));
         } else if (response.status === responseCodes.HTTP_NOT_FOUND) {
             NotificationManager.error(APP_MESSAGES.auth.credentialsError);

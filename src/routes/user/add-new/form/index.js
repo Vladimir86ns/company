@@ -1,6 +1,3 @@
-/**
- * Material Text Field
- */
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';

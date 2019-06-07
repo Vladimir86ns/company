@@ -36,7 +36,7 @@ function* getUserFromServer() {
         // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
         }
     } catch (error) {
-        console.log('PUKLOO   : ', error);
+        console.log('Get user error : ', error);
         // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
     }
 };

@@ -8,6 +8,9 @@ const APP_MESSAGES = {
     updateSuccess: 'Updated successfully!',
     auth: {
         credentialsError: 'Credentials are not correct!',
+    },
+    user: {
+        updateSuccess: 'Update success!'
     }
 }
 export default APP_MESSAGES;

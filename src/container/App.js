@@ -5,16 +5,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import { NotificationContainer } from 'react-notifications';
-
-// rct theme provider
 import RctThemeProvider from './RctThemeProvider';
-
-//Main App
 import RctDefaultLayout from './DefaultLayout';
-
-// app signin
 import AppSignIn from './SignIn';
 import AppSignUp from './SignUp';
+import { isEmpty } from 'Util/lodashFunctions';
+
+// redux action
+import {
+   getUserByIdAndAccountId
+ } from 'Actions/index';
 
 /**
  * Initial Path To Check Whether User Is Logged In Or Not
@@ -26,17 +26,28 @@ const InitialPath = ({ component: Component, ...rest }) =>
    />;
 
 class App extends Component {
+
+   componentWillMount() {
+      let { user } = this.props;
+      let accountId = localStorage.getItem('account_id');
+      let userId = localStorage.getItem('user_id');
+
+      if (isEmpty(user) && accountId && userId) {
+         this.props.getUserByIdAndAccountId();
+      }
+   }
+
    render() {
       const { location, match, user } = this.props;
-      let account = localStorage.getItem('account_id');
+      let accountId = localStorage.getItem('account_id');
+      let userId = localStorage.getItem('user_id');
 
-		// TODO make logic for logged in user
+      if (!accountId && !userId && location.pathname !== '/signIn' && location.pathname !== '/signUp') {
+         return (<Redirect to={'/signIn'} />);
+      }
+
 		if (location.pathname === '/') {
-			if (!account) {
-            return (<Redirect to={'/signIn'} />);
-			} else {
-            return <Redirect to={'/app/dashboard/ecommerce'} />;
-			}
+         return <Redirect to={'/app/dashboard/ecommerce'} />;
       }
       
       return (
@@ -55,9 +66,11 @@ class App extends Component {
 }
 
 // map state to props
-const mapStateToProps = ({ authUser }) => {
-   const { user } = authUser;
+const mapStateToProps = ({ userReducer }) => {
+   const { user } = userReducer;
    return { user };
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, {
+   getUserByIdAndAccountId
+})(App);

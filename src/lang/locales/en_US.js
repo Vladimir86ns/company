@@ -766,8 +766,8 @@ module.exports = {
    "welcome.company_and_user_information_one": "Welcome to company manager! ",
    "welcome.company_and_user_information_two": 
       `
-         You have to add information about the user,
-         and additional information about the company to be able to proceed to all
+         You have to add information about your self,
+         and additional information about your company to be able to proceed to all
          settings in the company manager.
       `,
    "sidebar.user_settings" :"User Settings",
@@ -780,7 +780,7 @@ module.exports = {
    "form.company.country": "Country",
    "form.company.city": "City",
    "form.company.address": "Address",
-   "form.company.phone": "Phone Number",
+   "form.company.phone_number": "Phone Number",
    "form.company.mobile_phone": "Mobile Phone",
 
    "form.user.header": "User Information",
@@ -789,7 +789,8 @@ module.exports = {
    "form.user.country": "Country",
    "form.user.city": "City",
    "form.user.address": "Address",
-   "form.user.phone": "Phone Number",
+   "form.user.phone_number": "Phone Number",
    "form.user.mobile_phone": "Mobile Phone",
    "form.user.gender": "Gender",
+   "form.user.email": "Email",
 }

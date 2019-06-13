@@ -23,7 +23,7 @@ export default {
             {
                "path": "/app/company-information",
                "new_item": false,
-               "menu_title": "sidebar.company_settings"
+               "menu_title": "sidebar.company_info"
             },
          ]
       }

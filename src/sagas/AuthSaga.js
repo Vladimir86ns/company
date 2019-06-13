@@ -40,10 +40,11 @@ function* loginUserOnServer({ payload }) {
     try {
         const response = yield call(loginUserRequest, email, password);
         if (response.status === responseCodes.HTTP_OK) {
-            let { id, account_id, token } = response.data;
+            let { id, account_id, token, headquarter_company_id } = response.data;
             localStorage.setItem('account_id', account_id);
             localStorage.setItem('user_id', id);
             localStorage.setItem('token', token);
+            localStorage.setItem('headquarter_company_id', headquarter_company_id);
             history.push('/app/dashboard/ecommerce');
             yield put(handleUserSuccess(response.data));
         } else if (response.status === responseCodes.HTTP_NOT_FOUND) {

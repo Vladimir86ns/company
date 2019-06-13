@@ -11,6 +11,9 @@ const APP_MESSAGES = {
     },
     user: {
         updateSuccess: 'Update success!'
+    },
+    company: {
+        createSuccess: 'Company is created successfully!'
     }
 }
 export default APP_MESSAGES;

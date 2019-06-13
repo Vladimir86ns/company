@@ -43,7 +43,7 @@ class UserInformationForm extends React.Component {
 
     componentWillUpdate(nextProps) {
         if (isEmpty(this.props.user) && !isEmpty(nextProps.user)) {
-        this.getUserInfoToState(nextProps.user);
+            this.getUserInfoToState(nextProps.user);
         }
     }
 

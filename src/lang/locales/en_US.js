@@ -773,7 +773,7 @@ module.exports = {
    "sidebar.user_settings" :"User Settings",
    "sidebar.my_profile" : "My Profile",
    "sidebar.company" :"Company",
-   "sidebar.company_settings" : "Company Settings",
+   "sidebar.company_info" : "Company Info",
 
    "form.company.header": "Company Information",
    "form.company.name": "Name",

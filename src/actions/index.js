@@ -10,3 +10,4 @@ export * from './FeedbacksActions';
 export * from './EcommerceActions';
 
 export * from './UserActions';
+export * from './CompanyActions';

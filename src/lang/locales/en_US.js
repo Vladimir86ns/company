@@ -775,6 +775,8 @@ module.exports = {
    "sidebar.company" :"Company",
    "sidebar.company_info" : "Company Info",
 
+   "form.general.error.nothing_changed": "Nothing is changed!",
+
    "form.company.header": "Company Information",
    "form.company.name": "Name",
    "form.company.country": "Country",
@@ -782,7 +784,6 @@ module.exports = {
    "form.company.address": "Address",
    "form.company.phone_number": "Phone Number",
    "form.company.mobile_phone": "Mobile Phone",
-   "form.company.nothing_changed": "Nothing is changed!",
 
    "form.user.header": "User Information",
    "form.user.first_name": "First Name",

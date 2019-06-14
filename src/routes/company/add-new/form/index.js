@@ -74,7 +74,7 @@ class CompanyInformationForm extends React.Component {
         let updatedValues = getOnlyUpdatedValues(company, this.state);
 
         if (isEmpty(updatedValues)) {
-            return NotificationManager.error(<IntlMessages id={'form.company.nothing_changed'} />);
+            return NotificationManager.error(<IntlMessages id={'form.general.error.nothing_changed'} />);
         }
 
         this.props.updateCompany(this.state);

@@ -25,12 +25,8 @@ function* getCompanyFromServer() {
         if (response.status === responseCodes.HTTP_OK) {
             yield put(handleCompanySuccess(response.data));
         }
-        // else {
-        // // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
-        // }
     } catch (error) {
         console.log('Create company error : ', error , ' ', error.response);
-        // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
     }
 };
 
@@ -51,13 +47,9 @@ function* createCompanyToServer({payload}) {
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
             NotificationManager.error(APP_MESSAGES.error.validationMessage);
             yield put(updateCreateCompanyFailure(response.data));
-        } 
-        // else {
-        // // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
-        // }
+        }
     } catch (error) {
         console.log('Create company error : ', error, ' ', error.response);
-        // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
     }
 };
 
@@ -78,13 +70,9 @@ function* updateCompanyToServer({payload}) {
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
             NotificationManager.error(APP_MESSAGES.error.validationMessage);
             yield put(updateCreateCompanyFailure(response.data));
-        } 
-        // else {
-        // // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
-        // }
+        }
     } catch (error) {
         console.log('Create company error : ', error, ' ', error.response);
-        // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
     }
 };
 

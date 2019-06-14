@@ -23,26 +23,26 @@ class DefaultLayout extends Component {
         };
 	};
 
-	render() {
-		const { match, user } = this.props;
+    render() {
+        const { match, user } = this.props;
 
-		let welcomeMessage = this.checkUserHasAllInformation(user);
+        let welcomeMessage = this.checkUserHasAllInformation(user);
 
-		return (
-			<RctAppLayout>
-				{welcomeMessage}
-				{routerService && routerService.map((route,key)=>
-					<Route key={key} path={`${match.url}/${route.path}`} component={route.component} />
-				)}
-			</RctAppLayout>
-		);
-	}
+        return (
+            <RctAppLayout>
+                {welcomeMessage}
+                {routerService && routerService.map((route,key)=>
+                    <Route key={key} path={`${match.url}/${route.path}`} component={route.component} />
+                )}
+            </RctAppLayout>
+        );
+    }
 }
 
 // map state to props
 const mapStateToProps = ({ userReducer }) => {
-	const { user } = userReducer;
-	return { user };
+    const { user } = userReducer;
+    return { user };
 };
 
 export default withRouter(connect(mapStateToProps, null)(DefaultLayout));

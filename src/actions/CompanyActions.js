@@ -1,6 +1,7 @@
 import {
     CREATE_COMPANY,
     GET_COMPANY,
+    UPDATE_COMPANY,
     UPDATE_CREATE_COMPANY_FAILURE,
     UPDATE_CREATE_COMPANY_FAILURE_RESTART,
     HANDLE_COMPANY_SUCCESS
@@ -11,6 +12,14 @@ import {
  */
 export const createCompany = (company) => ({
     type: CREATE_COMPANY,
+    payload: { company }
+});
+
+/**
+ * Update company.
+ */
+export const updateCompany = (company) => ({
+    type: UPDATE_COMPANY,
     payload: { company }
 });
 

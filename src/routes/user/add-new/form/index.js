@@ -6,6 +6,8 @@ import IntlMessages from 'Util/IntlMessages';
 import RctCollapsibleCard from 'Components/RctCollapsibleCard/RctCollapsibleCard';
 import { Button } from 'reactstrap';
 import FormErrorMessage from '../../../../components/Form/FormErrorMessage';
+import { NotificationManager } from 'react-notifications';
+import { getOnlyUpdatedValues } from '../../../../util';
 
 // redux action
 import {
@@ -51,7 +53,7 @@ class UserInformationForm extends React.Component {
      * If user object is empty, send request to get user info.
      */
     getUserInfo() {
-        let { user } = this.props
+        let { user } = this.props;
         if (isEmpty(user)) {
             this.props.getUserByIdAndAccountId();
         } else {
@@ -67,7 +69,7 @@ class UserInformationForm extends React.Component {
         var newState = {...this.state};
 
         Object.keys(user).forEach((key) => {
-            if (this.state[key] !== 'undefined') {
+            if (typeof this.state[key] !== 'undefined') {
                 newState[key] = user[key] ? user[key] : '';
             }
         });
@@ -78,7 +80,12 @@ class UserInformationForm extends React.Component {
      * Submit the form.
      */
     onSubmit() {
-        // TODO add validations, before update
+        let updatedValues = getOnlyUpdatedValues(this.props.user, this.state);
+
+        if (isEmpty(updatedValues)) {
+            return NotificationManager.error(<IntlMessages id={'form.general.error.nothing_changed'} />);
+        }
+
         this.props.updateUser(this.state);
     };
 

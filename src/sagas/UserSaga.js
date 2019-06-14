@@ -24,17 +24,12 @@ function* getUserFromServer() {
         let userId = localStorage.getItem('user_id');
         let token = localStorage.getItem('token');
         let response = yield call(getUserRequest, accountId, userId, token);
-        // TODO remove status 201 later on when is fixed from API side
+
         if (response.status === responseCodes.HTTP_OK) {
             yield put(handleUserSuccess(response.data));
-        } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
-        // yield put(responseAccountNotAcceptable(newAccount.data));
-        } else {
-        // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
         }
     } catch (error) {
         console.log('Get user error : ', error, ' ', error.response);
-        // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
     }
 };
 
@@ -48,8 +43,8 @@ function* createUserToServer({payload}) {
     try {
         let response = yield call(createUserRequest, name, email, password);
         if (response.status === responseCodes.HTTP_OK) {
-        
             let { id, account_id, token } = response.data;
+
             localStorage.setItem('account_id', account_id);
             localStorage.setItem('user_id', id);
             localStorage.setItem('token', token);
@@ -74,10 +69,10 @@ function* updateUserToServer({payload}) {
     try {
         let response = yield call(updateUserRequest, user);
         if (response.status === responseCodes.HTTP_OK) {
-            NotificationManager.success(APP_MESSAGES.user.updateSuccess);
+            NotificationManager.success(APP_MESSAGES.success.updateSuccess);
             yield put(handleUserSuccess(response.data));
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
-            NotificationManager.error(APP_MESSAGES.validationMessage);
+            NotificationManager.error(APP_MESSAGES.error.validationMessage);
             yield put(updateUserFailure(response.data));
         }
     } catch (error) {

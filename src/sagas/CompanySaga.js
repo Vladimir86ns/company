@@ -6,11 +6,13 @@ import APP_MESSAGES from '../../src/constants/AppMessages';
 import { clone } from '../../src/util/lodashFunctions';
 import {
     GET_COMPANY,
-    CREATE_COMPANY
+    CREATE_COMPANY,
+    UPDATE_COMPANY
 } from '../actions/types';
 
 import {
     handleCompanySuccess,
+    updateCreateCompanyFailure
 } from 'Actions';
 
 /**
@@ -22,16 +24,9 @@ function* getCompanyFromServer() {
 
         if (response.status === responseCodes.HTTP_OK) {
             yield put(handleCompanySuccess(response.data));
-        } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
-            NotificationManager.error(APP_MESSAGES.validationMessage);
-        // yield put(responseAccountNotAcceptable(newAccount.data));
-        } 
-        // else {
-        // // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
-        // }
+        }
     } catch (error) {
         console.log('Create company error : ', error , ' ', error.response);
-        // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
     }
 };
 
@@ -48,16 +43,36 @@ function* createCompanyToServer({payload}) {
             let { id } = response.data;
             localStorage.setItem('headquarter_company_id', id);
             NotificationManager.success(APP_MESSAGES.company.createSuccess);
+            yield put(handleCompanySuccess(response.data));
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
-            NotificationManager.error(APP_MESSAGES.validationMessage);
-        // yield put(responseAccountNotAcceptable(newAccount.data));
-        } 
-        // else {
-        // // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
-        // }
+            NotificationManager.error(APP_MESSAGES.error.validationMessage);
+            yield put(updateCreateCompanyFailure(response.data));
+        }
     } catch (error) {
         console.log('Create company error : ', error, ' ', error.response);
-        // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
+    }
+};
+
+/**
+ * Update User
+ */
+function* updateCompanyToServer({payload}) {
+    let { company } = payload;
+
+    try {
+        let response = yield call(updateCompanyRequest, company);
+
+        if (response.status === responseCodes.HTTP_OK) {
+            let { id } = response.data;
+            localStorage.setItem('headquarter_company_id', id);
+            NotificationManager.success(APP_MESSAGES.company.createSuccess);
+            yield put(handleCompanySuccess(response.data));
+        } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
+            NotificationManager.error(APP_MESSAGES.error.validationMessage);
+            yield put(updateCreateCompanyFailure(response.data));
+        }
+    } catch (error) {
+        console.log('Create company error : ', error, ' ', error.response);
     }
 };
 
@@ -70,6 +85,22 @@ const createCompanyRequest = (company) => {
     clonedCompany.account_id = localStorage.getItem('account_id');
 
     return axios.post('http://localhost:8000/api/company/create', clonedCompany , { 
+            headers: 
+                { Authorization: `Bearer ${localStorage.getItem('token')}`}
+            }
+        ).then(res => res)
+        .catch(err => err.response);
+};
+
+/**
+ * Update company.
+ */
+const updateCompanyRequest = (company) => {
+    var clonedCompany = clone(company);
+    clonedCompany.company_id = localStorage.getItem('user_id');
+    clonedCompany.account_id = localStorage.getItem('account_id');
+
+    return axios.patch('http://localhost:8000/api/company/update', clonedCompany , { 
             headers: 
                 { Authorization: `Bearer ${localStorage.getItem('token')}`}
             }
@@ -93,10 +124,17 @@ const getCompanyRequest = () => {
 };
 
 /**
- * Create User
+ * Create company
  */
 export function* createCompany() {
     yield takeEvery(CREATE_COMPANY, createCompanyToServer);
+};
+
+/**
+ * Update company.
+ */
+export function* updateCompany() {
+    yield takeEvery(UPDATE_COMPANY, updateCompanyToServer);
 };
 
 /**
@@ -112,6 +150,7 @@ export function* getCompany() {
 export default function* rootSaga() {
     yield all([
         fork(createCompany),
+        fork(updateCompany),
         fork(getCompany)
     ]);
 }

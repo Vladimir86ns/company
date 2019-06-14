@@ -12,6 +12,7 @@ import {
 
 import {
     handleCompanySuccess,
+    updateCreateCompanyFailure
 } from 'Actions';
 
 /**
@@ -23,10 +24,7 @@ function* getCompanyFromServer() {
 
         if (response.status === responseCodes.HTTP_OK) {
             yield put(handleCompanySuccess(response.data));
-        } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
-            NotificationManager.error(APP_MESSAGES.error.validationMessage);
-        // yield put(responseAccountNotAcceptable(newAccount.data));
-        } 
+        }
         // else {
         // // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
         // }
@@ -52,7 +50,7 @@ function* createCompanyToServer({payload}) {
             yield put(handleCompanySuccess(response.data));
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
             NotificationManager.error(APP_MESSAGES.error.validationMessage);
-        // yield put(responseAccountNotAcceptable(newAccount.data));
+            yield put(updateCreateCompanyFailure(response.data));
         } 
         // else {
         // // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
@@ -79,7 +77,7 @@ function* updateCompanyToServer({payload}) {
             yield put(handleCompanySuccess(response.data));
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
             NotificationManager.error(APP_MESSAGES.error.validationMessage);
-        // yield put(responseAccountNotAcceptable(newAccount.data));
+            yield put(updateCreateCompanyFailure(response.data));
         } 
         // else {
         // // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));

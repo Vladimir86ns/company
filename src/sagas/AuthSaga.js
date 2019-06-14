@@ -47,7 +47,7 @@ function* loginUserOnServer({ payload }) {
         } else if (response.status === responseCodes.HTTP_NOT_FOUND) {
             NotificationManager.error(APP_MESSAGES.auth.credentialsError);
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE) {
-            NotificationManager.error(APP_MESSAGES.validationMessage);
+            NotificationManager.error(APP_MESSAGES.error.validationMessage);
             yield put(loginUserFailure(response.data));
         }
     } catch (error) {

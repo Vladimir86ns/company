@@ -2,7 +2,6 @@
    "extends": "react-app",
    "rules": {
       "semi": ["error", "always"],
-      "extends": "eslint:recommended",
       "skipBlankLines": true,
       "max": 20
    }

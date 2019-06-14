@@ -5,10 +5,14 @@ import IntlMessages from 'Util/IntlMessages';
 import RctCollapsibleCard from 'Components/RctCollapsibleCard/RctCollapsibleCard';
 import { Button } from 'reactstrap';
 import { isEmpty } from '../../../../util/lodashFunctions';
+import { getOnlyUpdatedValues } from '../../../../util/helper';
+import { NotificationManager } from 'react-notifications';
+import APP_MESSAGES from '../../../../constants/AppMessages';
 
 // redux action
 import {
     createCompany,
+    updateCompany,
     getCompanyByIdAndAccountId
 } from 'Actions/index';
 
@@ -44,8 +48,24 @@ class CompanyInformationForm extends React.Component {
         });
     };
 
+    /**
+     * Create new company, or update.
+     * On update, update only changed values;
+     */
     handleCreateOrUpdate() {
-        this.props.createCompany(this.state);
+        let { user, company} =  this.props;
+
+        if (!user.company_settings_done) {
+            this.props.createCompany(this.state);
+        }
+
+        let updatedValues = getOnlyUpdatedValues(company, this.state);
+
+        if (isEmpty(updatedValues)) {
+            return NotificationManager.error(<IntlMessages id={'form.company.nothing_changed'} />);
+        }
+        
+        this.props.updateCompany(this.state);
     }
 
     /**
@@ -56,7 +76,7 @@ class CompanyInformationForm extends React.Component {
         var newState = {...this.state};
 
         Object.keys(company).forEach((key) => {
-            if (this.state[key] !== 'undefined') {
+            if (typeof this.state[key] !== 'undefined') {
                 newState[key] = company[key] ? company[key] : '';
             }
         });
@@ -110,5 +130,6 @@ function mapStateToProps({ companyReducer, userReducer }) {
 
 export default connect(mapStateToProps, {
     createCompany,
-    getCompanyByIdAndAccountId
-})(CompanyInformationForm)
+    getCompanyByIdAndAccountId,
+    updateCompany
+})(CompanyInformationForm);

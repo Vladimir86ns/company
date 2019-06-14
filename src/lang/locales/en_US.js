@@ -782,6 +782,7 @@ module.exports = {
    "form.company.address": "Address",
    "form.company.phone_number": "Phone Number",
    "form.company.mobile_phone": "Mobile Phone",
+   "form.company.nothing_changed": "Nothing is changed!",
 
    "form.user.header": "User Information",
    "form.user.first_name": "First Name",

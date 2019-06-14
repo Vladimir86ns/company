@@ -74,10 +74,10 @@ function* updateUserToServer({payload}) {
     try {
         let response = yield call(updateUserRequest, user);
         if (response.status === responseCodes.HTTP_OK) {
-            NotificationManager.success(APP_MESSAGES.user.updateSuccess);
+            NotificationManager.success(APP_MESSAGES.updateSuccess);
             yield put(handleUserSuccess(response.data));
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
-            NotificationManager.error(APP_MESSAGES.validationMessage);
+            NotificationManager.error(APP_MESSAGES.error.validationMessage);
             yield put(updateUserFailure(response.data));
         }
     } catch (error) {

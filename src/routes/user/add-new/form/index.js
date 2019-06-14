@@ -51,7 +51,7 @@ class UserInformationForm extends React.Component {
      * If user object is empty, send request to get user info.
      */
     getUserInfo() {
-        let { user } = this.props
+        let { user } = this.props;
         if (isEmpty(user)) {
             this.props.getUserByIdAndAccountId();
         } else {
@@ -67,7 +67,7 @@ class UserInformationForm extends React.Component {
         var newState = {...this.state};
 
         Object.keys(user).forEach((key) => {
-            if (this.state[key] !== 'undefined') {
+            if (typeof this.state[key] !== 'undefined') {
                 newState[key] = user[key] ? user[key] : '';
             }
         });

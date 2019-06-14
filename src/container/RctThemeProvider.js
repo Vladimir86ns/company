@@ -1,6 +1,3 @@
-/**
- * Rct Theme Provider
- */
 import React, { Component, Fragment } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
@@ -8,11 +5,7 @@ import { IntlProvider } from 'react-intl';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { isEmpty } from 'Util/lodashFunctions';
 import { withRouter } from "react-router-dom";
-
-// App locale
 import AppLocale from '../lang';
-
-// themes
 import primaryTheme from './themes/primaryTheme';
 import darkTheme from './themes/darkTheme';
 import secondaryTheme from './themes/secondaryTheme';

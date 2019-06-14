@@ -51,18 +51,18 @@ class RctThemeProvider extends Component {
 		if (isEmpty(this.props.user)) {
 			this.props.history.push('/signIn');
 		}
-	}
+	};
 
 	/**
 	 * If user is not available, set time out to redirect on sign in page
 	 */
 	setTimeOutIfUserIsNotAvailable() {
-		if (!isEmpty(this.props.user)) {
+		if (isEmpty(this.props.user)) {
 			setTimeout(() => {
-				this.redirectUserToSignIn()
+				this.redirectUserToSignIn();
 			}, 5000);
 		}
-	}
+	};
 
 	render() {
 		const { locale, darkMode, rtlLayout, activeTheme } = this.props.settings;
@@ -71,35 +71,35 @@ class RctThemeProvider extends Component {
 		let theme = '';
 		switch (activeTheme.id) {
 			case 1:
-				theme = primaryTheme
+				theme = primaryTheme;
 				break;
 			case 2:
-				theme = secondaryTheme
+				theme = secondaryTheme;
 				break;
 			case 3:
-				theme = warningTheme
+				theme = warningTheme;
 				break;
 			case 4:
-				theme = infoTheme
+				theme = infoTheme;
 				break;
 			case 5:
-				theme = dangerTheme
+				theme = dangerTheme;
 				break;
 			case 6:
-				theme = successTheme
+				theme = successTheme;
 				break;
 			default:
 				break;
 		}
 
 		if (darkMode) {
-			theme = darkTheme
+			theme = darkTheme;
 		}
 
 		if (rtlLayout) {
-			theme.direction = 'rtl'
+			theme.direction = 'rtl';
 		} else {
-			theme.direction = 'ltr'
+			theme.direction = 'ltr';
 		}
 
 		return (
@@ -121,7 +121,7 @@ const mapStateToProps = ({ settings, userReducer }) => {
 	const { user } = userReducer;
 
 	return { settings, user };
-}
+};
 
 
 export default withRouter(connect(mapStateToProps)(RctThemeProvider));

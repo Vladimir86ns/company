@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import RctAppLayout from 'Components/RctAppLayout';
 import routerService from "../services/_routerService";
 import IntlMessages from 'Util/IntlMessages';
+import { isEmpty } from 'Util/lodashFunctions';
 
 class DefaultLayout extends Component {
 
@@ -15,7 +16,7 @@ class DefaultLayout extends Component {
 	 * @param {object} user
 	*/
 	checkUserHasAllInformation(user) {
-		if (user && !user.company_settings_done && !user.user_settings_done) {
+		if (!isEmpty(user) && !user.company_settings_done && !user.user_settings_done) {
 			return (
 				<div className="alert alert-info">
 					<p>{ <IntlMessages id={'welcome.company_and_user_information_one'}/> }</p>

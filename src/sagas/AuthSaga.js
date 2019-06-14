@@ -1,6 +1,3 @@
-/**
- * Auth Sagas
- */
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 
 import {
@@ -54,7 +51,7 @@ function* loginUserOnServer({ payload }) {
             yield put(loginUserFailure(response.data));
         }
     } catch (error) {
-        console.log('AUTH SAGE ERROR');
+        console.log('AUTH SAGE ERROR : ', error , ' ', error.response);
     }
 }
 

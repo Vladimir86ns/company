@@ -1,6 +1,3 @@
-/**
- * Auth Sagas
- */
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 import { responseCodes } from '../constants/ResponseCode';
@@ -59,7 +56,7 @@ function* createCompanyToServer({payload}) {
         // // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
         // }
     } catch (error) {
-        console.log('Create company error : ', error.response);
+        console.log('Create company error : ', error, ' ', error.response);
         // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
     }
 };

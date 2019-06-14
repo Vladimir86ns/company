@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { isEmpty } from 'Util/lodashFunctions';
+import { withRouter } from "react-router-dom";
 
 // App locale
 import AppLocale from '../lang';
@@ -21,40 +22,47 @@ import infoTheme from './themes/infoTheme';
 import successTheme from './themes/successTheme';
 
 class RctThemeProvider extends Component {
-
-	state = {
-		isUserAvailable: false
-	};
-
-	/**
-	 * Check when user is available.
-	 * 
-	 * @param {object} nextProps 
-	 */
-	componentWillUpdate(nextProps) {
-		if (isEmpty(this.props.user) && !isEmpty(nextProps.user)) {
-			this.setState({isUserAvailable: true})
-		};
-	}
-
+	
 	/**
 	 * 
 	 * If user is un available, show loader. And check the current route.
 	 */
 	showLoaderOrGoNext() {
 		let { pathname } = window.location;
-		let { children } = this.props;
+		let { children, user } = this.props;
 
 		if (pathname === '/signIn' || pathname === '/signUp') {
 			return children;
 		}
 
-		if (this.state.isUserAvailable) {
+		this.setTimeOutIfUserIsNotAvailable();
+
+		if (!isEmpty(user)) {
 			return children;
 		} else {
 			return (<LinearProgress />);
 		}
 	};
+
+	/**
+	 * If user is not available, redirect to sign in page.
+	 */
+	redirectUserToSignIn() {
+		if (isEmpty(this.props.user)) {
+			this.props.history.push('/signIn');
+		}
+	}
+
+	/**
+	 * If user is not available, set time out to redirect on sign in page
+	 */
+	setTimeOutIfUserIsNotAvailable() {
+		if (!isEmpty(this.props.user)) {
+			setTimeout(() => {
+				this.redirectUserToSignIn()
+			}, 5000);
+		}
+	}
 
 	render() {
 		const { locale, darkMode, rtlLayout, activeTheme } = this.props.settings;
@@ -116,4 +124,4 @@ const mapStateToProps = ({ settings, userReducer }) => {
 }
 
 
-export default connect(mapStateToProps)(RctThemeProvider);
+export default withRouter(connect(mapStateToProps)(RctThemeProvider));

@@ -1,6 +1,3 @@
-/**
- * Auth Sagas
- */
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 import { responseCodes } from '../constants/ResponseCode';
@@ -36,7 +33,7 @@ function* getUserFromServer() {
         // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
         }
     } catch (error) {
-        console.log('Get user error : ', error);
+        console.log('Get user error : ', error, ' ', error.response);
         // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
     }
 };
@@ -64,7 +61,7 @@ function* createUserToServer({payload}) {
         // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
         }
     } catch (error) {
-        console.log('Create user error : ', error);
+        console.log('Create user error : ', error, ' ', error.response);
         // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
     }
 };
@@ -84,7 +81,7 @@ function* updateUserToServer({payload}) {
             yield put(updateUserFailure(response.data));
         }
     } catch (error) {
-        console.log('Update user error : ', error);
+        console.log('Update user error : ', error, ' ', error.response);
     }
 };
 

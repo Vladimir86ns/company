@@ -93,7 +93,7 @@ class MainApp extends Component {
             >
                 <div className="rct-page-content">
                     {children}
-                    <Footer />
+                    {/* <Footer /> */}
                 </div>
             </Scrollbars>
         );

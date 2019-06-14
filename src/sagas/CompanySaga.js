@@ -65,7 +65,7 @@ function* updateCompanyToServer({payload}) {
         if (response.status === responseCodes.HTTP_OK) {
             let { id } = response.data;
             localStorage.setItem('headquarter_company_id', id);
-            NotificationManager.success(APP_MESSAGES.company.createSuccess);
+            NotificationManager.success(APP_MESSAGES.success.updateSuccess);
             yield put(handleCompanySuccess(response.data));
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
             NotificationManager.error(APP_MESSAGES.error.validationMessage);

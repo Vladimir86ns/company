@@ -19,5 +19,6 @@ const APP_MESSAGES = {
     company: {
         createSuccess: 'Company is created successfully!'
     }
-}
+};
+
 export default APP_MESSAGES;

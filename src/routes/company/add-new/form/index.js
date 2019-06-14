@@ -77,7 +77,7 @@ class CompanyInformationForm extends React.Component {
             return NotificationManager.error(<IntlMessages id={'form.general.error.nothing_changed'} />);
         }
 
-        this.props.updateCompany(this.state);
+        this.props.updateCompany(updatedValues);
     }
 
     /**

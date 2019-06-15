@@ -13,6 +13,7 @@ import screenfull from 'screenfull';
 import Tooltip from '@material-ui/core/Tooltip';
 import MenuIcon from '@material-ui/icons/Menu';
 import { withRouter } from 'react-router-dom';
+import LanguageProvider from './LanguageProvider';
 import $ from 'jquery';
 
 // actions
@@ -109,22 +110,13 @@ class Header extends Component {
 										</Tooltip>
 									</li>
 								}
-								{/* NOTICE for now is not need to show this search */}
-								{/* <li className="list-inline-item search-icon d-inline-block">
-									<SearchForm />
-									<IconButton mini="true" className="search-icon-btn" onClick={() => this.openMobileSearchForm()}>
-										<i className="zmdi zmdi-search"></i>
-									</IconButton>
-									<MobileSearchForm
-										isOpen={isMobileSearchFormVisible}
-										onClose={() => this.setState({ isMobileSearchFormVisible: false })}
-									/>
-								</li> */}
-							</ul>
+							</ul>										
 						}
 					</div>
 					<ul className="navbar-right list-inline mb-0">
 						<li className="list-inline-item">
+							{/* TODO un comment languages later on */}
+							{/* <LanguageProvider /> */}
 							<Tooltip title="Full Screen" placement="bottom">
 								<IconButton aria-label="settings" onClick={() => this.toggleScreenFull()}>
 									<i className="zmdi zmdi-crop-free"></i>

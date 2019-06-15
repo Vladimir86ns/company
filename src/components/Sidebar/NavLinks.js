@@ -3,7 +3,7 @@ export default {
    category1: [
       {
          "menu_title": "sidebar.user_settings",
-         "menu_icon": "zmdi zmdi-view-dashboard",
+         "menu_icon": "zmdi zmdi-accounts",
          "new_item": false,
          "type_multi": null,
          "child_routes": [
@@ -16,7 +16,7 @@ export default {
       },
       {
          "menu_title": "sidebar.company",
-         "menu_icon": "zmdi zmdi-view-dashboard",
+         "menu_icon": "zmdi zmdi-store",
          "new_item": false,
          "type_multi": null,
          "child_routes": [

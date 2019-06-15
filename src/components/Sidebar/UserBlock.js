@@ -109,27 +109,11 @@ class UserBlock extends Component {
 								<li>
 									<Link to={{
 										pathname: '/app/users/user-profile-1',
-										state: { activeTab: 0 }
-									}}>
-										<i className="zmdi zmdi-account text-primary mr-3"></i>
-										<IntlMessages id="widgets.profile" />
-									</Link>
-								</li>
-								<li>
-									<Link to={{
-										pathname: '/app/users/user-profile-1',
 										state: { activeTab: 2 }
 									}}>
 										<i className="zmdi zmdi-comment-text-alt text-success mr-3"></i>
 										<IntlMessages id="widgets.messages" />
 										<Badge color="danger" className="pull-right">3</Badge>
-									</Link>
-								</li>
-								<li>
-									<Link to="/app/pages/feedback">
-										<i className="zmdi zmdi-edit text-warning mr-3"></i>
-										<IntlMessages id="sidebar.feedback" />
-										<Badge color="info" className="pull-right">1</Badge>
 									</Link>
 								</li>
 								<li className="border-top">

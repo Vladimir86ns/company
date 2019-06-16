@@ -35,7 +35,7 @@ function* getUserFromServer() {
 /**
  * Update user.
  * 
- * @param {object} payload 
+ * @param {object} action 
  */
 function* updateUserToServer({payload}) {
     let { user } = payload;

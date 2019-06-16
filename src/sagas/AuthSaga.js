@@ -16,7 +16,7 @@ import {
 /**
  * Login to server.
  * 
- * @param {object} param0 
+ * @param {object} payload 
  */
 function* loginUserOnServer({ payload }) {
     const { email, password } = payload.user;

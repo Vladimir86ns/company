@@ -33,7 +33,7 @@ function* getCompanyFromServer() {
 /**
  * Create company.
  * 
- * @param {object} param0 
+ * @param {object} action 
  */
 function* createCompanyToServer({payload}) {
     let { company } = payload;
@@ -58,7 +58,7 @@ function* createCompanyToServer({payload}) {
 /**
  * Update company.
  * 
- * @param {object} param0 
+ * @param {object} action 
  */
 function* updateCompanyToServer({payload}) {
     let { company } = payload;

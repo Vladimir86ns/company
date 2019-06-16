@@ -10,6 +10,9 @@ import QueueAnim from 'rc-queue-anim';
 import { SessionSlider } from 'Components/Widgets';
 import FormErrorMessage from '../components/Form/FormErrorMessage';
 import AppConfig from 'Constants/AppConfig';
+import SimpleReactValidator from 'simple-react-validator';
+import { NotificationManager } from 'react-notifications';
+import APP_MESSAGES from '../constants/AppMessages';
 
 // redux action
 import {
@@ -20,6 +23,11 @@ import {
 const RESET_TIME_VALIDATION_MESSAGE = 5000;
 
 class SignUp extends Component {
+
+	constructor() {
+		super();
+		this.validator = new SimpleReactValidator();
+	}
 
 	state = {
 		name: '',
@@ -42,23 +50,43 @@ class SignUp extends Component {
 	 * On User SignUp
 	 */
 	onUserSignUp() {
-		this.props.createAccountAndUser(this.state, this.props.history);
+        if (this.validator.allValid()) {
+            this.props.createAccountAndUser(this.state, this.props.history);
+        } else {
+            NotificationManager.error(APP_MESSAGES.error.validationMessage);
+            this.validator.showMessages();
+            this.forceUpdate();
+        }
 	};
 
 	/**
      * Set time to remove validation messages.
+     * 
+     * @param {number} field 
     */
     setTimeToRemoveErrorMessage(time) {
-		setTimeout(() => {
-			this.props.generalFormFailureRestart();
-		}, time);
-	};
+        setTimeout(() => {
+            this.props.generalFormFailureRestart();
+        }, time);
+    };
+
+    /**
+     * Get validation message.
+     * 
+c
+     * @param {string} validationRule 
+     */
+    getValidationMessage(field, validationRule) {
+        return (
+            <div style={{color: 'red', fontSize: '15px'}}>
+                {this.validator.message(field, this.state[field], validationRule)}
+            </div>
+        );
+    };
 
 	render() {
 		const { name, email, password } = this.state;
 		const { loading, errorMessages } = this.props;
-
-		console.log(this.props);
 
 		return (
 			<QueueAnim type="bottom" duration={2000}>
@@ -106,12 +134,11 @@ class SignUp extends Component {
 													name="name"
 													className="has-input input-lg"
 													placeholder="Enter Name Of Account"
-													onChange={(e) => this.setState({ name: e.target.value })}
+                                                    onChange={(e) => this.setState({ name: e.target.value })}
 												/>
 												<span className="has-icon"><i className="ti-user"></i></span>
-												<FormErrorMessage
-													 message={errorMessages.name}
-												/>
+												<FormErrorMessage message={errorMessages.name} />
+                                                {this.getValidationMessage('name', 'required|min:1|max:100')}
 											</FormGroup>
 											<FormGroup className="has-wrapper">
 												<Input
@@ -123,9 +150,8 @@ class SignUp extends Component {
 													onChange={(e) => this.setState({ email: e.target.value })}
 												/>
 												<span className="has-icon"><i className="ti-email"></i></span>
-												<FormErrorMessage
-													 message={errorMessages.email}
-												/>
+												<FormErrorMessage message={errorMessages.email}	/>
+												{this.getValidationMessage('email', 'required|email')}
 											</FormGroup>
 											<FormGroup className="has-wrapper">
 												<Input
@@ -137,9 +163,8 @@ class SignUp extends Component {
 													onChange={(e) => this.setState({ password: e.target.value })}
 												/>
 												<span className="has-icon"><i className="ti-lock"></i></span>
-												<FormErrorMessage
-													 message={errorMessages.password}
-												/>
+												<FormErrorMessage message={errorMessages.password} />
+                                                {this.getValidationMessage('password', 'required|min:6|max:30')}
 											</FormGroup>
 											<FormGroup className="mb-15">
 												<Button

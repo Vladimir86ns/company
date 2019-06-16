@@ -794,5 +794,5 @@ module.exports = {
    "form.user.phone_number": "Phone Number",
    "form.user.mobile_phone": "Mobile Phone",
    "form.user.gender": "Gender",
-   "form.user.email": "Email",
-}
+   "form.user.email": "Email"
+};

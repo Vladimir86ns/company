@@ -13,6 +13,9 @@ const APP_MESSAGES = {
     auth: {
         credentialsError: 'Credentials are not correct!',
     },
+    account: {
+        createSuccess: 'Account has been created! Welcome to the Company Online Manager',
+    },
     user: {
         //
     },

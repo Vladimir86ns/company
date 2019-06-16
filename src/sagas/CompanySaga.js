@@ -16,7 +16,7 @@ import {
 } from 'Actions';
 
 /**
- * Get Company
+ * Get company.
  */
 function* getCompanyFromServer() {
     try {
@@ -31,7 +31,9 @@ function* getCompanyFromServer() {
 };
 
 /**
- * Create User
+ * Create company.
+ * 
+ * @param {object} param0 
  */
 function* createCompanyToServer({payload}) {
     let { company } = payload;
@@ -54,7 +56,9 @@ function* createCompanyToServer({payload}) {
 };
 
 /**
- * Update User
+ * Update company.
+ * 
+ * @param {object} param0 
  */
 function* updateCompanyToServer({payload}) {
     let { company } = payload;
@@ -77,7 +81,9 @@ function* updateCompanyToServer({payload}) {
 };
 
 /**
- * Create company.
+ * Create company made request.
+ * 
+ * @param {object} company 
  */
 const createCompanyRequest = (company) => {
     var clonedCompany = clone(company);
@@ -90,7 +96,9 @@ const createCompanyRequest = (company) => {
 };
 
 /**
- * Update company.
+ * Update company made request.
+ * 
+ * @param {object} company 
  */
 const updateCompanyRequest = (company) => {
     var clonedCompany = clone(company);

@@ -1,4 +1,8 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
+import laravelApi from '../../src/api/index';
+import { responseCodes } from '../constants/ResponseCode';
+import { NotificationManager } from 'react-notifications';
+import APP_MESSAGES from '../../src/constants/AppMessages';
 
 import {
     LOGIN_USER
@@ -9,27 +13,10 @@ import {
     handleUserSuccess
 } from 'Actions';
 
-import laravelApi from '../../src/api/index';
-import { responseCodes } from '../constants/ResponseCode';
-import { NotificationManager } from 'react-notifications';
-import APP_MESSAGES from '../../src/constants/AppMessages';
-
 /**
- * Sig In User With Email and Password Request
- */
-const loginUserRequest = async (email, password) => {
-    return laravelApi.get('/user/login', {
-        params: {
-            email,
-            password
-        }
-    })
-    .then(res => res)
-    .catch(err => err.response);
-};
-
-/**
- * Sign In User With Email & Password
+ * Login to server.
+ * 
+ * @param {object} param0 
  */
 function* loginUserOnServer({ payload }) {
     const { email, password } = payload.user;
@@ -56,7 +43,24 @@ function* loginUserOnServer({ payload }) {
 }
 
 /**
- * Login User
+ * Login to user request.
+ * 
+ * @param {string} email 
+ * @param {string} password 
+ */
+const loginUserRequest = async (email, password) => {
+    return laravelApi.get('/account/login', {
+        params: {
+            email,
+            password
+        }
+    })
+    .then(res => res)
+    .catch(err => err.response);
+};
+
+/**
+ * Login user.
  */
 export function* loginUser() {
     yield takeEvery(LOGIN_USER, loginUserOnServer);

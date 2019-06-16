@@ -30,8 +30,8 @@ import {
 class SignIn extends Component {
 
 	state = {
-		email: 'milos@gmail.com',
-		password: 'test123'
+		email: '',
+		password: ''
 	}
 
 	/**
@@ -163,7 +163,7 @@ class SignIn extends Component {
 const mapStateToProps = ({ authUser }) => {
 	const { errorMessages } = authUser;
 	return { errorMessages };
-}
+};
 
 export default connect(mapStateToProps, {
 	loginUser,

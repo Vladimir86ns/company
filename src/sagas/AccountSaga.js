@@ -29,7 +29,6 @@ function* createAccountUserToServer({payload}) {
             localStorage.setItem('account_id', account_id);
             localStorage.setItem('user_id', id);
             localStorage.setItem('token', token);
-            NotificationManager.success(APP_MESSAGES.account.createSuccess);
             history.push('/app/dashboard/ecommerce');
             yield put(handleUserSuccess(response.data));
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {

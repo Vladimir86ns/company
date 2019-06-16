@@ -1,11 +1,10 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import axios from 'axios';
+import laravelApi from '../../src/api/index';
 import { responseCodes } from '../constants/ResponseCode';
 import { NotificationManager } from 'react-notifications';
 import APP_MESSAGES from '../../src/constants/AppMessages';
 import { clone } from '../../src/util/lodashFunctions';
 import {
-    CREATE_USER,
     GET_USER,
     UPDATE_USER
 } from '../actions/types';
@@ -34,35 +33,9 @@ function* getUserFromServer() {
 };
 
 /**
- * Create User
- */
-function* createUserToServer({payload}) {
-    let { name, email, password } = payload.user;
-    let { history } = payload;
-
-    try {
-        let response = yield call(createUserRequest, name, email, password);
-        if (response.status === responseCodes.HTTP_OK) {
-            let { id, account_id, token } = response.data;
-
-            localStorage.setItem('account_id', account_id);
-            localStorage.setItem('user_id', id);
-            localStorage.setItem('token', token);
-            history.push('/app/dashboard/ecommerce');
-            yield put(handleUserSuccess(response.data));
-        } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
-        // yield put(responseAccountNotAcceptable(newAccount.data));
-        } else {
-        // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
-        }
-    } catch (error) {
-        console.log('Create user error : ', error, ' ', error.response);
-        // yield put(responseAccountFailure(APP_MESSAGES.requestFailed));
-    }
-};
-
-/**
- * Update User
+ * Update user.
+ * 
+ * @param {object} action 
  */
 function* updateUserToServer({payload}) {
     let { user } = payload;
@@ -81,39 +54,28 @@ function* updateUserToServer({payload}) {
 };
 
 /**
- * Get User
+ * Get user from server.
+ * 
+ * @param {string} id 
+ * @param {string} accountId 
  */
-const getUserRequest = async (id, accountId, token) => {
-    return axios.get(`http://localhost:8000/api/user/${id}/${accountId}`,
-        { headers: 
-            { Authorization: `Bearer ${token}`}
-        });
-};
-
-/**
- * Create User
- */
-const createUserRequest = async (name, email, password) => {
-    return axios.post('http://localhost:8000/api/user/create', {
-            name,
-            email,
-            password
-        })
+const getUserRequest = (id, accountId) => {
+    return laravelApi.get(`/user/${id}/${accountId}`)
         .then(res => res)
-        .catch(err => err);
+        .catch(err => err.response);;
 };
 
 /**
- * Update User
+ * Update user made request.
+ * 
+ * @param {object} user 
  */
-const updateUserRequest = async (user) => {
+const updateUserRequest = (user) => {
     var clonedUser = clone(user);
     clonedUser.user_id = localStorage.getItem('user_id');
     clonedUser.account_id = localStorage.getItem('account_id');
 
-    return axios.post('http://localhost:8000/api/user/update', clonedUser,
-            { headers: {'Authorization': "bearer " + localStorage.getItem('token')} }
-        )
+    return laravelApi.post('/user/update', clonedUser)
         .then(res => res)
         .catch(err => err.response);
 };
@@ -123,13 +85,6 @@ const updateUserRequest = async (user) => {
  */
 export function* getUser() {
     yield takeEvery(GET_USER, getUserFromServer);
-};
-
-/**
- * Create User
- */
-export function* createUser() {
-    yield takeEvery(CREATE_USER, createUserToServer);
 };
 
 /**
@@ -144,7 +99,6 @@ export function* updateUser() {
  */
 export default function* rootSaga() {
     yield all([
-        fork(createUser),
         fork(getUser),
         fork(updateUser)
     ]);

@@ -7,37 +7,58 @@ import { Link } from 'react-router-dom';
 import { Form, FormGroup, Input } from 'reactstrap';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import QueueAnim from 'rc-queue-anim';
-
-// components
 import { SessionSlider } from 'Components/Widgets';
 import FormErrorMessage from '../components/Form/FormErrorMessage';
-
-// app config
 import AppConfig from 'Constants/AppConfig';
 
 // redux action
 import {
-	createUser
+	createAccountAndUser,
+	generalFormFailureRestart
 } from '../actions/index';
+
+const RESET_TIME_VALIDATION_MESSAGE = 5000;
 
 class SignUp extends Component {
 
 	state = {
-		name: 'Milos Jandric',
-		email: 'milos@gmail.com',
-		password: 'test123'
-	}
+		name: '',
+		email: '',
+		password: ''
+	};
+
+	/**
+     * Check if has error message, and reset.
+     * 
+     * @param {object} prevProps 
+     */
+    componentDidUpdate(prevProps) {
+        if (prevProps.errorMessages !== this.props.errorMessages) {
+            this.setTimeToRemoveErrorMessage(RESET_TIME_VALIDATION_MESSAGE);
+        }
+    };
 
 	/**
 	 * On User SignUp
 	 */
 	onUserSignUp() {
-		this.props.createUser(this.state, this.props.history)
-	}
+		this.props.createAccountAndUser(this.state, this.props.history);
+	};
+
+	/**
+     * Set time to remove validation messages.
+    */
+    setTimeToRemoveErrorMessage(time) {
+		setTimeout(() => {
+			this.props.generalFormFailureRestart();
+		}, time);
+	};
 
 	render() {
 		const { name, email, password } = this.state;
-		const { loading, errorMessage } = this.props;
+		const { loading, errorMessages } = this.props;
+
+		console.log(this.props);
 
 		return (
 			<QueueAnim type="bottom" duration={2000}>
@@ -89,7 +110,7 @@ class SignUp extends Component {
 												/>
 												<span className="has-icon"><i className="ti-user"></i></span>
 												<FormErrorMessage
-													 message={errorMessage}
+													 message={errorMessages.name}
 												/>
 											</FormGroup>
 											<FormGroup className="has-wrapper">
@@ -103,7 +124,7 @@ class SignUp extends Component {
 												/>
 												<span className="has-icon"><i className="ti-email"></i></span>
 												<FormErrorMessage
-													 message={errorMessage}
+													 message={errorMessages.email}
 												/>
 											</FormGroup>
 											<FormGroup className="has-wrapper">
@@ -117,7 +138,7 @@ class SignUp extends Component {
 												/>
 												<span className="has-icon"><i className="ti-lock"></i></span>
 												<FormErrorMessage
-													 message={errorMessage}
+													 message={errorMessages.password}
 												/>
 											</FormGroup>
 											<FormGroup className="mb-15">
@@ -145,11 +166,12 @@ class SignUp extends Component {
 	}
 }
 
-// map state to props
-const mapStateToProps = () => {
-	//
+const mapStateToProps = ({ generalReducer }) => {
+	let { errorMessages } = generalReducer;
+	return { errorMessages };
 };
 
 export default connect(mapStateToProps, {
-	createUser
+	createAccountAndUser,
+	generalFormFailureRestart
 })(SignUp);

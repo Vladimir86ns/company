@@ -1,4 +1,5 @@
-import IntlMessages from './IntlMessages'; 
+import IntlMessages from './IntlMessages';
+import { isEmpty } from './lodashFunctions';
  
 /**
  * Return error message, or required. 
@@ -32,6 +33,10 @@ export function getOnlyUpdatedValues(origin, comparing) {
     var updatedValues = {};
 
      Object.keys(comparing).forEach((key) => {
+        if (origin[key] === null) {
+            updatedValues[key] = trim(comparing[key]);
+            return;
+        } 
         if (trim(comparing[key]) !== trim(origin[key])) {
             updatedValues[key] = trim(comparing[key]);
         }

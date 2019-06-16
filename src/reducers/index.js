@@ -13,6 +13,8 @@ import ecommerceReducer from './EcommerceReducer';
 
 import userReducer from './UserReducer';
 import companyReducer from './CompanyReducer';
+import accountReducer from './AccountReducer';
+import generalReducer from './GeneralReducer';
 
 const reducers = combineReducers({
    settings,
@@ -25,7 +27,9 @@ const reducers = combineReducers({
    ecommerce: ecommerceReducer,
    
    userReducer,
-   companyReducer
+   companyReducer,
+   accountReducer,
+   generalReducer
 });
 
 export default reducers;

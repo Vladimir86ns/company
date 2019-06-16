@@ -1,5 +1,5 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import axios from 'axios';
+import laravelApi from '../../src/api/index';
 import { responseCodes } from '../constants/ResponseCode';
 import { NotificationManager } from 'react-notifications';
 import APP_MESSAGES from '../../src/constants/AppMessages';
@@ -84,11 +84,8 @@ const createCompanyRequest = (company) => {
     clonedCompany.user_id = localStorage.getItem('user_id');
     clonedCompany.account_id = localStorage.getItem('account_id');
 
-    return axios.post('http://localhost:8000/api/company/create', clonedCompany , { 
-            headers: 
-                { Authorization: `Bearer ${localStorage.getItem('token')}`}
-            }
-        ).then(res => res)
+    return laravelApi.post('/company/create', clonedCompany)
+        .then(res => res)
         .catch(err => err.response);
 };
 
@@ -97,14 +94,11 @@ const createCompanyRequest = (company) => {
  */
 const updateCompanyRequest = (company) => {
     var clonedCompany = clone(company);
-    clonedCompany.company_id = localStorage.getItem('user_id');
+    clonedCompany.company_id = localStorage.getItem('headquarter_company_id');
     clonedCompany.account_id = localStorage.getItem('account_id');
 
-    return axios.patch('http://localhost:8000/api/company/update', clonedCompany , { 
-            headers: 
-                { Authorization: `Bearer ${localStorage.getItem('token')}`}
-            }
-        ).then(res => res)
+    return laravelApi.patch('/company/update', clonedCompany)
+        .then(res => res)
         .catch(err => err.response);
 };
 
@@ -115,11 +109,8 @@ const getCompanyRequest = () => {
     let companyId = localStorage.getItem('headquarter_company_id');
     let accountId = localStorage.getItem('account_id');
 
-    return axios.get(`http://localhost:8000/api/company/${companyId}/${accountId}`, { 
-            headers: 
-                { Authorization: `Bearer ${localStorage.getItem('token')}`}
-            }
-        ).then(res => res)
+    return laravelApi.get(`/company/${companyId}/${accountId}`)
+        .then(res => res)
         .catch(err => err.response);
 };
 

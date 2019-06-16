@@ -80,6 +80,8 @@ class UserInformationForm extends React.Component {
      * Submit the form.
      */
     onSubmit() {
+        console.log(this.state);
+        console.log(this.props.user);
         let updatedValues = getOnlyUpdatedValues(this.props.user, this.state);
 
         if (isEmpty(updatedValues)) {

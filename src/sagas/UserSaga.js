@@ -1,5 +1,5 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import axios from 'axios';
+import laravelApi from '../../src/api/index';
 import { responseCodes } from '../constants/ResponseCode';
 import { NotificationManager } from 'react-notifications';
 import APP_MESSAGES from '../../src/constants/AppMessages';
@@ -84,17 +84,14 @@ function* updateUserToServer({payload}) {
  * Get User
  */
 const getUserRequest = async (id, accountId, token) => {
-    return axios.get(`http://localhost:8000/api/user/${id}/${accountId}`,
-        { headers: 
-            { Authorization: `Bearer ${token}`}
-        });
+    return laravelApi.get(`http://localhost:8000/api/user/${id}/${accountId}`);
 };
 
 /**
  * Create User
  */
 const createUserRequest = async (name, email, password) => {
-    return axios.post('http://localhost:8000/api/user/create', {
+    return laravelApi.post('/user/create', {
             name,
             email,
             password
@@ -111,9 +108,7 @@ const updateUserRequest = async (user) => {
     clonedUser.user_id = localStorage.getItem('user_id');
     clonedUser.account_id = localStorage.getItem('account_id');
 
-    return axios.post('http://localhost:8000/api/user/update', clonedUser,
-            { headers: {'Authorization': "bearer " + localStorage.getItem('token')} }
-        )
+    return laravelApi.post('/user/update', clonedUser)
         .then(res => res)
         .catch(err => err.response);
 };

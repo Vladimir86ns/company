@@ -17,6 +17,7 @@ import {
 } from 'Actions/index';
 
 const RESET_TIME_VALIDATION_MESSAGE = 5000;
+
 class UserInformationForm extends React.Component {
 
     state = {

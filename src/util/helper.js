@@ -1,6 +1,8 @@
+import React from 'react';
 import IntlMessages from './IntlMessages';
-import { isEmpty } from './lodashFunctions';
- 
+import { validationLanguages } from '../constants/ValidationLanguages';
+import SimpleReactValidator from 'simple-react-validator';
+
 /**
  * Return error message, or required. 
  * 
@@ -46,11 +48,23 @@ export function getOnlyUpdatedValues(origin, comparing) {
 };
 
 /**
+ * Get locale validation message.
+ * 
+ * @param {string} localeKey
+ */
+export function setUpValidationMessageLanguage(localeKey) {
+    if (typeof validationLanguages[localeKey] !== 'undefined') {
+        SimpleReactValidator.addLocale(localeKey, validationLanguages[localeKey]);
+        return new SimpleReactValidator({ locale: localeKey });
+    }
+    return new SimpleReactValidator();
+};
+
+/**
  * Trim the value.
  * 
- * @param {string} val;
+ * @param {string} val
  */
 function trim (val) {
     return val.trim();
 };
-

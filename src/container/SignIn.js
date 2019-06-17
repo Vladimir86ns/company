@@ -1,7 +1,3 @@
-/**
- * Signin Firebase
- */
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
@@ -12,11 +8,8 @@ import { Form, FormGroup, Input } from 'reactstrap';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import QueueAnim from 'rc-queue-anim';
 import FormErrorMessage from '../components/Form/FormErrorMessage';
-
-// components
-import {
-	SessionSlider
-} from 'Components/Widgets';
+import { setUpValidationMessageLanguage } from '../util';
+import { SessionSlider } from 'Components/Widgets';
 
 // app config
 import AppConfig from 'Constants/AppConfig';
@@ -35,11 +28,35 @@ class SignIn extends Component {
 	}
 
 	/**
+	 * Set up validation local message.
+	 */
+	componentWillMount() {
+		if (this.props.locale) {
+			this.validator = setUpValidationMessageLanguage(this.props.locale.locale);
+		}
+	}
+
+	/**
+	 * Set time to remove error messages.
+	 * 
+	 * @param {object} prevProps 
+	 */
+	componentDidUpdate(prevProps) {
+		if (prevProps.errorMessages !== this.props.errorMessages) {
+			this.setTimeToRemoveErrorMessage(5000);
+		}
+	}
+	  
+	/**
 	 * On User Login
 	 */
 	onUserLogin() {
-		// TODO add validation here to check is correct.
-		this.props.loginUser(this.state, this.props.history);
+		if (this.validator.allValid()) {
+			this.props.loginUser(this.state, this.props.history);
+        } else {
+            this.validator.showMessages();
+            this.forceUpdate();
+        }
 	}
 
 	/**
@@ -49,20 +66,30 @@ class SignIn extends Component {
 		this.props.history.push('/signUp');
 	}
 
-	componentDidUpdate(prevProps) {
-		if (prevProps.errorMessages !== this.props.errorMessages) {
-			this.setTimeToRemoveErrorMessage(5000);
-		}
-	  }
-
 	/**
 	 * Set time to remove validation messages.
+	 * 
+	 * @param {number} time 
 	 */
 	setTimeToRemoveErrorMessage(time) {
 		setTimeout(() => {
 			this.props.loginUserFailureRestart();
 		}, time);
-	}
+	};
+
+	/**
+     * Get validation message.
+     * 
+     * @param {string} field 
+     * @param {string} validationRule 
+     */
+    getValidationMessage(field, validationRule) {
+        return (
+            <div style={{color: 'red', fontSize: '15px'}}>
+                {this.validator.message(field, this.state[field], validationRule)}
+            </div>
+        );
+	};
 
 	render() {
 		const { email, password } = this.state;
@@ -112,9 +139,8 @@ class SignIn extends Component {
 													onChange={(event) => this.setState({ email: event.target.value })}
 												/>
 												<span className="has-icon"><i className="ti-email"></i></span>
-												<FormErrorMessage
-													 message={errorMessages.email}
-												/>
+												<FormErrorMessage message={errorMessages.email} />
+												{this.getValidationMessage('email', 'required|email')}
 											</FormGroup>
 											<FormGroup className="has-wrapper">
 												<Input
@@ -127,9 +153,8 @@ class SignIn extends Component {
 													onChange={(event) => this.setState({ password: event.target.value })}
 												/>
 												<span className="has-icon"><i className="ti-lock"></i></span>
-												<FormErrorMessage
-													 message={errorMessages.password}
-												/>
+												<FormErrorMessage message={errorMessages.password} />
+												{this.getValidationMessage('password', 'required|min:6|max:30')}
 											</FormGroup>
 											<FormGroup className="mb-15">
 												<Button
@@ -160,9 +185,10 @@ class SignIn extends Component {
 }
 
 // map state to props
-const mapStateToProps = ({ authUser }) => {
+const mapStateToProps = ({ authUser, settings }) => {
 	const { errorMessages } = authUser;
-	return { errorMessages };
+	let { locale } = settings;
+	return { errorMessages, locale };
 };
 
 export default connect(mapStateToProps, {

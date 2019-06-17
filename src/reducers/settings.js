@@ -1,8 +1,3 @@
-/**
- * App Settings Reducers
- */
-import update from 'react-addons-update';
-
 import {
 	COLLAPSED_SIDEBAR,
 	DARK_MODE,
@@ -235,9 +230,9 @@ export default (state = INIT_STATE, action) => {
 			let layoutsBg = [];
 			for (const layoutBg of state.agencyLayoutBgColors) {
 				if (layoutBg.id === action.payload.id) {
-					layoutBg.active = true
+					layoutBg.active = true;
 				} else {
-					layoutBg.active = false
+					layoutBg.active = false;
 				}
 				layoutsBg.push(layoutBg);
 			}

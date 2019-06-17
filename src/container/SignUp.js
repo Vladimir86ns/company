@@ -10,9 +10,9 @@ import QueueAnim from 'rc-queue-anim';
 import { SessionSlider } from 'Components/Widgets';
 import FormErrorMessage from '../components/Form/FormErrorMessage';
 import AppConfig from 'Constants/AppConfig';
-import SimpleReactValidator from 'simple-react-validator';
 import { NotificationManager } from 'react-notifications';
 import APP_MESSAGES from '../constants/AppMessages';
+import { setUpValidationMessageLanguage } from '../util';
 
 // redux action
 import {
@@ -24,16 +24,20 @@ const RESET_TIME_VALIDATION_MESSAGE = 5000;
 
 class SignUp extends Component {
 
-	constructor() {
-		super();
-		this.validator = new SimpleReactValidator();
-	}
-
 	state = {
 		name: '',
 		email: '',
 		password: ''
 	};
+
+	/**
+	 * Set up validation local message.
+	 */
+	componentWillMount() {
+		if (this.props.locale) {
+			this.validator = setUpValidationMessageLanguage(this.props.locale.locale);
+		}
+	}
 
 	/**
      * Check if has error message, and reset.
@@ -62,7 +66,7 @@ class SignUp extends Component {
 	/**
      * Set time to remove validation messages.
      * 
-     * @param {number} field 
+     * @param {number} time 
     */
     setTimeToRemoveErrorMessage(time) {
         setTimeout(() => {
@@ -73,7 +77,7 @@ class SignUp extends Component {
     /**
      * Get validation message.
      * 
-c
+     * @param {string} field 
      * @param {string} validationRule 
      */
     getValidationMessage(field, validationRule) {
@@ -82,7 +86,7 @@ c
                 {this.validator.message(field, this.state[field], validationRule)}
             </div>
         );
-    };
+	};
 
 	render() {
 		const { name, email, password } = this.state;
@@ -191,9 +195,10 @@ c
 	}
 }
 
-const mapStateToProps = ({ generalReducer }) => {
+const mapStateToProps = ({ generalReducer, settings }) => {
 	let { errorMessages } = generalReducer;
-	return { errorMessages };
+	let { locale } = settings;
+	return { errorMessages, locale };
 };
 
 export default connect(mapStateToProps, {

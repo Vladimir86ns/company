@@ -12,7 +12,7 @@ import FormErrorMessage from '../components/Form/FormErrorMessage';
 import AppConfig from 'Constants/AppConfig';
 import { NotificationManager } from 'react-notifications';
 import APP_MESSAGES from '../constants/AppMessages';
-import { setUpValidationMessageLanguage } from '../util';
+import { setUpValidationMessageLanguage, getValidationMessage } from '../util';
 
 // redux action
 import {
@@ -81,11 +81,7 @@ class SignUp extends Component {
      * @param {string} validationRule 
      */
     getValidationMessage(field, validationRule) {
-        return (
-            <div style={{color: 'red', fontSize: '15px'}}>
-                {this.validator.message(field, this.state[field], validationRule)}
-            </div>
-        );
+        return getValidationMessage(field, validationRule, this.state[field], this.validator);
 	};
 
 	render() {
@@ -198,6 +194,7 @@ class SignUp extends Component {
 const mapStateToProps = ({ generalReducer, settings }) => {
 	let { errorMessages } = generalReducer;
 	let { locale } = settings;
+	
 	return { errorMessages, locale };
 };
 

@@ -1,21 +1,22 @@
-/**
- * User Block Component
- */
 import React, { Component } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
+import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Badge } from 'reactstrap';
 import { NotificationManager } from 'react-notifications';
-
-// components
 import SupportPage from '../Support/Support';
+import IntlMessages from 'Util/IntlMessages';
 
 // redux action
 import { logoutUserFromFirebase } from 'Actions';
 
-// intl messages
-import IntlMessages from 'Util/IntlMessages';
+const APP_LOCAL_STORAGE_DATA = [
+	'user_id',
+	'account_id',
+	'token',
+	'headquarter_company_id'
+];
 
 class UserBlock extends Component {
 
@@ -28,7 +29,11 @@ class UserBlock extends Component {
 	 * Logout User
 	 */
 	logoutUser() {
-		this.props.logoutUserFromFirebase();
+		APP_LOCAL_STORAGE_DATA.forEach(e => {
+			localStorage.removeItem(e);
+		});
+
+		this.props.history.push('/signIn');
 	}
 
 	/**
@@ -116,7 +121,7 @@ class UserBlock extends Component {
 										<Badge color="danger" className="pull-right">3</Badge>
 									</Link>
 								</li>
-								<li className="border-top">
+								<li className="border-top" onClick={ () => this.logoutUser()}>
 									<a href="javascript:void(0)">
 										<i className="zmdi zmdi-power text-danger mr-3"></i>
 										<IntlMessages id="widgets.logOut" />
@@ -142,6 +147,6 @@ const mapStateToProps = ({ userReducer }) => {
 	return { user };
 }
 
-export default connect(mapStateToProps, {
+export default withRouter(connect(mapStateToProps, {
 	logoutUserFromFirebase
-})(UserBlock);
+})(UserBlock));

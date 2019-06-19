@@ -61,6 +61,22 @@ export function setUpValidationMessageLanguage(localeKey) {
 };
 
 /**
+ * Return validation message for field.
+ * 
+ * @param {string} field 
+ * @param {string} validationRule 
+ * @param {string} stateField 
+ * @param {object} validator 
+ */
+export function getValidationMessage(field, validationRule, stateField, validator) {
+    return (
+        <div style={{color: 'red', fontSize: '15px'}}>
+            {validator.message(field, stateField, validationRule)}
+        </div>
+    );
+};
+
+/**
  * Trim the value.
  * 
  * @param {string} val

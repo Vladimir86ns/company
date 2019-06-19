@@ -5,9 +5,10 @@ import IntlMessages from 'Util/IntlMessages';
 import RctCollapsibleCard from 'Components/RctCollapsibleCard/RctCollapsibleCard';
 import { Button } from 'reactstrap';
 import { isEmpty } from '../../../../util/lodashFunctions';
-import { getOnlyUpdatedValues } from '../../../../util/helper';
 import { NotificationManager } from 'react-notifications';
-import FormErrorMessage from '../../../../components/Form/FormErrorMessage';
+import { setUpValidationMessageLanguage, getValidationMessage, getOnlyUpdatedValues } from 'Util/helper';
+import FormErrorMessage from 'Components/Form/FormErrorMessage';
+import APP_MESSAGES from 'Constants/AppMessages';
 
 // redux action
 import {
@@ -37,13 +38,17 @@ class CompanyInformationForm extends React.Component {
         } else {
             this.updateStateWithCompanyInfo(company);
         }
-    }
+
+        if (this.props.locale) {
+			this.validator = setUpValidationMessageLanguage(this.props.locale.locale);
+		}
+    };
 
     componentWillUpdate(nextProps) {
         if (isEmpty(this.props.company) && !isEmpty(nextProps.company)) {
             this.updateStateWithCompanyInfo(nextProps.company);
         }
-    }
+    };
 
     componentDidUpdate(prevProps) {
         if (prevProps.errorMessages !== this.props.errorMessages) {
@@ -65,10 +70,24 @@ class CompanyInformationForm extends React.Component {
      * On update, update only changed values;
      */
     handleCreateOrUpdate() {
+        if (this.validator.allValid()) {
+            return this.validationPass();
+        } else {
+            NotificationManager.error(APP_MESSAGES.error.validationMessage);
+            this.validator.showMessages();
+            this.forceUpdate();
+        }
+    };
+
+    /**
+     * Update or create company, if validation pass.
+     */
+    validationPass() {
         let { user, company} =  this.props;
 
         if (!user.company_settings_done) {
             this.props.createCompany(this.state);
+            return;
         }
 
         let updatedValues = getOnlyUpdatedValues(company, this.state);
@@ -102,7 +121,17 @@ class CompanyInformationForm extends React.Component {
         setTimeout(() => {
             this.props.updateCreateCompanyFailureRestart();
         }, time);
-    }
+    };
+
+    /**
+     * Get validation message.
+     * 
+     * @param {string} field 
+     * @param {string} validationRule 
+     */
+    getValidationMessage(field, validationRule) {
+        return getValidationMessage(field, validationRule, this.state[field], this.validator);
+    };
 
     render() {
         let { errorMessages } = this.props;
@@ -116,28 +145,33 @@ class CompanyInformationForm extends React.Component {
                     <div className="form-group">
                         <TextField id="name" fullWidth label={<IntlMessages id={'form.company.name'} />} value={this.state.name} onChange={this.handleChange('name')} autoComplete="off"/>
                         <FormErrorMessage message={errorMessages.name} />
+                        { this.getValidationMessage('name', 'required|min:1|max:100') }
                     </div>
                     <div className="form-group">
                         <TextField id="mobile_phone" fullWidth label={<IntlMessages id={'form.company.mobile_phone'} />} value={this.state.mobile_phone} onChange={this.handleChange('mobile_phone')} autoComplete="off"/>
                         <FormErrorMessage message={errorMessages.mobile_phone} />
+                        { this.getValidationMessage('mobile_phone', 'min:3|max:100') }
                     </div>
                 </div>
                 <div className="col-sm-6 col-md-6 col-xl-3">
                     <div className="form-group">
                         <TextField id="country" fullWidth label={<IntlMessages id={'form.company.country'} />} value={this.state.country} onChange={this.handleChange('country')} autoComplete="off"/>
                         <FormErrorMessage message={errorMessages.country} />
+                        { this.getValidationMessage('country', 'min:3|max:100') }
                     </div>
                 </div>
                 <div className="col-sm-6 col-md-6 col-xl-3">
                     <div className="form-group">
                         <TextField id="address" fullWidth label={<IntlMessages id={'form.company.address'} />} value={this.state.address} onChange={this.handleChange('address')} autoComplete="off"/>
                         <FormErrorMessage message={errorMessages.address} />
+                        { this.getValidationMessage('address', 'max:100') }
                     </div>
                 </div>
                 <div className="col-sm-6 col-md-6 col-xl-3">
                     <div className="form-group">
                         <TextField id="phone_number" fullWidth label={<IntlMessages id={'form.company.phone_number'} />} value={this.state.phone_number} onChange={this.handleChange('phone_number')} autoComplete="off"/>
                         <FormErrorMessage message={errorMessages.phone_number} />
+                        { this.getValidationMessage('phone_number', 'min:3|max:100') }
                     </div>
                 </div>
                 </div>
@@ -149,11 +183,12 @@ class CompanyInformationForm extends React.Component {
     }
 }
 
-function mapStateToProps({ companyReducer, userReducer }) {
+function mapStateToProps({ companyReducer, userReducer, settings }) {
     const { company, errorMessages } = companyReducer;
     const { user } = userReducer;
+    let { locale } = settings;
 
-    return { company, user, errorMessages };
+    return { company, user, errorMessages, locale };
 }
 
 export default connect(mapStateToProps, {

@@ -8,7 +8,7 @@ import { Form, FormGroup, Input } from 'reactstrap';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import QueueAnim from 'rc-queue-anim';
 import FormErrorMessage from '../components/Form/FormErrorMessage';
-import { setUpValidationMessageLanguage } from '../util';
+import { setUpValidationMessageLanguage, getValidationMessage } from '../util';
 import { SessionSlider } from 'Components/Widgets';
 
 // app config
@@ -84,11 +84,7 @@ class SignIn extends Component {
      * @param {string} validationRule 
      */
     getValidationMessage(field, validationRule) {
-        return (
-            <div style={{color: 'red', fontSize: '15px'}}>
-                {this.validator.message(field, this.state[field], validationRule)}
-            </div>
-        );
+        return getValidationMessage(field, validationRule, this.state[field], this.validator);
 	};
 
 	render() {
@@ -188,6 +184,7 @@ class SignIn extends Component {
 const mapStateToProps = ({ authUser, settings }) => {
 	const { errorMessages } = authUser;
 	let { locale } = settings;
+	
 	return { errorMessages, locale };
 };
 

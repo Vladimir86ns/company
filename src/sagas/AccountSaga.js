@@ -24,13 +24,13 @@ function* createAccountUserToServer({payload}) {
     try {
         let response = yield call(createAccountAndUserRequest, name, email, password);
         if (response.status === responseCodes.HTTP_OK) {
-            let { id, account_id, token } = response.data;
+            let { id, account_id, token } = response.data.data;
 
             localStorage.setItem('account_id', account_id);
             localStorage.setItem('user_id', id);
             localStorage.setItem('token', token);
             history.push('/app/dashboard/ecommerce');
-            yield put(handleUserSuccess(response.data));
+            yield put(handleUserSuccess(response.data.data));
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
             NotificationManager.error(APP_MESSAGES.error.validationMessage);
         	yield put(generalFormFailure(response.data));

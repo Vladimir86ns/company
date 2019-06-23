@@ -25,7 +25,7 @@ function* getUserFromServer() {
         let response = yield call(getUserRequest, accountId, userId, token);
 
         if (response.status === responseCodes.HTTP_OK) {
-            yield put(handleUserSuccess(response.data));
+            yield put(handleUserSuccess(response.data.data));
         }
     } catch (error) {
         console.log('Get user error : ', error, ' ', error.response);
@@ -43,7 +43,7 @@ function* updateUserToServer({payload}) {
         let response = yield call(updateUserRequest, user);
         if (response.status === responseCodes.HTTP_OK) {
             NotificationManager.success(APP_MESSAGES.success.updateSuccess);
-            yield put(handleUserSuccess(response.data));
+            yield put(handleUserSuccess(response.data.data));
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
             NotificationManager.error(APP_MESSAGES.error.validationMessage);
             yield put(updateUserFailure(response.data));
@@ -60,7 +60,7 @@ function* updateUserToServer({payload}) {
  * @param {string} accountId 
  */
 const getUserRequest = (id, accountId) => {
-    return laravelApi.get(`/user/${id}/${accountId}`)
+    return laravelApi.get(`account/${accountId}/user/${id}`)
         .then(res => res)
         .catch(err => err.response);;
 };
@@ -75,7 +75,7 @@ const updateUserRequest = (user) => {
     clonedUser.user_id = localStorage.getItem('user_id');
     clonedUser.account_id = localStorage.getItem('account_id');
 
-    return laravelApi.post('/user/update', clonedUser)
+    return laravelApi.post('/account/user/update', clonedUser)
         .then(res => res)
         .catch(err => err.response);
 };

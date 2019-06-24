@@ -775,6 +775,11 @@ module.exports = {
    "sidebar.company" :"Company",
    "sidebar.company_info" : "Company Info",
 
+   "sidebar.employees" : "Employees",
+   "sidebar.employee_info" : "Employee Info",
+   "sidebar.all_employees" : "All Employees",
+
+
    "form.general.error.nothing_changed": "Nothing is changed!",
 
    "form.company.header": "Company Information",
@@ -794,5 +799,7 @@ module.exports = {
    "form.user.phone_number": "Phone Number",
    "form.user.mobile_phone": "Mobile Phone",
    "form.user.gender": "Gender",
-   "form.user.email": "Email"
+   "form.user.email": "Email",
+
+   "employee.table.header.employees_list": "Employee List",
 };

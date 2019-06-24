@@ -3,7 +3,7 @@ export default {
    category1: [
       {
          "menu_title": "sidebar.user_settings",
-         "menu_icon": "zmdi zmdi-accounts",
+         "menu_icon": "zmdi zmdi-account",
          "new_item": false,
          "type_multi": null,
          "child_routes": [
@@ -26,6 +26,19 @@ export default {
                "menu_title": "sidebar.company_info"
             },
          ]
+      },
+      {
+         "menu_title": "sidebar.employees",
+         "menu_icon": "zmdi zmdi-accounts",
+         "new_item": false,
+         "type_multi": null,
+         "child_routes": [
+            {
+               "path": "/app/employee/all-employees",
+               "new_item": false,
+               "menu_title": "sidebar.all_employees"
+            }
+         ]
       }
    ]
-}
+};

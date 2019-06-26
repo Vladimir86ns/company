@@ -1,5 +1,6 @@
 import CompanyInformationForm from 'Routes/company/add-new';
 import UserInformationForm from 'Routes/user/add-new';
+import AllEmployees from 'Routes/employee/all-employees';
 
 export default [
    {
@@ -9,5 +10,9 @@ export default [
    {
       path: 'user-information',
       component: UserInformationForm
+   },
+   {
+      path: 'employee',
+      component: AllEmployees
    },
 ];

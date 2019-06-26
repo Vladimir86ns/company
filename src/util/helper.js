@@ -77,6 +77,25 @@ export function getValidationMessage(field, validationRule, stateField, validato
 };
 
 /**
+ * Return all data for table, and exclude some properties if need.
+ * 
+ * @param {array} array 
+ * @param {array} excludeFields
+ */
+export function returnDataForTable(array, excludeFields = []) {
+    const data = [];
+
+    array.forEach((val) => {
+        if (excludeFields.length > 0) {
+            excludeFields.forEach(key => delete val[key]);
+        }
+        data.push(Object.keys(val).map(key => val[key]));
+    });
+
+    return data;
+}
+
+/**
  * Trim the value.
  * 
  * @param {string} val

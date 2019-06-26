@@ -15,6 +15,7 @@ import userReducer from './UserReducer';
 import companyReducer from './CompanyReducer';
 import accountReducer from './AccountReducer';
 import generalReducer from './GeneralReducer';
+import employeeReducer from './EmployeeReducer';
 
 const reducers = combineReducers({
    settings,
@@ -29,7 +30,8 @@ const reducers = combineReducers({
    userReducer,
    companyReducer,
    accountReducer,
-   generalReducer
+   generalReducer,
+   employeeReducer
 });
 
 export default reducers;

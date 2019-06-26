@@ -10,3 +10,4 @@ export * from './AccountActions';
 export * from './UserActions';
 export * from './CompanyActions';
 export * from './GeneralActions';
+export * from './EmployeeActions';

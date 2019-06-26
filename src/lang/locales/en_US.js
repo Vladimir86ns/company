@@ -802,4 +802,11 @@ module.exports = {
    "form.user.email": "Email",
 
    "employee.table.header.employees_list": "Employee List",
+   "employee.table.field.full_name": "Full Name",
+   "employee.table.field.city": "City",
+   "employee.table.field.address": "Address",
+   "employee.table.field.mobile_phone": "Mobile Phone",
+   "employee.table.field.employee_company_id": "Employee ID",
+   "employee.table.field.hire_date": "Hire Date",
+   "employee.table.field.action": "Action",
 };

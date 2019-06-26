@@ -1,5 +1,5 @@
 import {
-	HANDLE_EMPLOYEES_SUCCESS
+    HANDLE_EMPLOYEES_SUCCESS
 } from '../actions/types';
 
 const INIT_STATE = {
@@ -8,7 +8,7 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
     switch (action.type) {
-		case HANDLE_EMPLOYEES_SUCCESS:
+        case HANDLE_EMPLOYEES_SUCCESS:
             return { ...state, employees: action.payload };
 
         default: return { ...state };

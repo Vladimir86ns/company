@@ -12,7 +12,7 @@ export default [
       component: UserInformationForm
    },
    {
-		path: 'employee',
-		component: AllEmployees
-	},
+      path: 'employee',
+      component: AllEmployees
+   },
 ];

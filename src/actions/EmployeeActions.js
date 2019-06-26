@@ -1,13 +1,13 @@
 import { 
-	GET_EMPLOYEES,
-	HANDLE_EMPLOYEES_SUCCESS
+    GET_EMPLOYEES,
+    HANDLE_EMPLOYEES_SUCCESS
  } from "./types";
 
 /**
  * Get employees.
  */
 export const getEmployees = () => ({
-	type: GET_EMPLOYEES
+    type: GET_EMPLOYEES
 });
 
 /**

@@ -16,8 +16,8 @@ const AsyncUserInformationFormComponent = Loadable({
 
 // Basic Table
 const AsyncAllEmployeesComponent = Loadable({
-	loader: () => import("Routes/employee/all-employees/data-table"),
-	loading: () => <RctPageLoader />,
+    loader: () => import("Routes/employee/all-employees/data-table"),
+    loading: () => <RctPageLoader />,
 });
 
 export {

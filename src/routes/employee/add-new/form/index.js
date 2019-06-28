@@ -11,6 +11,7 @@ import FormErrorMessage from 'Components/Form/FormErrorMessage';
 import APP_MESSAGES from 'Constants/AppMessages';
 import { fieldNamesAndRules, RESET_TIME_VALIDATION_MESSAGE } from '../../constants';
 import moment from 'moment';
+import { DatePicker } from 'material-ui-pickers';
 
 // redux action
 import {
@@ -85,7 +86,7 @@ class EmployeeInformationForm extends React.Component {
     handleChange = (key) => event => {
         this.setState({
             [key]: (key === 'hire_date') ? 
-                moment(event.target.value).format('YYYY-MM-DD') :
+                event.format('YYYY-MM-DD') :
                 event.target.value,
         });
     };
@@ -151,6 +152,20 @@ class EmployeeInformationForm extends React.Component {
         return getValidationMessage(field, validationRule, this.state[field], this.validator);
     };
 
+    /**
+     * Get value for hire date.
+     */
+    getValueForDatePicker() {
+        if (isEmpty(this.state.hire_date)) {
+            this.setState({
+                hire_date: moment().format('YYYY-MM-DD')
+            });
+            return moment();
+        }
+
+        return (typeof this.state.hire_date === moment) ? this.state.hire_date : moment(this.state.hire_date);
+    }
+
     render() {
         let { errorMessages } = this.props;
 
@@ -178,14 +193,13 @@ class EmployeeInformationForm extends React.Component {
                         })}
                         <div className="col-sm-6 col-md-6 col-xl-3">
                             <div className="form-group">
-                                <TextField
-                                    id="date"
+                                <DatePicker
                                     label={<IntlMessages id={`form.employee.hire_date`} />}
-                                    type="date"
+                                    animateYearScrolling={false}
+                                    leftArrowIcon={<i className="zmdi zmdi-arrow-back" />}
+                                    rightArrowIcon={<i className="zmdi zmdi-arrow-forward" />}
                                     fullWidth
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
+                                    value={this.getValueForDatePicker()}
                                     onChange={this.handleChange('hire_date')}
                                 />
                                 <FormErrorMessage message={errorMessages.hire_date} />

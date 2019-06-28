@@ -16,7 +16,7 @@ const Pages = ({ match }) => (
             <meta name="description" content="Reactify Tables" />
         </Helmet>
         <Switch>
-            <Route path={`${match.url}/`} component={AsyncAllEmployeesComponent} />
+            <Route path={`${match.url}/all-employees`} component={AsyncAllEmployeesComponent} />
         </Switch>
     </div>
 );

@@ -21,6 +21,9 @@ const APP_MESSAGES = {
     },
     company: {
         createSuccess: 'Company is created successfully!'
+    },
+    employee: {
+        createSuccess: 'Employee is created successfully!'
     }
 };
 

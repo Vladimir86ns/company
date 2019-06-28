@@ -37,6 +37,11 @@ export default {
                "path": "/app/employee/all-employees",
                "new_item": false,
                "menu_title": "sidebar.all_employees"
+            },
+            {
+               "path": "/app/employee/employee-information",
+               "new_item": false,
+               "menu_title": "sidebar.employee_information"
             }
          ]
       }

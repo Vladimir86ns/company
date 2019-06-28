@@ -776,7 +776,7 @@ module.exports = {
    "sidebar.company_info" : "Company Info",
 
    "sidebar.employees" : "Employees",
-   "sidebar.employee_info" : "Employee Info",
+   "sidebar.employee_information" : "Employee Information",
    "sidebar.all_employees" : "All Employees",
 
 
@@ -800,6 +800,18 @@ module.exports = {
    "form.user.mobile_phone": "Mobile Phone",
    "form.user.gender": "Gender",
    "form.user.email": "Email",
+
+   "form.employee.header": "Employee Information",
+   "form.employee.first_name": "First Name",
+   "form.employee.last_name": "Last Name",
+   "form.employee.email": "Email",
+   "form.employee.country": "Country",
+   "form.employee.city": "City",
+   "form.employee.address": "Address",
+   "form.employee.mobile_phone": "Mobile Phone",
+   "form.employee.phone_number": "Phone Number",
+   "form.employee.hire_date": "Hire Date",
+   "form.employee.employee_company_id": "Employee ID",
 
    "employee.table.header.employees_list": "Employee List",
    "employee.table.field.full_name": "Full Name",

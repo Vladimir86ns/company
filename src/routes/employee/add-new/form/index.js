@@ -159,7 +159,6 @@ class EmployeeInformationForm extends React.Component {
         return getValidationMessage(field, validationRule, this.state[field], this.validator);
     };
 
-<<<<<<< HEAD
     /**
      * Get value for hire date.
      */
@@ -174,8 +173,6 @@ class EmployeeInformationForm extends React.Component {
         return (typeof this.state.hire_date === moment) ? this.state.hire_date : moment(this.state.hire_date);
     }
 
-=======
->>>>>>> f9852db4232a9cd2bd4dd330e8595f2b4b90ab9a
     render() {
         let { errorMessages } = this.props;
 

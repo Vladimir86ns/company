@@ -11,7 +11,10 @@ import FormErrorMessage from 'Components/Form/FormErrorMessage';
 import APP_MESSAGES from 'Constants/AppMessages';
 import { fieldNamesAndRules, RESET_TIME_VALIDATION_MESSAGE } from '../../constants';
 import moment from 'moment';
+<<<<<<< HEAD
 import { DatePicker } from 'material-ui-pickers';
+=======
+>>>>>>> f9852db4232a9cd2bd4dd330e8595f2b4b90ab9a
 
 // redux action
 import {
@@ -86,7 +89,11 @@ class EmployeeInformationForm extends React.Component {
     handleChange = (key) => event => {
         this.setState({
             [key]: (key === 'hire_date') ? 
+<<<<<<< HEAD
                 event.format('YYYY-MM-DD') :
+=======
+                moment(event.target.value).format('YYYY-MM-DD') :
+>>>>>>> f9852db4232a9cd2bd4dd330e8595f2b4b90ab9a
                 event.target.value,
         });
     };
@@ -152,6 +159,7 @@ class EmployeeInformationForm extends React.Component {
         return getValidationMessage(field, validationRule, this.state[field], this.validator);
     };
 
+<<<<<<< HEAD
     /**
      * Get value for hire date.
      */
@@ -166,6 +174,8 @@ class EmployeeInformationForm extends React.Component {
         return (typeof this.state.hire_date === moment) ? this.state.hire_date : moment(this.state.hire_date);
     }
 
+=======
+>>>>>>> f9852db4232a9cd2bd4dd330e8595f2b4b90ab9a
     render() {
         let { errorMessages } = this.props;
 

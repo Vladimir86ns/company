@@ -14,14 +14,21 @@ const AsyncUserInformationFormComponent = Loadable({
    loading: () => <RctPageLoader />,
 });
 
-// Basic Table
+// Employee all
 const AsyncAllEmployeesComponent = Loadable({
     loader: () => import("Routes/employee/all-employees/data-table"),
     loading: () => <RctPageLoader />,
 });
 
+// Employee add
+const AsyncEmployeeInformationComponent = Loadable({
+   loader: () => import("Routes/employee/add-new/form"),
+   loading: () => <RctPageLoader />
+});
+
 export {
    AsyncCompanyInformationFormComponent,
    AsyncUserInformationFormComponent,
-   AsyncAllEmployeesComponent
+   AsyncAllEmployeesComponent,
+   AsyncEmployeeInformationComponent
 };

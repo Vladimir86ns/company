@@ -55,5 +55,6 @@ export const employeeDetailFields = [
     'city',
     'address',
     'mobile_phone',
-    'phone_number'
+    'phone_number',
+    'hire_date'
 ];

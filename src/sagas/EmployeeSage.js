@@ -24,7 +24,7 @@ function* getEmployeesFromServer() {
         let response = yield call(getEmployeeRequest, accountId, companyId);
 
         if (response.status === responseCodes.HTTP_OK) {
-            yield put(handleEmployeesSuccess(response.data.data));
+            yield put(handleEmployeesSuccess(response.data));
         }
     } catch (error) {
         console.log('Get employees error : ', error, ' ', error.response);

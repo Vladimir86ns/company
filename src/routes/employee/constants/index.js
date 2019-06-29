@@ -38,3 +38,11 @@ export const fieldNamesAndRules = [
         rule: 'required|min:3|max:100'
     }
 ];
+
+export const columnFields = [
+    'full_name',
+    'employee_company_id',
+    'city',
+    'mobile_phone',
+    'action'
+];

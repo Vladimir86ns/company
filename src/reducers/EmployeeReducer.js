@@ -15,6 +15,7 @@ const INIT_STATE = {
 export default (state = INIT_STATE, action) => {
     switch (action.type) {
         case HANDLE_EMPLOYEES_SUCCESS:
+
             return { ...state, employees: action.payload };
         case HANDLE_EMPLOYEE_SUCCESS:
             return { ...state, employee: action.payload };

@@ -23,7 +23,7 @@ function* getCompanyFromServer() {
         let response = yield call(getCompanyRequest);
 
         if (response.status === responseCodes.HTTP_OK) {
-            yield put(handleCompanySuccess(response.data.data));
+            yield put(handleCompanySuccess(response.data));
         }
     } catch (error) {
         console.log('Create company error : ', error , ' ', error.response);

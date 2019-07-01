@@ -111,7 +111,7 @@ class UserBlock extends Component {
 									<p className="text-white mb-0 fs-14">{ `${this.props.user.first_name} ${this.props.user.last_name}` }</p>
 									<span className="text-white fs-14">{ this.props.user.email }</span>
 								</li>
-								<li>
+								{/* <li>
 									<Link to={{
 										pathname: '/app/users/user-profile-1',
 										state: { activeTab: 2 }
@@ -120,7 +120,7 @@ class UserBlock extends Component {
 										<IntlMessages id="widgets.messages" />
 										<Badge color="danger" className="pull-right">3</Badge>
 									</Link>
-								</li>
+								</li> */}
 								<li className="border-top" onClick={ () => this.logoutUser()}>
 									<a href="javascript:void(0)">
 										<i className="zmdi zmdi-power text-danger mr-3"></i>

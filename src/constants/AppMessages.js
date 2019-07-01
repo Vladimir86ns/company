@@ -23,7 +23,9 @@ const APP_MESSAGES = {
         createSuccess: 'Company is created successfully!'
     },
     employee: {
-        createSuccess: 'Employee is created successfully!'
+        createSuccess: 'Employee is created successfully!',
+        updateSuccess: 'Employee is updated successfully!',
+        deleteSuccess: 'Employee is deleted successfully!'
     }
 };
 

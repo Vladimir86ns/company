@@ -518,9 +518,7 @@ module.exports = {
    "themeOptions.darkMode": "Dark Mode",
    "themeOptions.sidebarLight": "Light",
    "themeOptions.sidebarDark": "Dark",
-   "button.cancel": "Cancel",
    "button.add": "Add",
-   "button.update": "Update",
    "button.reply": "Reply",
    "button.delete": "Delete",
    "button.yes": "Yes",
@@ -776,7 +774,7 @@ module.exports = {
    "sidebar.company_info" : "Company Info",
 
    "sidebar.employees" : "Employees",
-   "sidebar.employee_information" : "Employee Information",
+   "sidebar.add_employee" : "Add Employee",
    "sidebar.all_employees" : "All Employees",
 
 
@@ -801,6 +799,9 @@ module.exports = {
    "form.user.gender": "Gender",
    "form.user.email": "Email",
 
+   "general.employee.update_employee": "Update Employee",
+   "general.employee.add_new_employee": "Add New Employee",
+
    "form.employee.header": "Employee Information",
    "form.employee.first_name": "First Name",
    "form.employee.last_name": "Last Name",
@@ -815,10 +816,21 @@ module.exports = {
 
    "employee.table.header.employees_list": "Employee List",
    "employee.table.field.full_name": "Full Name",
+   "employee.table.field.first_name": "First Name",
+   "employee.table.field.last_name": "Last Name",
+   "employee.table.field.country": "Country",
+   "employee.table.field.email": "Email",
    "employee.table.field.city": "City",
    "employee.table.field.address": "Address",
    "employee.table.field.mobile_phone": "Mobile Phone",
+   "employee.table.field.phone_number": "Phone Phone",
    "employee.table.field.employee_company_id": "Employee ID",
    "employee.table.field.hire_date": "Hire Date",
    "employee.table.field.action": "Action",
+
+   "employee.delete.title": "Are You Sure Want To Delete?",
+   "employee.delete.message": "This will delete employee!",
+
+   "button.update": "Update",
+   "button.cancel": "Cancel"
 };

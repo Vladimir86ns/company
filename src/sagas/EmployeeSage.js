@@ -5,10 +5,14 @@ import APP_MESSAGES from '../constants/AppMessages';
 import { NotificationManager } from 'react-notifications';
 import {
     GET_EMPLOYEES,
-    CREATE_EMPLOYEE
+    CREATE_EMPLOYEE,
+    UPDATE_EMPLOYEE,
+    DELETE_EMPLOYEE
 } from '../actions/types';
 
 import {
+    getEmployees as getEmployeesFromAPI,
+    resetEmployees,
     handleEmployeesSuccess,
     handleEmployeeSuccess,
     createUpdateEmployeeFailure
@@ -24,7 +28,7 @@ function* getEmployeesFromServer() {
         let response = yield call(getEmployeeRequest, accountId, companyId);
 
         if (response.status === responseCodes.HTTP_OK) {
-            yield put(handleEmployeesSuccess(response.data.data));
+            yield put(handleEmployeesSuccess(response.data));
         }
     } catch (error) {
         console.log('Get employees error : ', error, ' ', error.response);
@@ -44,12 +48,55 @@ function* createEmployeeToServer({payload}) {
         if (response.status === responseCodes.HTTP_OK) {
             NotificationManager.success(APP_MESSAGES.employee.createSuccess);
             yield put(handleEmployeeSuccess(response.data.data));
+            yield put(resetEmployees());
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
             NotificationManager.error(APP_MESSAGES.error.validationMessage);
             yield put(createUpdateEmployeeFailure(response.data));
         }
     } catch (error) {
-        console.log('Create / update employee error : ', error, ' ', error.response);
+        console.log('Create employee error : ', error, ' ', error.response);
+    }
+};
+
+/**
+ * Update employee.
+ * 
+ * @param {object} action 
+ */
+function* updateEmployeeToServer({payload}) {
+    let { employee } = payload;
+
+    try {
+        let response = yield call(updateEmployeeRequest, employee);
+        if (response.status === responseCodes.HTTP_OK) {
+            NotificationManager.success(APP_MESSAGES.employee.updateSuccess);
+            yield put(handleEmployeeSuccess(response.data.data));
+            yield put(getEmployeesFromAPI());
+        } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
+            NotificationManager.error(APP_MESSAGES.error.validationMessage);
+            yield put(createUpdateEmployeeFailure(response.data));
+        }
+    } catch (error) {
+        console.log('Update employee error : ', error, ' ', error.response);
+    }
+};
+
+/**
+ * Delete employee from server.
+ */
+function* deleteEmployeeToServer({payload}) {
+    try {
+        let accountId = localStorage.getItem('account_id');
+        let companyId = localStorage.getItem('headquarter_company_id');
+        let employeeId = payload.employeeId;
+        let response = yield call(deleteEmployeeRequest, accountId, companyId, employeeId);
+
+        if (response.status === responseCodes.HTTP_OK) {
+            yield put(getEmployeesFromAPI());
+            NotificationManager.success(APP_MESSAGES.employee.deleteSuccess);
+        }
+    } catch (error) {
+        console.log('Get employees error : ', error, ' ', error.response);
     }
 };
 
@@ -61,6 +108,19 @@ function* createEmployeeToServer({payload}) {
  */
 const getEmployeeRequest = (accountId, companyId) => {
     return laravelApi.get(`account/${accountId}/company/${companyId}/employees`)
+        .then(res => res)
+        .catch(err => err.response);;
+};
+
+/**
+ * Delete employees request.
+ * 
+ * @param {string} accountId
+ * @param {string} companyId 
+ * @param {string} employeeId 
+ */
+const deleteEmployeeRequest = (accountId, companyId, employeeId) => {
+    return laravelApi.delete(`account/${accountId}/company/${companyId}/employee/${employeeId}/delete`)
         .then(res => res)
         .catch(err => err.response);;
 };
@@ -80,6 +140,20 @@ const createEmployeeRequest = (employee) => {
 };
 
 /**
+ * Update employee made request.
+ * 
+ * @param {object} user 
+ */
+const updateEmployeeRequest = (employee) => {
+    employee.company_id = localStorage.getItem('headquarter_company_id');
+    employee.account_id = localStorage.getItem('account_id');
+
+    return laravelApi.patch('/account/company/employee/update', employee)
+        .then(res => res)
+        .catch(err => err.response);
+};
+
+/**
  * Get employees from company.
  */
 export function* getEmployees() {
@@ -94,11 +168,27 @@ export function* createEmployees() {
 };
 
 /**
+ * Update employee.
+ */
+export function* updateEmployees() {
+    yield takeEvery(UPDATE_EMPLOYEE, updateEmployeeToServer);
+};
+
+/**
+ * Delete employee.
+ */
+export function* deleteEmployees() {
+    yield takeEvery(DELETE_EMPLOYEE, deleteEmployeeToServer);
+};
+
+/**
  * Auth Root Saga
  */
 export default function* rootSaga() {
     yield all([
         fork(getEmployees),
-        fork(createEmployees)
+        fork(createEmployees),
+        fork(updateEmployees),
+        fork(deleteEmployees)
     ]);
 }

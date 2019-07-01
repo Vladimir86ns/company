@@ -1,7 +1,10 @@
 import { 
     GET_EMPLOYEES,
     CREATE_EMPLOYEE,
+    UPDATE_EMPLOYEE,
     RESET_EMPLOYEES,
+    DELETE_EMPLOYEE,
+    RESET_EMPLOYEE,
     HANDLE_EMPLOYEES_SUCCESS,
     HANDLE_EMPLOYEE_SUCCESS,
     CREATE_UPDATE_EMPLOYEE_FAILURE,
@@ -24,6 +27,14 @@ export const createEmployee = (employee) => ({
 });
 
 /**
+ * Update employee.
+ */
+export const updateEmployee = (employee) => ({
+    type: UPDATE_EMPLOYEE,
+    payload: { employee }
+});
+
+/**
  * Handle employees success.
  */
 export const handleEmployeesSuccess = (employees) => ({
@@ -35,7 +46,22 @@ export const handleEmployeesSuccess = (employees) => ({
  * Reset employee.
  */
 export const resetEmployee = () => ({
+    type: RESET_EMPLOYEE
+});
+
+/**
+ * Reset employees.
+ */
+export const resetEmployees = () => ({
     type: RESET_EMPLOYEES
+});
+
+/**
+ * Delete employee.
+ */
+export const deleteEmployee = (employeeId) => ({
+    type: DELETE_EMPLOYEE,
+    payload: { employeeId }
 });
 
 /**

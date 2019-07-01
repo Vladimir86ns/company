@@ -2,56 +2,55 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import IntlMessages from 'Util/IntlMessages';
-import RctCollapsibleCard from 'Components/RctCollapsibleCard/RctCollapsibleCard';
 import { Button } from 'reactstrap';
 import { isEmpty } from '../../../../util/lodashFunctions';
 import { NotificationManager } from 'react-notifications';
-import { setUpValidationMessageLanguage, getValidationMessage } from 'Util/helper';
+import { setUpValidationMessageLanguage, getValidationMessage, getOnlyUpdatedValues } from 'Util/helper';
 import FormErrorMessage from 'Components/Form/FormErrorMessage';
 import APP_MESSAGES from 'Constants/AppMessages';
 import { fieldNamesAndRules, RESET_TIME_VALIDATION_MESSAGE } from '../../constants';
+
 import moment from 'moment';
 import { DatePicker } from 'material-ui-pickers';
+import {
+	ModalFooter
+} from 'reactstrap';
 
 // redux action
 import {
     createEmployee,
+    updateEmployee,
     createUpdateEmployeeFailureRestart,
     resetEmployee
 } from 'Actions/index';
 
-class EmployeeInformationForm extends React.Component {
+let editEmployeeOriginData = {};
+
+class UpdateEmployeeInformationForm extends React.Component {
 
     state = {
-        first_name: 'novi',
-        last_name: 'novi',
-        email: 'novi@novi.com',
-        country: 'novi',
-        city: 'novi',
-        address: 'novi',
-        mobile_phone: 'novi',
-        phone_number: 'novi',
-        hire_date: '2020-10-10',
-        employee_company_id: '2020'
+        first_name: '',
+        last_name: '',
+        email: '',
+        country: '',
+        city: '',
+        address: '',
+        mobile_phone: '',
+        phone_number: '',
+        hire_date: '',
+        employee_company_id: ''
     };
 
     /**
      * Set up validation message language.
      */
     componentWillMount() {
+        const { editEmployee } = this.props;
+        editEmployeeOriginData = editEmployee;
+        this.updateStateWithEmployeeInfo(editEmployee);
+
         if (this.props.locale) {
 			this.validator = setUpValidationMessageLanguage(this.props.locale.locale);
-		}
-    };
-
-    /**
-     * Update state when employee has information.
-     * 
-     * @param {object} nextProps 
-     */
-    componentWillUpdate(nextProps) {
-        if (isEmpty(this.props.employee) && !isEmpty(nextProps.employee)) {
-            this.updateStateWithEmployeeInfo(nextProps.employee);
         }
     };
 
@@ -67,13 +66,6 @@ class EmployeeInformationForm extends React.Component {
     };
 
     /**
-     * Set empty employee information in state, before live component.
-     */
-    componentWillUnmount() {
-        this.props.resetEmployee();
-    }
-
-    /**
      * Update the state.
      */
     handleChange = (key) => event => {
@@ -81,14 +73,14 @@ class EmployeeInformationForm extends React.Component {
             [key]: (key === 'hire_date') ? 
                 event.format('YYYY-MM-DD') :
                 event.target.value,
-        });
+        }, () => this.props.onUpdateUserDetail(this.state));
     };
 
     /**
      * Create new employee, or update.
      * On update, update only changed values;
      */
-    handleCreateOrUpdate() {
+    updateEmployee() {
         if (this.validator.allValid()) {
             return this.validationPass();
         } else {
@@ -102,12 +94,14 @@ class EmployeeInformationForm extends React.Component {
      * Update or create employee, if validation pass.
      */
     validationPass() {
-        let { employee } = this.props;
+        let updatedValues = getOnlyUpdatedValues(editEmployeeOriginData, this.state);
 
-        if (isEmpty(employee)) {
-            this.props.createEmployee(this.state);
-            return;
+        if (isEmpty(updatedValues)) {
+            return NotificationManager.error(<IntlMessages id={'form.general.error.nothing_changed'} />);
         }
+
+        updatedValues.id = editEmployeeOriginData.id;
+        this.props.updateEmployee(updatedValues);
     }
 
     /**
@@ -164,13 +158,12 @@ class EmployeeInformationForm extends React.Component {
 
         return (
         <div className="textfields-wrapper">
-            <RctCollapsibleCard heading={<IntlMessages id={'form.employee.header'} />}>
                 <form noValidate autoComplete="off">
                     <div className="row">
                         {fieldNamesAndRules.map((field, i) => {
                             return (
-                                <div className="col-sm-6 col-md-6 col-xl-3" key={i}>
-                                    <div className="form-group">
+                                <div className="col-sm-6 col-md-6 col-xl-6" key={i}>
+                                    <div className="form-group" key={i}>
                                         <TextField 
                                             id={field.name} 
                                             fullWidth 
@@ -184,7 +177,7 @@ class EmployeeInformationForm extends React.Component {
                                 </div>
                             );
                         })}
-                        <div className="col-sm-6 col-md-6 col-xl-3">
+                        <div className="col-sm-6 col-md-6 col-xl-6">
                             <div className="form-group">
                                 <DatePicker
                                     label={<IntlMessages id={`form.employee.hire_date`} />}
@@ -200,14 +193,23 @@ class EmployeeInformationForm extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <Button 
-                        onClick={ () => this.handleCreateOrUpdate()} 
-                        className="mr-10 mb-10" 
-                        color="primary">
-                            { isEmpty(this.props.employee) ? 'Create' : 'Update'}
+                    <ModalFooter>
+                        <Button 
+                            variant="raised" 
+                            color="primary" 
+                            className="text-white" 
+                            onClick={() => this.updateEmployee()}>
+                                <IntlMessages id={`button.update`} />
                         </Button>
+                        {' '}
+                        <Button 
+                            variant="raised" 
+                            className="text-white btn-danger" 
+                            onClick={() => this.props.onUpdateEmployeeModalClose()}>
+                                <IntlMessages id={`button.cancel`} />
+                        </Button>
+                    </ModalFooter>
                 </form>
-            </RctCollapsibleCard>
         </div>
         );
     }
@@ -222,6 +224,7 @@ function mapStateToProps({ employeeReducer, settings }) {
 
 export default connect(mapStateToProps, {
     createEmployee,
+    updateEmployee,
     createUpdateEmployeeFailureRestart,
     resetEmployee
-})(EmployeeInformationForm);
+})(UpdateEmployeeInformationForm);

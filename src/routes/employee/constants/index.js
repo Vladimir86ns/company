@@ -11,7 +11,7 @@ export const fieldNamesAndRules = [
     },
     {
         name: 'email',
-        rule: 'required|email'
+        rule: 'required|email|max:100',
     },
     {
         name: 'country',
@@ -37,4 +37,24 @@ export const fieldNamesAndRules = [
         name: 'employee_company_id',
         rule: 'required|min:3|max:100'
     }
+];
+
+export const columnFields = [
+    'full_name',
+    'employee_company_id',
+    'city',
+    'mobile_phone',
+    'action'
+];
+
+export const employeeDetailFields = [
+    'first_name',
+    'last_name',
+    'email',
+    'country',
+    'city',
+    'address',
+    'mobile_phone',
+    'phone_number',
+    'hire_date'
 ];

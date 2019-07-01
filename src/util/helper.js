@@ -38,7 +38,7 @@ export function getOnlyUpdatedValues(origin, comparing) {
         if (origin[key] === null) {
             updatedValues[key] = trim(comparing[key]);
             return;
-        } 
+        }
         if (trim(comparing[key]) !== trim(origin[key])) {
             updatedValues[key] = trim(comparing[key]);
         }

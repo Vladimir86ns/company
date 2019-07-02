@@ -5,6 +5,7 @@ import {
     CardTitle,
   } from 'reactstrap';
   import MatButton from '@material-ui/core/Button';
+  import { Scrollbars } from 'react-custom-scrollbars';
 
 class DashBoard extends Component {
     render() {
@@ -21,7 +22,12 @@ class DashBoard extends Component {
                             color="secondary" 
                             key={i}>
                             <CardTitle className="font-weight-bold text-dark text-center">{val}</CardTitle>
-                                {[1,2,3,4,5,6,7].map((val , i) => {
+                            <Scrollbars 
+                                autoHeight 
+                                autoHide 
+                                autoHeightMin={100} 
+                                autoHeightMax={600}>
+                                {new Array(20).fill(1).map((val , i) => {
                                     return (
                                         <div className="mb-10" ke={i}>
                                             <Card body outline color="c">
@@ -30,6 +36,7 @@ class DashBoard extends Component {
                                         </div>
                                     );
                                 })}
+                            </Scrollbars>
                         </Card>
                     );
                 })}

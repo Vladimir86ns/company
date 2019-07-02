@@ -44,6 +44,19 @@ export default {
                "menu_title": "sidebar.add_employee"
             }
          ]
-      }
+      },
+      {
+         "menu_title": "sidebar.task-manager",
+         "menu_icon": "zmdi zmdi-store",
+         "new_item": false,
+         "type_multi": null,
+         "child_routes": [
+            {
+               "path": "/app/task-manager/dashboard",
+               "new_item": false,
+               "menu_title": "sidebar.task-manager"
+            },
+         ]
+      },
    ]
 };

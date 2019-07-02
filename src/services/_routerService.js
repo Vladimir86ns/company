@@ -2,6 +2,7 @@ import CompanyInformationForm from 'Routes/company/add-new';
 import UserInformationForm from 'Routes/user/add-new';
 import AllEmployees from 'Routes/employee/all-employees';
 import EmployeeInformation from 'Routes/employee/add-new';
+import TaskManager from 'Routes/task-manager/task-dashboard';
 
 export default [
    {
@@ -19,5 +20,9 @@ export default [
    {
       path: 'employee',
       component: EmployeeInformation
+   },
+   {
+      path: 'task-manager',
+      component: TaskManager
    },
 ];

@@ -776,6 +776,7 @@ module.exports = {
    "sidebar.employees" : "Employees",
    "sidebar.add_employee" : "Add Employee",
    "sidebar.all_employees" : "All Employees",
+   "sidebar.task-manager" : "Task Manager",
 
 
    "form.general.error.nothing_changed": "Nothing is changed!",

@@ -26,12 +26,12 @@ class DashBoard extends Component {
                                 autoHeight 
                                 autoHide 
                                 autoHeightMin={100} 
-                                autoHeightMax={650}>
+                                autoHeightMax={550}>
                                 {new Array(20).fill(1).map((val , i) => {
                                     return (
                                         <div className="mb-10" key={i}>
                                             <Card body outline color="c">
-                                                <CardTitle className="font-weight-bold">Special Title Treatment dsad sadsa sdsa</CardTitle>
+                                                <CardTitle className="font-weight-bold">{`#${i + 1}`} Special Title Treatment dsad sadsa sdsa</CardTitle>
                                             </Card>
                                         </div>
                                     );

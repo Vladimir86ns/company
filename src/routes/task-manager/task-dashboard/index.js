@@ -16,7 +16,6 @@ const Forms = ({ match }) => (
 			<meta name="description" content="Reactify Form Elements" />
 		</Helmet>
 		<Switch>
-			{console.log(match.url)}
 			<Route path={`${match.url}/dashboard`} component={AsyncTaskManagerComponent} />
 		</Switch>
 	</div>

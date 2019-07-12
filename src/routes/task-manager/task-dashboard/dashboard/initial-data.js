@@ -1,37 +1,37 @@
 const initialData = {
     tasks: {
-      "task-1": { id: "task-1", content: "Take out the garbage" },
-      "task-2": { id: "task-2", content: "Watch my favorite show" },
-      "task-3": { id: "task-3", content: "Charge my phone" },
-      "task-4": { id: "task-4", content: "Cook dinner" },
-      "task-5": { id: "task-5", content: "Take out the garbage" },
-      "task-6": { id: "task-6", content: "Watch my favorite show" },
-      "task-7": { id: "task-7", content: "Charge my phone" },
-      "task-8": { id: "task-8", content: "Cook dinner" },
-      "task-9": { id: "task-9", content: "Take out the garbage" },
-      "task-10": { id: "task-10", content: "Watch my favorite show" },
-      "task-11": { id: "task-11", content: "Charge my phone" },
-      "task-12": { id: "task-12", content: "Cook dinner" }
+      task1: { id: "task1", content: "Take out the garbage" },
+      task2: { id: "task2", content: "Watch my favorite show" },
+      task3: { id: "task3", content: "Charge my phone" },
+      task4: { id: "task4", content: "Cook dinner" },
+      task5: { id: "task5", content: "Take out the garbage" },
+      task6: { id: "task6", content: "Watch my favorite show" },
+      task7: { id: "task7", content: "Charge my phone" },
+      task8: { id: "task8", content: "Cook dinner" },
+      task9: { id: "task9", content: "Take out the garbage" },
+      task10: { id: "task10", content: "Watch my favorite show" },
+      task11: { id: "task11", content: "Charge my phone" },
+      task12: { id: "task12", content: "Cook dinner" }
     },
     columns: {
-      "column-1": {
-        id: "column-1",
+      column1: {
+        id: "column1",
         title: "To do",
-        taskIds: ["task-1", "task-2", "task-3", "task-4","task-5", "task-6", "task-7", "task-8","task-9", "task-10", "task-11", "task-12"]
+        taskIds: ["task1", "task2", "task3", "task4","task5", "task6", "task7", "task8","task9", "task10", "task11", "task12"]
       },
-      "column-2": {
-        id: "column-2",
+      column2: {
+        id: "column2",
         title: "In progress",
         taskIds: []
       },
-      "column-3": {
-        id: "column-3",
+      column3: {
+        id: "column3",
         title: "Done",
         taskIds: []
       }
     },
     // Facilitate reordering of the columns
-    columnOrder: ["column-1", "column-2", "column-3"]
+    columnOrder: ["column1", "column2", "column3"]
   };
   
   export default initialData;

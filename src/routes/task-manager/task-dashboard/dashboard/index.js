@@ -80,8 +80,13 @@ class DashBoard extends Component {
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     {   
                         this.state.columnOrder.map(columnId => {
+                          console.log(columnId);
                             const column = this.state.columns[columnId];
-                            const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
+                            const tasks = column.taskIds.map(taskId => {
+                              console.log(taskId);
+                              return this.state.tasks[taskId];
+                            });
+                            console.log(tasks);
 
                             return <Column key={column.id} column={column} tasks={tasks}/>;
                         })

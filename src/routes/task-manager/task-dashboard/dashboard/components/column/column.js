@@ -26,8 +26,8 @@ class Column extends Component {
                             <Scrollbars
                             autoHeight 
                             autoHide 
-                            autoHeightMin={100} 
-                            autoHeightMax={550}>
+                            autoHeightMin={690} 
+                            autoHeightMax={690}>
                                 {this.props.tasks.map((task , i) => <List key={task.id} task={task} index={i}/>)}
                                 {provided.placeholder}
                             </Scrollbars>   

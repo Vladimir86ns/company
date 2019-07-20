@@ -2,10 +2,62 @@ import React, { Component } from 'react';
 import MatButton from '@material-ui/core/Button';
 import { DragDropContext } from 'react-beautiful-dnd';
 import initialData from './initial-data';
-
+import socketAxios from '../../../../../src/util/axios-socket';
 import Column from './components/column/column';
+import { isEmpty } from '../../../../util/lodashFunctions';
 class DashBoard extends Component {
-    state = initialData;
+    // state = initialData;
+    state = {
+      tasks: {},
+      columns: {},
+      columnOrder: {},
+    };
+
+    componentWillMount() {
+      socketAxios.get('dashboard/company/1/columns')
+      .then(res => {
+        this.handleResponse(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+        return err;
+      });  
+    };
+
+    handleResponse(response) {
+      let tasks = {};
+      let columns = {};
+
+      response.tasks.forEach(task => {
+        tasks[task._id] = { 
+          id: task._id,
+          title: task.title,
+          description: task.description,
+          author_id: task.author_id,
+          column_id: task.column_id 
+        };
+      });
+
+      response.columns.forEach((c, i) => {
+        columns[c._id] = {
+          id: c._id,
+          title: c.title,
+          taskIds: []
+        };
+      });
+
+      let columnOrder = response.columnOrder.column_ids;
+
+      Object.keys(tasks).forEach(taskId => {
+        columns[tasks[taskId].column_id].taskIds.push(taskId);
+      });
+
+      this.setState({
+        tasks: tasks,
+        columns: columns,
+        columnOrder: columnOrder
+      });
+    }
 
     onDragEnd = result => {
         const { destination, source, draggableId } = result;
@@ -74,24 +126,28 @@ class DashBoard extends Component {
     }
 
     render() {
+        var columns = (<div></div>);
+        if (!isEmpty(this.state.columnOrder)) {
+          this.columns = (
+            <DragDropContext onDragEnd={this.onDragEnd}>
+            {   
+                this.state.columnOrder.map(columnId => {
+                    const column = this.state.columns[columnId];
+                    const tasks = column.taskIds.map(taskId => {
+                      return this.state.tasks[taskId];
+                    });
+                    return <Column key={column.id} column={column} tasks={tasks}/>;
+                })
+            }
+        </DragDropContext>
+          );
+        }
+
         return (
         <div className="grid-list-wrapper">
             <div className="row">
-                <DragDropContext onDragEnd={this.onDragEnd}>
-                    {   
-                        this.state.columnOrder.map(columnId => {
-                          console.log(columnId);
-                            const column = this.state.columns[columnId];
-                            const tasks = column.taskIds.map(taskId => {
-                              console.log(taskId);
-                              return this.state.tasks[taskId];
-                            });
-                            console.log(tasks);
 
-                            return <Column key={column.id} column={column} tasks={tasks}/>;
-                        })
-                    }
-                </DragDropContext>
+                {this.columns}
                 <MatButton variant="fab" color="primary" className="text-white mr-15 mb-10" aria-label="add">
                     <i className="zmdi zmdi-plus"></i>
                 </MatButton>

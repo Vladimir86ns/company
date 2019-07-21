@@ -10,6 +10,8 @@ class DashBoard extends Component {
   constructor(props) {
     super(props);
     this.websocketEmit = getConnection();
+    this.companyId = localStorage.getItem('headquarter_company_id');
+    this.accountId = localStorage.getItem('account_id');
   }
     state = {
       tasks: {},
@@ -21,16 +23,33 @@ class DashBoard extends Component {
       socketAxios.get('dashboard/company/1/columns')
       .then(res => {
         this.handleResponse(res.data);
+        this.websocketEmit.subscribe(`${res.data.columnOrder._id}-${this.accountId}-${this.companyId}`, (e) => {
+          this.setState(e);
+        });
+        socketAxios.get(`dashboard/company/subscribe?event_name=${res.data.columnOrder._id}`)
+        .then(res => {
+          console.log('SUBSCRIBE SOCKET');
+        })
+        .catch(err => {
+          console.log('NE SLUSA SOCKET!!!');
+        });
       })
       .catch(err => {
         console.log(err);
         return err;
       });
-
-      this.websocketEmit.subscribe('dva', (e) => {
-        this.setState(e);
-      });
     };
+
+    componentWillUnmount() {
+      socketAxios.get(`dashboard/company/unsubscribe?event_name=${this.state.columnOrder._id}`)
+      .then(res => {
+        console.log('UN SUBSCRIBE SOCKET');
+      })
+      .catch(err => {
+        console.log('NE SLUSA SOCKET!!!');
+      });
+      this.websocketEmit.unsubscribe(`${this.state.columnOrder._id}-${this.accountId}-${this.companyId}`);
+    }
 
     handleResponse(response) {
       let tasks = {};
@@ -54,7 +73,7 @@ class DashBoard extends Component {
         };
       });
 
-      let columnOrder = response.columnOrder.column_ids;
+      let columnOrder = response.columnOrder;
 
       this.setState({
         tasks: tasks,
@@ -79,9 +98,6 @@ class DashBoard extends Component {
     
         const start = this.state.columns[source.droppableId];
         const finish = this.state.columns[destination.droppableId];
-
-        console.log('start', start);
-        console.log('finish', finish);
     
         if (start === finish) {
           const newTaskIds = Array.from(start.taskIds);
@@ -101,9 +117,12 @@ class DashBoard extends Component {
             },
           };
     
-          this.websocketEmit.emit('jedan', { 
+          this.websocketEmit.emit(`${this.state.columnOrder._id}`, { 
             newState, 
             updated: {
+              company_id: this.companyId,
+              account_id: this.accountId,
+              column_order_id: this.state.columnOrder._id,
               columns: [{
                 column_id: start.id,
                 task_ids: newTaskIds
@@ -129,10 +148,6 @@ class DashBoard extends Component {
       taskIds: finishTaskIds,
     };
 
-    // TODO ove new IDS se salje da se unapredi redosled za start column IDS i finish columns ids
-    console.log('startTaskIds', startTaskIds);
-    console.log('finishTaskIds', finishTaskIds);
-
     const newState = {
       ...this.state,
       columns: {
@@ -141,9 +156,12 @@ class DashBoard extends Component {
         [newFinish.id]: newFinish,
       },
     };
-    this.websocketEmit.emit('jedan', { 
+    this.websocketEmit.emit(`${this.state.columnOrder._id}`, { 
       newState, 
       updated: {
+        company_id: this.companyId,
+        account_id: this.accountId,
+        column_order_id: this.state.columnOrder._id,
         columns: [{
           column_id: start.id,
           task_ids: startTaskIds
@@ -158,11 +176,11 @@ class DashBoard extends Component {
 
     render() {
         var columns = (<div></div>);
-        if (!isEmpty(this.state.columnOrder)) {
+        if (!isEmpty(this.state.columnOrder.column_ids)) {
           this.columns = (
             <DragDropContext onDragEnd={this.onDragEnd}>
             {   
-                this.state.columnOrder.map(columnId => {
+                this.state.columnOrder.column_ids.map(columnId => {
                     const column = this.state.columns[columnId];
                     const tasks = column.taskIds.map(taskId => {
                       return this.state.tasks[taskId];

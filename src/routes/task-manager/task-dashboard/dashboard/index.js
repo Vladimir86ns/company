@@ -11,7 +11,6 @@ class DashBoard extends Component {
     super(props);
     this.websocketEmit = getConnection();
   }
-    // state = initialData;
     state = {
       tasks: {},
       columns: {},
@@ -51,15 +50,11 @@ class DashBoard extends Component {
         columns[c._id] = {
           id: c._id,
           title: c.title,
-          taskIds: []
+          taskIds: c.task_ids
         };
       });
 
       let columnOrder = response.columnOrder.column_ids;
-
-      Object.keys(tasks).forEach(taskId => {
-        columns[tasks[taskId].column_id].taskIds.push(taskId);
-      });
 
       this.setState({
         tasks: tasks,
@@ -84,12 +79,15 @@ class DashBoard extends Component {
     
         const start = this.state.columns[source.droppableId];
         const finish = this.state.columns[destination.droppableId];
+
+        console.log('start', start);
+        console.log('finish', finish);
     
         if (start === finish) {
           const newTaskIds = Array.from(start.taskIds);
           newTaskIds.splice(source.index, 1);
           newTaskIds.splice(destination.index, 0, draggableId);
-    
+   
           const newColumn = {
             ...start,
             taskIds: newTaskIds,
@@ -103,7 +101,14 @@ class DashBoard extends Component {
             },
           };
     
-          this.websocketEmit.emit('jedan', newState);
+          this.websocketEmit.emit('jedan', { 
+            newState, 
+            updated: {
+              columns: [{
+                column_id: start.id,
+                task_ids: newTaskIds
+              }]
+            }});
           this.setState(newState);
           return;
         }
@@ -124,6 +129,10 @@ class DashBoard extends Component {
       taskIds: finishTaskIds,
     };
 
+    // TODO ove new IDS se salje da se unapredi redosled za start column IDS i finish columns ids
+    console.log('startTaskIds', startTaskIds);
+    console.log('finishTaskIds', finishTaskIds);
+
     const newState = {
       ...this.state,
       columns: {
@@ -132,7 +141,18 @@ class DashBoard extends Component {
         [newFinish.id]: newFinish,
       },
     };
-    this.websocketEmit.emit('jedan', newState);
+    this.websocketEmit.emit('jedan', { 
+      newState, 
+      updated: {
+        columns: [{
+          column_id: start.id,
+          task_ids: startTaskIds
+        },
+        {
+          column_id: finish.id,
+          task_ids: finishTaskIds
+        }]
+      }});
     this.setState(newState);
     }
 

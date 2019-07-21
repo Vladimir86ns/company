@@ -5,7 +5,12 @@ import initialData from './initial-data';
 import socketAxios from '../../../../../src/util/axios-socket';
 import Column from './components/column/column';
 import { isEmpty } from '../../../../util/lodashFunctions';
+import { getConnection } from '../../../../../src/util/websocket';
 class DashBoard extends Component {
+  constructor(props) {
+    super(props);
+    this.websocketEmit = getConnection();
+  }
     // state = initialData;
     state = {
       tasks: {},
@@ -21,7 +26,11 @@ class DashBoard extends Component {
       .catch(err => {
         console.log(err);
         return err;
-      });  
+      });
+
+      this.websocketEmit.subscribe('dva', (e) => {
+        this.setState(e);
+      });
     };
 
     handleResponse(response) {
@@ -94,6 +103,7 @@ class DashBoard extends Component {
             },
           };
     
+          this.websocketEmit.emit('jedan', newState);
           this.setState(newState);
           return;
         }
@@ -122,6 +132,7 @@ class DashBoard extends Component {
         [newFinish.id]: newFinish,
       },
     };
+    this.websocketEmit.emit('jedan', newState);
     this.setState(newState);
     }
 

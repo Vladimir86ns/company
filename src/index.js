@@ -6,9 +6,11 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from './../src/util/websocket';
 
 // Save a reference to the root element for reuse
 const rootEl = document.getElementById("root");
+connect();
 
 // Create a reusable render method that we can call more than once
 let render = () => {

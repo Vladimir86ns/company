@@ -20,19 +20,21 @@ class DashBoard extends Component {
     };
 
     componentWillMount() {
-      socketAxios.get('dashboard/company/1/columns')
+      socketAxios.get(`dashboard/company/${this.companyId}/columns`)
       .then(res => {
         this.handleResponse(res.data);
-        this.websocketEmit.subscribe(`${res.data.columnOrder._id}-${this.accountId}-${this.companyId}`, (e) => {
-          this.setState(e);
-        });
-        socketAxios.get(`dashboard/company/subscribe?event_name=${res.data.columnOrder._id}`)
-        .then(res => {
-          console.log('SUBSCRIBE SOCKET');
-        })
-        .catch(err => {
-          console.log('NE SLUSA SOCKET!!!');
-        });
+        if (res.data.columnOrder) {
+          this.websocketEmit.subscribe(`${res.data.columnOrder._id}-${this.accountId}-${this.companyId}`, (e) => {
+            this.setState(e);
+          });
+          socketAxios.get(`dashboard/company/subscribe?event_name=${res.data.columnOrder._id}`)
+          .then(res => {
+            console.log('SUBSCRIBE SOCKET');
+          })
+          .catch(err => {
+            console.log('NE SLUSA SOCKET!!!');
+          });
+        }
       })
       .catch(err => {
         console.log(err);
@@ -41,14 +43,16 @@ class DashBoard extends Component {
     };
 
     componentWillUnmount() {
-      socketAxios.get(`dashboard/company/unsubscribe?event_name=${this.state.columnOrder._id}`)
-      .then(res => {
-        console.log('UN SUBSCRIBE SOCKET');
-      })
-      .catch(err => {
-        console.log('NE SLUSA SOCKET!!!');
-      });
-      this.websocketEmit.unsubscribe(`${this.state.columnOrder._id}-${this.accountId}-${this.companyId}`);
+      if (this.state.columnOrder) {
+        socketAxios.get(`dashboard/company/unsubscribe?event_name=${this.state.columnOrder._id}`)
+        .then(res => {
+          console.log('UN SUBSCRIBE SOCKET');
+        })
+        .catch(err => {
+          console.log('NE SLUSA SOCKET!!!');
+        });
+        this.websocketEmit.unsubscribe(`${this.state.columnOrder._id}-${this.accountId}-${this.companyId}`);
+      }
     }
 
     handleResponse(response) {
@@ -176,7 +180,7 @@ class DashBoard extends Component {
 
     render() {
         var columns = (<div></div>);
-        if (!isEmpty(this.state.columnOrder.column_ids)) {
+        if (this.state.columnOrder && !isEmpty(this.state.columnOrder.column_ids)) {
           this.columns = (
             <DragDropContext onDragEnd={this.onDragEnd}>
             {   

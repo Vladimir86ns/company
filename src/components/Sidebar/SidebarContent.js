@@ -26,24 +26,25 @@ class SidebarContent extends Component {
 
     render() {
         const { sidebarMenus } = this.props.sidebar;
+        const sidebarList = sidebarMenus.category1.map((menu, key) => {
+            const { user_settings_done, company_settings_done } = this.props.user;
+            if ((user_settings_done && company_settings_done) || menu.menu_title === 'sidebar.user_settings' || menu.menu_title === 'sidebar.company') {
+                return (
+                    <NavMenuItem
+                    menu={menu}
+                    key={key}
+                    onToggleMenu={() => this.toggleMenu(menu, 'category1')}
+                />
+                );
+            }
+        });
         return (
             <div className="rct-sidebar-nav">
                 <nav className="navigation">
                     {/* NOTICE for now do not need to show sub header */}
                     <List
-                        className="rct-mainMenu p-0 m-0 list-unstyled"
-                        // subheader={
-                        //     <ListSubheader className="side-title" component="li">
-                        //         <IntlMessages id="sidebar.workOrder" />
-                        //     </ListSubheader>}
-                    >
-                        {sidebarMenus.category1.map((menu, key) => (
-                            <NavMenuItem
-                                menu={menu}
-                                key={key}
-                                onToggleMenu={() => this.toggleMenu(menu, 'category1')}
-                            />
-                        ))}
+                        className="rct-mainMenu p-0 m-0 list-unstyled">
+                        {sidebarList}
                     </List>
                 </nav>
             </div>
@@ -52,8 +53,10 @@ class SidebarContent extends Component {
 }
 
 // map state to props
-const mapStateToProps = ({ sidebar }) => {
-    return { sidebar };
+const mapStateToProps = ({ sidebar, accountReducer, userReducer }) => {
+    const { account } = accountReducer;
+    const { user } = userReducer;
+    return { sidebar, account, user };
 };
 
 export default withRouter(connect(mapStateToProps, {

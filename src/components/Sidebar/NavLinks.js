@@ -2,6 +2,19 @@
 export default {
    category1: [
       {
+         "menu_title": "sidebar.task-manager",
+         "menu_icon": "zmdi zmdi-store",
+         "new_item": false,
+         "type_multi": null,
+         "child_routes": [
+            {
+               "path": "/app/task-manager/dashboard",
+               "new_item": false,
+               "menu_title": "sidebar.task-manager"
+            },
+         ]
+      },
+      {
          "menu_title": "sidebar.user_settings",
          "menu_icon": "zmdi zmdi-account",
          "new_item": false,

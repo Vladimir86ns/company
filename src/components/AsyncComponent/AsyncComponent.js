@@ -26,9 +26,16 @@ const AsyncEmployeeInformationComponent = Loadable({
    loading: () => <RctPageLoader />
 });
 
+// Task manger
+const AsyncTaskManagerComponent = Loadable({
+   loader: () => import("Routes/task-manager/task-dashboard/dashboard"),
+   loading: () => <RctPageLoader />
+});
+
 export {
    AsyncCompanyInformationFormComponent,
    AsyncUserInformationFormComponent,
    AsyncAllEmployeesComponent,
-   AsyncEmployeeInformationComponent
+   AsyncEmployeeInformationComponent,
+   AsyncTaskManagerComponent
 };

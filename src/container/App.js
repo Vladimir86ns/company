@@ -47,7 +47,7 @@ class App extends Component {
       }
 
 		if (location.pathname === '/') {
-         return <Redirect to={'/app/dashboard/ecommerce'} />;
+         return <Redirect to={'/app/task-manager/dashboard'} />;
       }
       
       return (

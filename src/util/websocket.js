@@ -2,7 +2,7 @@ import deepstream from 'deepstream.io-client-js';
 let client = null;
 
 export function connect() {
-  client = deepstream('localhost:6020', { silentDeprecation: true });
+  client = deepstream('127.0.0.1:6020', { silentDeprecation: true });
   setEventHandlers();
 };
 
@@ -20,7 +20,7 @@ export function setEventHandlers() {
   });
 };
 
-export function getConnection() {
+export function getSocketClient() {
   return client.event;
 };
 

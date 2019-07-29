@@ -3,7 +3,7 @@
    "version": "4.3.0",
    "description": "A Material Design Reactjs + Redux Admin Template",
    "scripts": {
-      "start": "webpack-dev-server --mode development --inline --progress",
+      "start": "REACT_APP_ENV=dev webpack-dev-server --mode development --inline --progress",
       "build": "webpack --mode production"
    },
    "keywords": [

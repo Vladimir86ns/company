@@ -833,5 +833,9 @@ module.exports = {
    "employee.delete.message": "This will delete employee!",
 
    "button.update": "Update",
-   "button.cancel": "Cancel"
+   "button.create": "Create",
+   "button.cancel": "Cancel",
+
+   "dashboard.column.create": "Create Column",
+   "dashboard.column.form.column_name": "Column name",
 };

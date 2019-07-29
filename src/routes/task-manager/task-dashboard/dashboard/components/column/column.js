@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Droppable } from 'react-beautiful-dnd';
 import List from '../list/list';
+import { Fab } from '@material-ui/core';
 import {
     Card,
     CardTitle,
@@ -17,7 +18,12 @@ class Column extends Component {
                 body 
                 outline 
                 color="secondary">
-                <CardTitle className="font-weight-bold text-dark text-center">{this.props.column.title}</CardTitle>
+                <CardTitle className="font-weight-bold text-dark text-center">
+                    {this.props.column.title}
+                    <Fab size="small" variant="round" color="primary" className="text-white ml-10 mr-15 mb-10" aria-label="add">
+                        <i className="zmdi zmdi-plus"></i>
+                    </Fab>
+                </CardTitle>
                 <Droppable droppableId={this.props.column.id}>
                     {provided => (
                         <div

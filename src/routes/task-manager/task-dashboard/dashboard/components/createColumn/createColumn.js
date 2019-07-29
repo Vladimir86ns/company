@@ -6,6 +6,8 @@ import { Button } from 'reactstrap';
 import {
     ModalFooter
 } from 'reactstrap';
+import socketApi from '../../../../../../api/socket-api';
+import { getCompanyID, getAccountID } from '../../../../../../util/local-storage';
 
 class CreateColumn extends React.Component {
 
@@ -13,9 +15,23 @@ class CreateColumn extends React.Component {
         column_name: ''
     };
 
-    createColumn() {
-        console.log('CREATE COLUMN');
+    async createColumn() {
+        await socketApi.post('/dashboard/column/create', {
+            title: this.state.column_name,
+            company_id: getCompanyID(),
+            account_id: getAccountID()
+        });
+        this.props.closeModal();
     }
+
+    /**
+     * Update the state.
+     */
+    handleChange = (key) => event => {
+        this.setState({
+            [key]: event.target.value,
+        });
+    };
 
     render() {
         return (
@@ -28,8 +44,8 @@ class CreateColumn extends React.Component {
                                     fullWidth 
                                     label={<IntlMessages id={`dashboard.column.form.column_name`} />}
                                     value={this.state.column_name}
-                                    onChange={() => console.log('add handle')}
-                                        autoComplete="off"/>
+                                    onChange={this.handleChange('column_name')} 
+                                    autoComplete="off"/>
                             </div>
                         </div>
                         <ModalFooter>

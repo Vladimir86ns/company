@@ -71,7 +71,7 @@ class DashBoard extends Component {
             tasks: this.handleTasksFromResponse(response.tasks),
             columns: this.handleColumnsFromResponse(response.columns),
             columnOrder: response.columnOrder,
-        });
+        });        
     }
 
     /**
@@ -128,7 +128,12 @@ class DashBoard extends Component {
         this.websocketEmit.subscribe(
             `${response.data.columnOrder._id}-${this.accountId}-${this.companyId}`,
             (e) => {
-                 this.setState(e);
+                // check is column created, or just task change position.
+                if (e.columns[0]) {
+                    this.handleResponseAndSetState(e);
+                    return;
+                }
+                this.setState(e);
             }
         );
     }

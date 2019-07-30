@@ -838,4 +838,8 @@ module.exports = {
 
    "dashboard.column.create": "Create Column",
    "dashboard.column.form.column_name": "Column name",
+
+   "dashboard.task.create": "Create Task",
+   "dashboard.task.form.task_name": "Name",
+   "dashboard.task.form.description": "Description",
 };

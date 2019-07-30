@@ -324,9 +324,9 @@ class DashBoard extends Component {
                     this.state.columnOrder.column_ids.map(columnId => {
                         const column = this.state.columns[columnId];
                         const tasks = column.taskIds.map(taskId => {
-                        return this.state.tasks[taskId];
+                            return this.state.tasks[taskId];
                         });
-                        return <Column key={column.id} column={column} tasks={tasks}/>;
+                        return <Column key={column.id} column={column} tasks={tasks} columnOrderId={this.state.columnOrder._id}/>;
                     })
                 }
             </DragDropContext>

@@ -5,3 +5,7 @@ export const getCompanyID = () => {
 export const getAccountID = () => {
     return localStorage.getItem('account_id');
 };
+
+export const getUserID = () => {
+    return localStorage.getItem('user_id');
+};

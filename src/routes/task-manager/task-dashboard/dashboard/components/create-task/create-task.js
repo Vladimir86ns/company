@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { connect } from 'react-redux';
 import IntlMessages from 'Util/IntlMessages';
 import { Button } from 'reactstrap';
-import {
-    ModalFooter
-} from 'reactstrap';
+import { ModalFooter } from 'reactstrap';
 import socketApi from '../../../../../../api/socket-api';
-import { getCompanyID, getAccountID, getUserID } from '../../../../../../util/local-storage';
+import { getCompanyID, getUserID } from '../../../../../../util/local-storage';
 
 class CreateTask extends Component {
 
@@ -16,6 +13,9 @@ class CreateTask extends Component {
         description: '',
     };
 
+    /**
+     * Create new task on API.
+     */
     async createTask() {
         await socketApi.post('/dashboard/task/create', {
             title: this.state.task_name,
@@ -29,7 +29,7 @@ class CreateTask extends Component {
     }
 
     /**
-     * Update the state.
+     * Update state.
      */
     handleChange = (key) => event => {
         this.setState({
@@ -40,47 +40,47 @@ class CreateTask extends Component {
     render() {
         return (
             <div className="textfields-wrapper">
-                    <form noValidate autoComplete="off">
-                        <div className="row">
-                            <div className="col-sm-12 col-md-12 col-xl-6">
-                                <TextField 
-                                    id="column_name" 
-                                    fullWidth 
-                                    label={<IntlMessages id={`dashboard.task.form.task_name`} />}
-                                    value={this.state.column_name}
-                                    onChange={this.handleChange('task_name')} 
-                                    autoComplete="off"/>
-                            </div>
-                            <div className="col-sm-12 col-md-12 col-xl-12">
-                                <TextField 
-                                    id="column_name" 
-                                    fullWidth 
-                                    label={<IntlMessages id={`dashboard.task.form.description`} />}
-                                    value={this.state.column_name}
-                                    onChange={this.handleChange('description')} 
-                                    autoComplete="off"/>
-                            </div>
+                <form noValidate autoComplete="off">
+                    <div className="row">
+                        <div className="col-sm-12 col-md-12 col-xl-6">
+                            <TextField 
+                                id="column_name" 
+                                fullWidth 
+                                label={<IntlMessages id={`dashboard.task.form.task_name`} />}
+                                value={this.state.column_name}
+                                onChange={this.handleChange('task_name')} 
+                                autoComplete="off"/>
                         </div>
-                        <ModalFooter>
-                            <Button 
-                                variant="raised" 
-                                color="primary" 
-                                className="text-white" 
-                                onClick={() => this.createTask()}>
-                                    <IntlMessages id={`button.create`} />
-                            </Button>
-                            {' '}
-                            <Button 
-                                variant="raised" 
-                                className="text-white btn-danger" 
-                                onClick={() => this.props.closeModal()}>
-                                    <IntlMessages id={`button.cancel`} />
-                            </Button>
-                        </ModalFooter>
-                    </form>
+                        <div className="col-sm-12 col-md-12 col-xl-12">
+                            <TextField 
+                                id="column_name" 
+                                fullWidth 
+                                label={<IntlMessages id={`dashboard.task.form.description`} />}
+                                value={this.state.column_name}
+                                onChange={this.handleChange('description')} 
+                                autoComplete="off"/>
+                        </div>
+                    </div>
+                    <ModalFooter>
+                        <Button 
+                            variant="raised" 
+                            color="primary" 
+                            className="text-white" 
+                            onClick={() => this.createTask()}>
+                                <IntlMessages id={`button.create`} />
+                        </Button>
+                        {' '}
+                        <Button 
+                            variant="raised" 
+                            className="text-white btn-danger" 
+                            onClick={() => this.props.closeModal()}>
+                                <IntlMessages id={`button.cancel`} />
+                        </Button>
+                    </ModalFooter>
+                </form>
             </div>
         );
     }
 }
 
-export default connect(null, null)(CreateTask);
+export default CreateTask;

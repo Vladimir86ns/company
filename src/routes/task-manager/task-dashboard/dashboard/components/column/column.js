@@ -12,6 +12,7 @@ import {
     ModalBody
 } from 'reactstrap';
 import CreateTask from '../create-task/create-task';
+import MAxHeightMenu from '../column-menu/component/MaxHeightMenu';
 
 class Column extends Component {
     state = {
@@ -40,11 +41,16 @@ class Column extends Component {
                 body 
                 outline 
                 color="secondary">
-                <CardTitle className="font-weight-bold text-dark text-center">
-                    {this.props.column.title}
-                    <Fab onClick={() => this.handlePlusButton()} size="small" variant="round" color="primary" className="text-white ml-10 mr-15 mb-10" aria-label="add">
-                        <i className="zmdi zmdi-plus"></i>
-                    </Fab>
+                <CardTitle className="font-weight-bold text-dark">
+                    <div className="row">
+                        <duv className="ml-70 mr-15 mb-10 mt-10" >
+                            {this.props.column.title}
+                        </duv>
+                        <Fab onClick={() => this.handlePlusButton()} size="small" variant="round" color="primary" className="text-white ml-50 mr-10 mb-10" aria-label="add">
+                            <i className="zmdi zmdi-plus"></i>
+                        </Fab>
+                        <MAxHeightMenu column={this.props.column}/>
+                    </div>
                 </CardTitle>
                 <Droppable droppableId={this.props.column.id}>
                     {provided => (

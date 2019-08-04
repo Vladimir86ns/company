@@ -5,14 +5,15 @@ import socketAxios from '../../../../../src/util/axios-socket';
 import Column from './components/column/column';
 import { isEmpty, get } from '../../../../util/lodashFunctions';
 import { getSocketClient } from '../../../../../src/util/websocket';
-
 import IntlMessages from 'Util/IntlMessages';
+import { NotificationManager } from 'react-notifications';
 import {
     Modal,
     ModalHeader,
     ModalBody
 } from 'reactstrap';
 import CreateColumn from './components/createColumn/createColumn';
+import { TYPE_UPDATE_COLUMN, TYPE_CREATE_COLUMN, TYPE_CREATE_TASK } from '../../../../util/message-types';
 
 const LIMIT_COLUMNS = 3;
 
@@ -128,6 +129,10 @@ class DashBoard extends Component {
         this.websocketEmit.subscribe(
             `${response.data.columnOrder._id}-${this.accountId}-${this.companyId}`,
             (e) => {
+                if (e.updateData) {
+                    this.handleMessageTypeNotification(e.updateData);
+                }
+
                 // check is column created, or just task change position.
                 if (e.columns[0]) {
                     this.handleResponseAndSetState(e);
@@ -136,6 +141,27 @@ class DashBoard extends Component {
                 this.setState(e);
             }
         );
+    }
+
+    /**
+     * Check update data on update dashboard what is was changed, and display notification message.
+     * 
+     * @param {object} updateData 
+     */
+    handleMessageTypeNotification(updateData) {
+        switch(updateData.message_type) {
+            case TYPE_UPDATE_COLUMN:
+                NotificationManager.info(<IntlMessages id={"notification_manager.info.column_update"}/>);
+                break;
+            case TYPE_CREATE_COLUMN:
+                NotificationManager.info(<IntlMessages id={"notification_manager.info.column_create"}/>);
+                break;
+            case TYPE_CREATE_TASK:
+                NotificationManager.info(<IntlMessages id={"notification_manager.info.task_create"}/>);
+                break;
+            default:
+                return;
+          }
     }
 
     /**
@@ -339,7 +365,7 @@ class DashBoard extends Component {
      */
     checkColumnsAndDisplayButton() {
         if (this.state.columnOrder && this.state.columnOrder.column_ids && this.state.columnOrder.column_ids.length >= LIMIT_COLUMNS) {
-            return (<div></div>);
+            // return (<div></div>);
         }
 
         return (

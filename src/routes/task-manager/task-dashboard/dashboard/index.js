@@ -365,7 +365,7 @@ class DashBoard extends Component {
      */
     checkColumnsAndDisplayButton() {
         if (this.state.columnOrder && this.state.columnOrder.column_ids && this.state.columnOrder.column_ids.length >= LIMIT_COLUMNS) {
-            // return (<div></div>);
+            return (<div></div>);
         }
 
         return (

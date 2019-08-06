@@ -7,7 +7,7 @@ import DeleteConfirmationDialog from 'Components/DeleteConfirmationDialog/Delete
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import MultiSelect from './multiselect';
+import MultiSelect from '../multiselect-form/multiselect';
 
 class UpdateTask extends Component {
 
@@ -47,7 +47,6 @@ class UpdateTask extends Component {
     }
 
     render() {
-        console.log(this.state.everybodyCanSee);
         return (
             <div className="textfields-wrapper">
                 <form noValidate autoComplete="off">

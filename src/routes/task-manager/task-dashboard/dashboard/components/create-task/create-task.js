@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import IntlMessages from 'Util/IntlMessages';
 import { Button } from 'reactstrap';
-import { ModalFooter } from 'reactstrap';
+import { ModalFooter} from 'reactstrap';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import MultiSelect from '../multiselect-form/multiselect';
+
 import socketApi from '../../../../../../api/socket-api';
 import { getCompanyID, getUserID } from '../../../../../../util/local-storage';
 
@@ -42,8 +47,8 @@ class CreateTask extends Component {
             <div className="textfields-wrapper">
                 <form noValidate autoComplete="off">
                     <div className="row">
-                        <div className="col-sm-12 col-md-12 col-xl-6">
-                            <TextField 
+                        <div className="col-sm-6 col-md-6 col-xl-6">
+                            <TextField
                                 id="column_name" 
                                 fullWidth 
                                 label={<IntlMessages id={`dashboard.task.form.task_name`} />}
@@ -51,14 +56,27 @@ class CreateTask extends Component {
                                 onChange={this.handleChange('task_name')} 
                                 autoComplete="off"/>
                         </div>
-                        <div className="col-sm-12 col-md-12 col-xl-12">
-                            <TextField 
-                                id="column_name" 
+                        <div className="col-sm-12 col-md-12 col-xl-12 mt-30">
+                            <TextField
+                                id="column_name"
+                                multiline
                                 fullWidth 
                                 label={<IntlMessages id={`dashboard.task.form.description`} />}
                                 value={this.state.column_name}
                                 onChange={this.handleChange('description')} 
                                 autoComplete="off"/>
+                        </div>
+                        <div className="col-sm-12 col-md-12 col-xl-12 mt-3">
+                            <MultiSelect />
+                            <RadioGroup aria-label="position" name="position" value={this.state.everybodyCanSee} row>
+                            <FormControlLabel
+                                onClick={() => this.handleChangeRadio()}
+                                value="yes"
+                                control={<Radio color="primary" />}
+                                label={<IntlMessages id={'dashboard.task.form.everybody_can_see'}/>}
+                                labelPlacement="yes"
+                                />
+                            </RadioGroup>
                         </div>
                     </div>
                     <ModalFooter>
@@ -72,7 +90,7 @@ class CreateTask extends Component {
                         {' '}
                         <Button 
                             variant="raised" 
-                            className="text-white btn-danger" 
+                            className="text-white btn-primary" 
                             onClick={() => this.props.closeModal()}>
                                 <IntlMessages id={`button.cancel`} />
                         </Button>

@@ -835,17 +835,25 @@ module.exports = {
    "button.update": "Update",
    "button.create": "Create",
    "button.cancel": "Cancel",
+   "button.delete": "Delete",
 
    "dashboard.column.create": "Create Column",
    "dashboard.column.update": "Update Column",
    "dashboard.column.form.column_name": "Column name",
 
+   "dashboard.task.update": "Update Task",
    "dashboard.task.create": "Create Task",
    "dashboard.task.form.task_name": "Name",
    "dashboard.task.form.description": "Description",
+   "dashboard.task.form.assigned": "Assigned",
+   "dashboard.task.form.everybody_can_see": "everybody can see",
+   "dashboard.task.confirmation.delete.title": "Are you sure?",
+   "dashboard.task.confirmation.delete.message": "If you confirm, this task will be deleted?",
 
    "notification_manager.error.nothing_changed": "Everything is the same!",
    "notification_manager.info.column_update": "Column name updated!",
    "notification_manager.info.column_create": "New column created!",
    "notification_manager.info.task_create": "New task created!",
+
+   "created_by": "Created by",
 };

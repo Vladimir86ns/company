@@ -15,7 +15,7 @@ class UpdateTask extends Component {
         task_name: 'Test ime',
         task_description: `Curabitur ac orci fermentum, sollicitudin neque sed, maximus neque. Ut sed purus massa. Aliquam erat volutpat. Aliquam eu leo facilisis massa aliquam pretium eu nec erat. Quisque odio neque, semper vel mi a, tempor tincidunt nulla. Cras at nisi cursus, volutpat lacus luctus, molestie ipsum. Etiam sed hendrerit leo.`,
         toggle: false,
-        everybodyCanSee: 'yes',
+        everybodyCanSee: 'no',
     };
 
     componentWillMount() {
@@ -77,7 +77,7 @@ class UpdateTask extends Component {
                                 onClick={() => this.handleChangeRadio()}
                                 value="yes"
                                 control={<Radio color="primary" />}
-                                label={<IntlMessages id={'dashboard.task.form.everybody_can_see'}/>}
+                                label={<IntlMessages id={'dashboard.task.form.only_assigned_people_can_see'}/>}
                                 labelPlacement="yes"
                                 />
                             </RadioGroup>

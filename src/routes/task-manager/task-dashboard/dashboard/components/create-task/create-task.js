@@ -16,6 +16,7 @@ class CreateTask extends Component {
     state = {
         task_name: '',
         description: '',
+        everybodyCanSee: 'no',
     };
 
     /**
@@ -73,7 +74,7 @@ class CreateTask extends Component {
                                 onClick={() => this.handleChangeRadio()}
                                 value="yes"
                                 control={<Radio color="primary" />}
-                                label={<IntlMessages id={'dashboard.task.form.everybody_can_see'}/>}
+                                label={<IntlMessages id={'dashboard.task.form.only_assigned_people_can_see'}/>}
                                 labelPlacement="yes"
                                 />
                             </RadioGroup>

@@ -846,7 +846,7 @@ module.exports = {
    "dashboard.task.form.task_name": "Name",
    "dashboard.task.form.description": "Description",
    "dashboard.task.form.assigned": "Assigned",
-   "dashboard.task.form.everybody_can_see": "everybody can see",
+   "dashboard.task.form.only_assigned_people_can_see": "only assigned people can see",
    "dashboard.task.confirmation.delete.title": "Are you sure?",
    "dashboard.task.confirmation.delete.message": "If you confirm, this task will be deleted?",
 

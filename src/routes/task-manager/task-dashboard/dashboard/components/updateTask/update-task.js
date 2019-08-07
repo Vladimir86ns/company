@@ -12,15 +12,21 @@ import MultiSelect from '../multiselect-form/multiselect';
 class UpdateTask extends Component {
 
     state = {
-        task_name: 'Test ime',
-        task_description: `Curabitur ac orci fermentum, sollicitudin neque sed, maximus neque. Ut sed purus massa. Aliquam erat volutpat. Aliquam eu leo facilisis massa aliquam pretium eu nec erat. Quisque odio neque, semper vel mi a, tempor tincidunt nulla. Cras at nisi cursus, volutpat lacus luctus, molestie ipsum. Etiam sed hendrerit leo.`,
+        task_name: '',
+        task_description: '',
         toggle: false,
         everybodyCanSee: 'no',
+        assigned_ids: []
     };
 
     componentWillMount() {
-        // this.setState({column_name: this.props.column.title, column_name_original: this.props.column.title});
-    }
+        this.setState({
+            task_name: this.props.task.title,
+            task_description: this.props.task.description,
+            assigned_ids: this.props.task.assigned_ids,
+            everybodyCanSee: this.props.task.only_assigned_can_see ? 'yes' : 'no'
+        });
+    };
 
     /**
      * Update the state.
@@ -31,12 +37,21 @@ class UpdateTask extends Component {
         });
     };
 
+    updateTask() {
+        console.log(this.state);
+        this.props.closeModal();
+    }
+
     /**
      * On Delete
      */
     onDelete() {
         this.refs.deleteConfirmationDialog.open();
     }
+
+    handleChangeAssignedIds = ids => {
+        this.setState({ assigned_ids: ids });
+    };
 
     handleChangeRadio() {
         if (this.state.everybodyCanSee === 'yes') {
@@ -71,7 +86,7 @@ class UpdateTask extends Component {
                                 autoComplete="off"/>
                         </div>
                         <div className="col-sm-12 col-md-12 col-xl-12 mt-3">
-                            <MultiSelect />
+                            <MultiSelect assignedIds={this.props.task.assigned_ids} selectedAssignedIds={(ids)=> this.handleChangeAssignedIds(ids)}/>
                             <RadioGroup aria-label="position" name="position" value={this.state.everybodyCanSee} row>
                             <FormControlLabel
                                 onClick={() => this.handleChangeRadio()}
@@ -84,7 +99,9 @@ class UpdateTask extends Component {
                             <hr/>
                             <div className="media-body pt-5">
                                 <h6 className="mb-0">{<IntlMessages id={'created_by'} />}:</h6>
-                                <h6 className="fs-14">Jhon Smith <span className="fs-14">Jan 9, 2017, 3:03:28 PM</span></h6>
+                                <h6 className="fs-14">{this.props.task.author_name}</h6>
+                                <h6 className="mb-0">{<IntlMessages id={'time'} />}:</h6>
+                                <h6 className="fs-14"><span className="fs-14">{this.props.task.created_at}</span></h6>
                             </div>
                         </div>
                     </div>
@@ -93,7 +110,7 @@ class UpdateTask extends Component {
                             variant="raised" 
                             color="primary" 
                             className="text-white" 
-                            onClick={() => this.props.closeModal()}>
+                            onClick={() => this.updateTask()}>
                                 <IntlMessages id={`button.update`} />
                         </Button>
                         {' '}

@@ -52,7 +52,7 @@ class List extends Component {
                         <IntlMessages id={'dashboard.task.update'} />
                     </ModalHeader>
                     <ModalBody>
-                        <UpdateTask closeModal={() => this.closeModal()}/>
+                        <UpdateTask closeModal={() => this.closeModal()} task={this.props.task}/>
                     </ModalBody>
                 </Modal>
             </div>

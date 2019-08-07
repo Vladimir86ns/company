@@ -14,6 +14,7 @@ import {
 } from 'reactstrap';
 import CreateColumn from './components/createColumn/createColumn';
 import { TYPE_UPDATE_COLUMN, TYPE_CREATE_COLUMN, TYPE_CREATE_TASK } from '../../../../util/message-types';
+import { TableSortLabel } from '@material-ui/core';
 
 const LIMIT_COLUMNS = 3;
 
@@ -205,10 +206,14 @@ class DashBoard extends Component {
         tasks.forEach(task => {
             newTasks[task._id] = { 
               id: task._id,
+              assigned_ids: task.assigned_ids,
               title: task.title,
               description: task.description,
               author_id: task.author_id,
-              column_id: task.column_id 
+              author_name: task.author_name,
+              created_at: task.created_at,
+              column_id: task.column_id,
+              only_assigned_can_see: task.only_assigned_can_see 
             };
           });
         

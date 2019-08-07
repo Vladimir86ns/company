@@ -856,4 +856,5 @@ module.exports = {
    "notification_manager.info.task_create": "New task created!",
 
    "created_by": "Created by",
+   "time": "Time",
 };

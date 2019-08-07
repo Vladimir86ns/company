@@ -23,6 +23,11 @@ class MultiSelect extends React.Component {
 
 
   componentWillMount() {
+      console.log(this.props);
+      if (!isEmpty(this.props.assignedIds)) {
+        console.log('Usao');
+        this.setState({ nameIds: this.props.assignedIds });
+      }
       if (isEmpty(this.props.employees)) {
           this.props.getEmployees();
       } 

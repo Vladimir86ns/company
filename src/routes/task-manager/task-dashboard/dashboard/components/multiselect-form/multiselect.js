@@ -4,42 +4,35 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Chip from '@material-ui/core/Chip';
 import IntlMessages from 'Util/IntlMessages';
+import { isEmpty } from 'Util/lodashFunctions';
+import { connect } from 'react-redux';
+import { 
+    getEmployees,
+ } from '../../../../../../actions';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
-export default class MultiSelect extends React.Component {
+class MultiSelect extends React.Component {
   state = {
-    name: [],
+    nameIds: [],
   };
+
   handleChange = event => {
-    this.setState({ name: event.target.value });
+    this.setState({ nameIds: event.target.value });
+    this.props.selectedAssignedIds(event.target.value);
   };
+
+
+  componentWillMount() {
+      if (isEmpty(this.props.employees)) {
+          this.props.getEmployees();
+      } 
+  }
 
   render() {
+    let newNames = [];
+    if (this.props.employees.data) {
+        newNames = this.props.employees.data;
+    }
     return (
       <form autoComplete="off">
         <div className="row">
@@ -49,17 +42,13 @@ export default class MultiSelect extends React.Component {
                 <InputLabel htmlFor="select-multiple-chip">{<IntlMessages id={'dashboard.task.form.assigned'}/>}</InputLabel>
                 <Select
                   multiple
-                  value={this.state.name}
+                  value={this.state.nameIds}
                   onChange={this.handleChange}
                   input={<Input id="select-multiple-chip" />}
-                  renderValue={selected => (
-                    <div>
-                      {selected.map(value => <Chip key={value} label={value} />)}
-                    </div>
-                  )} MenuProps={MenuProps}>
-                  {names.map(name => (
-                    <MenuItem key={name} value={name}>
-                      {name}
+                  >
+                  {newNames.map(employee => (
+                    <MenuItem key={employee.id} value={employee.id}>
+                      {employee.first_name}
                     </MenuItem>
                   ))}
                 </Select>
@@ -71,3 +60,13 @@ export default class MultiSelect extends React.Component {
     );
   }
 }
+
+function mapStateToProps({ employeeReducer }) {
+    const { employees } = employeeReducer;
+
+    return { employees };
+}
+
+export default connect(mapStateToProps, {
+    getEmployees
+})(MultiSelect);

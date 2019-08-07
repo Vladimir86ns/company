@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import IntlMessages from 'Util/IntlMessages';
 import { Button } from 'reactstrap';
 import { ModalFooter} from 'reactstrap';
+import { connect } from 'react-redux';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -17,6 +18,8 @@ class CreateTask extends Component {
         task_name: '',
         description: '',
         everybodyCanSee: 'no',
+        first_time_changed: false,
+        assignedIds: []
     };
 
     /**
@@ -28,11 +31,22 @@ class CreateTask extends Component {
             description: this.state.description,
             company_id: getCompanyID(),
             author_id: getUserID(),
+            author_name: `${this.props.user.first_name} ${this.props.user.last_name}`,
             column_id: this.props.columnId,
-            column_order_id: this.props.columnOrderId
+            assigned_ids: this.state.assignedIds,
+            column_order_id: this.props.columnOrderId,
+            only_assigned_can_see: this.state.everybodyCanSee === 'yes'
         });
         this.props.closeModal();
     }
+
+    handleChangeAssignedIds = ids => {
+        if (!this.state.first_time_changed && this.state.everybodyCanSee === 'no') {
+            this.setState({ assignedIds: ids, everybodyCanSee: 'yes', first_time_changed: true });
+            return;
+        }
+        this.setState({ assignedIds: ids });
+    };
 
     /**
      * Update state.
@@ -42,6 +56,15 @@ class CreateTask extends Component {
             [key]: event.target.value,
         });
     };
+
+
+    handleChangeRadio() {
+        if (this.state.everybodyCanSee === 'yes') {
+            this.setState({everybodyCanSee: 'no'});
+        } else {
+            this.setState({everybodyCanSee: 'yes'});
+        }
+    }
 
     render() {
         return (
@@ -68,7 +91,7 @@ class CreateTask extends Component {
                                 autoComplete="off"/>
                         </div>
                         <div className="col-sm-12 col-md-12 col-xl-12 mt-3">
-                            <MultiSelect />
+                            <MultiSelect selectedAssignedIds={(ids)=> this.handleChangeAssignedIds(ids)}/>
                             <RadioGroup aria-label="position" name="position" value={this.state.everybodyCanSee} row>
                             <FormControlLabel
                                 onClick={() => this.handleChangeRadio()}
@@ -102,4 +125,10 @@ class CreateTask extends Component {
     }
 }
 
-export default CreateTask;
+function mapStateToProps({ userReducer }) {
+    const { user } = userReducer;
+
+    return { user };
+}
+
+export default connect(mapStateToProps, null)(CreateTask);

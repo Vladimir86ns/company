@@ -3,7 +3,7 @@ import MatButton from '@material-ui/core/Button';
 import { DragDropContext } from 'react-beautiful-dnd';
 import socketAxios from '../../../../../src/util/axios-socket';
 import Column from './components/column/column';
-import { isEmpty, get } from '../../../../util/lodashFunctions';
+import { isEmpty } from '../../../../util/lodashFunctions';
 import { getSocketClient } from '../../../../../src/util/websocket';
 import IntlMessages from 'Util/IntlMessages';
 import { NotificationManager } from 'react-notifications';
@@ -13,8 +13,7 @@ import {
     ModalBody
 } from 'reactstrap';
 import CreateColumn from './components/createColumn/createColumn';
-import { TYPE_UPDATE_COLUMN, TYPE_CREATE_COLUMN, TYPE_CREATE_TASK } from '../../../../util/message-types';
-import { TableSortLabel } from '@material-ui/core';
+import { TYPE_UPDATE_COLUMN, TYPE_CREATE_COLUMN, TYPE_CREATE_TASK, TYPE_UPDATE_TASK } from '../../../../util/message-types';
 
 const LIMIT_COLUMNS = 3;
 
@@ -160,6 +159,9 @@ class DashBoard extends Component {
             case TYPE_CREATE_TASK:
                 NotificationManager.info(<IntlMessages id={"notification_manager.info.task_create"}/>);
                 break;
+            case TYPE_UPDATE_TASK:
+                NotificationManager.info(<IntlMessages id={"notification_manager.info.task_updated"}/>);
+                break;
             default:
                 return;
           }
@@ -204,7 +206,8 @@ class DashBoard extends Component {
     handleTasksFromResponse(tasks) {
         let newTasks = {};
         tasks.forEach(task => {
-            newTasks[task._id] = { 
+            newTasks[task._id] = {
+              task,
               id: task._id,
               assigned_ids: task.assigned_ids,
               title: task.title,
@@ -213,7 +216,10 @@ class DashBoard extends Component {
               author_name: task.author_name,
               created_at: task.created_at,
               column_id: task.column_id,
-              only_assigned_can_see: task.only_assigned_can_see 
+              only_assigned_can_see: task.only_assigned_can_see,
+              updated_at: task.updated_at,
+              updated_by_id: task.updated_by_id,
+              updated_by_name: task.updated_by_name,
             };
           });
         

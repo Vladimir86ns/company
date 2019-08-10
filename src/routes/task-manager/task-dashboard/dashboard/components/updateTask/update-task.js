@@ -8,6 +8,9 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MultiSelect from '../multiselect-form/multiselect';
+import socketApi from 'Api/socket-api';
+import { connect } from 'react-redux';
+import { getCompanyID, getUserID, getAccountID } from 'Util/local-storage';
 
 class UpdateTask extends Component {
 
@@ -37,8 +40,21 @@ class UpdateTask extends Component {
         });
     };
 
-    updateTask() {
-        console.log(this.state);
+    async updateTask() {
+        await socketApi.post('/dashboard/task/update', {
+            title: this.state.task_name,
+            description: this.state.task_description,
+            task_id: this.props.task.id,
+            company_id: getCompanyID(),
+            account_id: getAccountID(),
+            column_id: this.props.task.column_id,
+            assigned_ids: this.state.assigned_ids,
+            column_order_id: this.props.columnOrderId,
+            only_assigned_can_see: this.state.everybodyCanSee === 'yes',
+            updated_by_id: getUserID(),
+            updated_by_name: `${this.props.user.first_name} ${this.props.user.last_name}`
+        });
+
         this.props.closeModal();
     }
 
@@ -59,6 +75,17 @@ class UpdateTask extends Component {
         } else {
             this.setState({everybodyCanSee: 'yes'});
         }
+    }
+
+    getUpdatedSection() {
+        return (
+            <div className="media-body pt-5">
+                <h6 className="mb-0">{<IntlMessages id={'last_updated_by'} />}:</h6>
+                <h6 className="fs-14">{this.props.task.updated_by_name}</h6>
+                <h6 className="mb-0">{<IntlMessages id={'time'} />}:</h6>
+                <h6 className="fs-14"><span className="fs-14">{this.props.task.updated_at}</span></h6>
+            </div>
+        );
     }
 
     render() {
@@ -97,11 +124,14 @@ class UpdateTask extends Component {
                                 />
                             </RadioGroup>
                             <hr/>
-                            <div className="media-body pt-5">
-                                <h6 className="mb-0">{<IntlMessages id={'created_by'} />}:</h6>
-                                <h6 className="fs-14">{this.props.task.author_name}</h6>
-                                <h6 className="mb-0">{<IntlMessages id={'time'} />}:</h6>
-                                <h6 className="fs-14"><span className="fs-14">{this.props.task.created_at}</span></h6>
+                            <div className="row">
+                                <div className="ml-15 media-body pt-5">
+                                    <h6 className="mb-0">{<IntlMessages id={'created_by'} />}:</h6>
+                                    <h6 className="fs-14">{this.props.task.author_name}</h6>
+                                    <h6 className="mb-0">{<IntlMessages id={'time'} />}:</h6>
+                                    <h6 className="fs-14"><span className="fs-14">{this.props.task.created_at}</span></h6>
+                                </div>
+                                {this.props.task.updated_at ? this.getUpdatedSection() : <div></div>}
                             </div>
                         </div>
                     </div>
@@ -140,4 +170,10 @@ class UpdateTask extends Component {
     }
 }
 
-export default UpdateTask;
+function mapStateToProps({ userReducer }) {
+    const { user } = userReducer;
+
+    return { user };
+}
+
+export default connect(mapStateToProps, null)(UpdateTask);

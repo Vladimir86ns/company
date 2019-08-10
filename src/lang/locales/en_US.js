@@ -854,7 +854,9 @@ module.exports = {
    "notification_manager.info.column_update": "Column name updated!",
    "notification_manager.info.column_create": "New column created!",
    "notification_manager.info.task_create": "New task created!",
+   "notification_manager.info.task_updated": "Task is updated!",
 
    "created_by": "Created by",
+   "last_updated_by": "Last updated by",
    "time": "Time",
 };

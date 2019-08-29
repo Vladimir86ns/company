@@ -50,12 +50,13 @@ class DashBoard extends Component {
         socketAxios.get(`dashboard/company/${this.companyId}/columns`)
         .then(res => {
             this.handleResponseAndSetState(res.data);
-            if (res.data.columnOrder) {
-                this.subscribeOrUnsubscribeSocketAPI(res.data.columnOrder._id, 'subscribe');
+            if (res.data.dashboard) {
+                this.subscribeOrUnsubscribeSocketAPI(res.data.dashboard.id, 'subscribe');
                 this.subscribeOnEventName(res);
             }
         })
         .catch(err => {
+            console.log('usao je u error');
             console.log(err);
             console.log(err.response);
             return err;
@@ -71,7 +72,7 @@ class DashBoard extends Component {
         this.setState({
             tasks: this.handleTasksFromResponse(response.tasks),
             columns: this.handleColumnsFromResponse(response.columns),
-            columnOrder: response.columnOrder,
+            columnOrder: this.handleDashboardFromResponse(response.dashboard)
         });        
     }
 
@@ -107,7 +108,7 @@ class DashBoard extends Component {
      * Send new state to websocket API
      */
     emitSocketWithNewState(newState, newData) {
-        this.websocketEmit.emit(`${this.state.columnOrder._id}`, { 
+        this.websocketEmit.emit(`${this.state.columnOrder.id}`, { 
             newState, 
             updated: newData
         });
@@ -127,7 +128,7 @@ class DashBoard extends Component {
      */
     subscribeOnEventName(response) {
         this.websocketEmit.subscribe(
-            `${response.data.columnOrder._id}-${this.accountId}-${this.companyId}`,
+            `${response.data.dashboard.id}-${this.accountId}-${this.companyId}`,
             (e) => {
                 if (e.updateData) {
                     this.handleMessageTypeNotification(e.updateData);
@@ -135,8 +136,7 @@ class DashBoard extends Component {
 
                 // check is column created, or just task change position.
                 if (e.columns[0]) {
-                    this.handleResponseAndSetState(e);
-                    return;
+                    return this.handleResponseAndSetState(e);
                 }
                 this.setState(e);
             }
@@ -206,10 +206,10 @@ class DashBoard extends Component {
     handleTasksFromResponse(tasks) {
         let newTasks = {};
         tasks.forEach(task => {
-            newTasks[task._id] = {
+            newTasks[task.id] = {
               task,
-              id: task._id,
-              assigned_ids: task.assigned_ids,
+              id: task.id,
+              assigned_ids: this.handleAssignedIds(task.assigned_ids),
               title: task.title,
               description: task.description,
               author_id: task.author_id,
@@ -222,8 +222,17 @@ class DashBoard extends Component {
               updated_by_name: task.updated_by_name,
             };
           });
-        
+
         return newTasks;
+    }
+
+    handleAssignedIds(ids) {
+        if (isEmpty(ids) || ids === null || ids === 'null') {
+            return [];
+        }
+        let idsAll = ids.split(",");
+        
+        return idsAll.map(i => parseInt(i));
     }
 
     /**
@@ -234,14 +243,24 @@ class DashBoard extends Component {
     handleColumnsFromResponse(columns) {
         let newColumns = {};
         columns.forEach((column, i) => {
-            newColumns[column._id] = {
-              id: column._id,
+            newColumns[column.id] = {
+              id: column.id,
               title: column.title,
-              taskIds: column.task_ids
+              taskIds: !isEmpty(column.task_ids) ? column.task_ids.split(",") : column.task_ids
             };
           });
-        
+
         return newColumns;
+    }
+
+    /**
+     * Prepare dashboard from response.
+     * 
+     * @param {Array} columns 
+     */
+    handleDashboardFromResponse(dashboard) {
+        dashboard.column_ids = !isEmpty(dashboard.column_ids) ? dashboard.column_ids.split(",") : dashboard.column_ids;
+        return dashboard;
     }
 
     /**
@@ -292,7 +311,7 @@ class DashBoard extends Component {
         let newData = {
             company_id: this.companyId,
             account_id: this.accountId,
-            column_order_id: this.state.columnOrder._id,
+            column_order_id: this.state.columnOrder.id,
             columns: [{
               column_id: start.id,
               task_ids: newTaskIds
@@ -339,7 +358,7 @@ class DashBoard extends Component {
         let newData = {
             company_id: this.companyId,
             account_id: this.accountId,
-            column_order_id: this.state.columnOrder._id,
+            column_order_id: this.state.columnOrder.id,
             columns: [{
                     column_id: start.id,
                     task_ids: startTaskIds
@@ -360,10 +379,13 @@ class DashBoard extends Component {
                 {   
                     this.state.columnOrder.column_ids.map(columnId => {
                         const column = this.state.columns[columnId];
-                        const tasks = column.taskIds.map(taskId => {
-                            return this.state.tasks[taskId];
-                        });
-                        return <Column key={column.id} column={column} tasks={tasks} columnOrderId={this.state.columnOrder._id}/>;
+                        const tasks = 
+                            !isEmpty(column.taskIds) ? 
+                                column.taskIds.map(taskId => {
+                                    return this.state.tasks[taskId];
+                                }):
+                                [];
+                        return <Column key={column.id} column={column} tasks={tasks} columnOrderId={this.state.columnOrder.id}/>;
                     })
                 }
             </DragDropContext>
@@ -388,6 +410,7 @@ class DashBoard extends Component {
 
     render() {
         var columns = (<div></div>);
+        console.log('STATE', this.state);
         if (this.state.columnOrder && !isEmpty(this.state.columnOrder.column_ids)) {
           columns = this.getAllColumns();
         }
@@ -403,7 +426,7 @@ class DashBoard extends Component {
                     <IntlMessages id={`dashboard.column.create`} />
                 </ModalHeader>
                 <ModalBody>
-                    <CreateColumn closeModal={() => this.onCreateColumnModalClose()}/>
+                    <CreateColumn dashboardId={this.state.columnOrder.id} closeModal={() => this.onCreateColumnModalClose()}/>
                 </ModalBody>
             </Modal>
         </div>

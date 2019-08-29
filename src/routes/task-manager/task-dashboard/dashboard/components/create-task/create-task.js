@@ -10,7 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MultiSelect from '../multiselect-form/multiselect';
 
 import socketApi from '../../../../../../api/socket-api';
-import { getCompanyID, getUserID } from '../../../../../../util/local-storage';
+import { getCompanyID, getUserID, getAccountID } from '../../../../../../util/local-storage';
 
 class CreateTask extends Component {
 
@@ -30,6 +30,7 @@ class CreateTask extends Component {
             title: this.state.task_name,
             description: this.state.description,
             company_id: getCompanyID(),
+            account_id: getAccountID(),
             author_id: getUserID(),
             author_name: `${this.props.user.first_name} ${this.props.user.last_name}`,
             column_id: this.props.columnId,

@@ -9,6 +9,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MultiSelect from '../multiselect-form/multiselect';
 import socketApi from 'Api/socket-api';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { getCompanyID, getUserID, getAccountID } from 'Util/local-storage';
 
@@ -83,7 +84,7 @@ class UpdateTask extends Component {
                 <h6 className="mb-0">{<IntlMessages id={'last_updated_by'} />}:</h6>
                 <h6 className="fs-14">{this.props.task.updated_by_name}</h6>
                 <h6 className="mb-0">{<IntlMessages id={'time'} />}:</h6>
-                <h6 className="fs-14"><span className="fs-14">{this.props.task.updated_at}</span></h6>
+                <h6 className="fs-14"><span className="fs-14">{moment(this.props.task.updated_at).format('MMMM Do YYYY, H:mm:ss')}</span></h6>
             </div>
         );
     }
@@ -129,7 +130,7 @@ class UpdateTask extends Component {
                                     <h6 className="mb-0">{<IntlMessages id={'created_by'} />}:</h6>
                                     <h6 className="fs-14">{this.props.task.author_name}</h6>
                                     <h6 className="mb-0">{<IntlMessages id={'time'} />}:</h6>
-                                    <h6 className="fs-14"><span className="fs-14">{this.props.task.created_at}</span></h6>
+                                    <h6 className="fs-14"><span className="fs-14">{moment(this.props.task.created_at).format('MMMM Do YYYY, H:mm:ss')}</span></h6>
                                 </div>
                                 {this.props.task.updated_at ? this.getUpdatedSection() : <div></div>}
                             </div>

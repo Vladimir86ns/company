@@ -42,7 +42,7 @@ class List extends Component {
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
                                 innerRef={provided.innerRef}>
-                                    <CardTitle className="font-weight-bold">{this.props.task.title}</CardTitle>
+                                    <CardTitle className="font-weight-bold"><h6>#{this.props.task.id}</h6>{this.props.task.title}</CardTitle>
                             </Card>
                         </div>
                     )}

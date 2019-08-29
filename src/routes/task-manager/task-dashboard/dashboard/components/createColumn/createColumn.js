@@ -16,10 +16,12 @@ class CreateColumn extends React.Component {
     };
 
     async createColumn() {
+        console.log('PROPS', this.props);
         await socketApi.post('/dashboard/column/create', {
             title: this.state.column_name,
             company_id: getCompanyID(),
-            account_id: getAccountID()
+            account_id: getAccountID(),
+            dashboard_id: this.props.dashboardId,
         });
         this.props.closeModal();
     }

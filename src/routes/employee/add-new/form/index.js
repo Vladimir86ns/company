@@ -23,16 +23,16 @@ import {
 class EmployeeInformationForm extends React.Component {
 
     state = {
-        first_name: 'novi',
-        last_name: 'novi',
-        email: 'novi@novi.com',
-        country: 'novi',
-        city: 'novi',
-        address: 'novi',
-        mobile_phone: 'novi',
-        phone_number: 'novi',
-        hire_date: '2020-10-10',
-        employee_company_id: '2020'
+        first_name: '',
+        last_name: '',
+        email: '',
+        country: '',
+        city: '',
+        address: '',
+        mobile_phone: '',
+        phone_number: '',
+        hire_date: '',
+        employee_company_id: ''
     };
 
     /**
@@ -51,7 +51,7 @@ class EmployeeInformationForm extends React.Component {
      */
     componentWillUpdate(nextProps) {
         if (isEmpty(this.props.employee) && !isEmpty(nextProps.employee)) {
-            this.updateStateWithEmployeeInfo(nextProps.employee);
+            this.resetState();
         }
     };
 
@@ -85,30 +85,17 @@ class EmployeeInformationForm extends React.Component {
     };
 
     /**
-     * Create new employee, or update.
-     * On update, update only changed values;
+     * Create new employee.
      */
     handleCreateOrUpdate() {
         if (this.validator.allValid()) {
-            return this.validationPass();
+            return this.props.createEmployee(this.state);
         } else {
             NotificationManager.error(APP_MESSAGES.error.validationMessage);
             this.validator.showMessages();
             this.forceUpdate();
         }
     };
-
-    /**
-     * Update or create employee, if validation pass.
-     */
-    validationPass() {
-        let { employee } = this.props;
-
-        if (isEmpty(employee)) {
-            this.props.createEmployee(this.state);
-            return;
-        }
-    }
 
     /**
      * Update state with employee info.
@@ -121,6 +108,20 @@ class EmployeeInformationForm extends React.Component {
             if (typeof this.state[key] !== 'undefined') {
                 newState[key] = employee[key] ? employee[key] : '';
             }
+        });
+
+        this.setState(newState);
+    };
+
+    /**
+     * Reset state when new employee is created.
+     *
+     */
+    resetState() {
+        var newState = {};
+
+        Object.keys(this.state).forEach((key) => {
+            newState[key] = '';
         });
 
         this.setState(newState);
@@ -203,9 +204,8 @@ class EmployeeInformationForm extends React.Component {
                     <Button 
                         onClick={ () => this.handleCreateOrUpdate()} 
                         className="mr-10 mb-10" 
-                        color="primary">
-                            { isEmpty(this.props.employee) ? 'Create' : 'Update'}
-                        </Button>
+                        color="primary">Create
+                    </Button>
                 </form>
             </RctCollapsibleCard>
         </div>

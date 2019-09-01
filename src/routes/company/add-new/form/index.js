@@ -15,7 +15,8 @@ import {
     createCompany,
     updateCompany,
     updateCreateCompanyFailureRestart,
-    getCompanyByIdAndAccountId
+    getCompanyByIdAndAccountId,
+    getUserByIdAndAccountId,
 } from 'Actions/index';
 
 const RESET_TIME_VALIDATION_MESSAGE = 5000;
@@ -26,6 +27,7 @@ class CompanyInformationForm extends React.Component {
         name: '',
         address: '',
         country: '',
+        city: '',
         mobile_phone: '',
         phone_number: ''
     };
@@ -47,6 +49,7 @@ class CompanyInformationForm extends React.Component {
     componentWillUpdate(nextProps) {
         if (isEmpty(this.props.company) && !isEmpty(nextProps.company)) {
             this.updateStateWithCompanyInfo(nextProps.company);
+            this.getUserIfCompanySettingsIsFalse();
         }
     };
 
@@ -55,6 +58,17 @@ class CompanyInformationForm extends React.Component {
             this.setTimeToRemoveErrorMessage(RESET_TIME_VALIDATION_MESSAGE);
         }
     };
+
+    /**
+     * Get user information from server, if new company is created.
+     */
+    getUserIfCompanySettingsIsFalse() {
+        if (this.props.user.company_settings_done) {
+            return;
+        }
+
+        this.props.getUserByIdAndAccountId();
+    }
 
     /**
      * Update the state.
@@ -147,17 +161,19 @@ class CompanyInformationForm extends React.Component {
                         <FormErrorMessage message={errorMessages.name} />
                         { this.getValidationMessage('name', 'required|min:1|max:100') }
                     </div>
-                    <div className="form-group">
-                        <TextField id="mobile_phone" fullWidth label={<IntlMessages id={'form.company.mobile_phone'} />} value={this.state.mobile_phone} onChange={this.handleChange('mobile_phone')} autoComplete="off"/>
-                        <FormErrorMessage message={errorMessages.mobile_phone} />
-                        { this.getValidationMessage('mobile_phone', 'min:3|max:100') }
-                    </div>
                 </div>
                 <div className="col-sm-6 col-md-6 col-xl-3">
                     <div className="form-group">
                         <TextField id="country" fullWidth label={<IntlMessages id={'form.company.country'} />} value={this.state.country} onChange={this.handleChange('country')} autoComplete="off"/>
                         <FormErrorMessage message={errorMessages.country} />
                         { this.getValidationMessage('country', 'min:3|max:100') }
+                    </div>
+                </div>
+                <div className="col-sm-6 col-md-6 col-xl-3">
+                    <div className="form-group">
+                        <TextField id="city" fullWidth label={<IntlMessages id={'form.company.city'} />} value={this.state.city} onChange={this.handleChange('city')} autoComplete="off"/>
+                        <FormErrorMessage message={errorMessages.city} />
+                        { this.getValidationMessage('city', 'min:3|max:100') }
                     </div>
                 </div>
                 <div className="col-sm-6 col-md-6 col-xl-3">
@@ -172,6 +188,13 @@ class CompanyInformationForm extends React.Component {
                         <TextField id="phone_number" fullWidth label={<IntlMessages id={'form.company.phone_number'} />} value={this.state.phone_number} onChange={this.handleChange('phone_number')} autoComplete="off"/>
                         <FormErrorMessage message={errorMessages.phone_number} />
                         { this.getValidationMessage('phone_number', 'min:3|max:100') }
+                    </div>
+                </div>
+                <div className="col-sm-6 col-md-6 col-xl-3">
+                    <div className="form-group">
+                        <TextField id="mobile_phone" fullWidth label={<IntlMessages id={'form.company.mobile_phone'} />} value={this.state.mobile_phone} onChange={this.handleChange('mobile_phone')} autoComplete="off"/>
+                        <FormErrorMessage message={errorMessages.mobile_phone} />
+                        { this.getValidationMessage('mobile_phone', 'min:3|max:100') }
                     </div>
                 </div>
                 </div>
@@ -195,5 +218,6 @@ export default connect(mapStateToProps, {
     createCompany,
     getCompanyByIdAndAccountId,
     updateCreateCompanyFailureRestart,
-    updateCompany
+    updateCompany,
+    getUserByIdAndAccountId
 })(CompanyInformationForm);

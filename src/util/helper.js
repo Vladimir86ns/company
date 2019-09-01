@@ -35,10 +35,6 @@ export function getOnlyUpdatedValues(origin, comparing) {
     var updatedValues = {};
 
      Object.keys(comparing).forEach((key) => {
-        if (key === 'manually_changed_Prefix') {
-            return;
-        }
-
         if (origin[key] === null) {
             updatedValues[key] = trim(comparing[key]);
             return;

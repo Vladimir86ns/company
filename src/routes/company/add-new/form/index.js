@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import IntlMessages from 'Util/IntlMessages';
 import RctCollapsibleCard from 'Components/RctCollapsibleCard/RctCollapsibleCard';
 import { Button } from 'reactstrap';
-import { isEmpty } from '../../../../util/lodashFunctions';
+import { isEmpty, clone } from '../../../../util/lodashFunctions';
 import { NotificationManager } from 'react-notifications';
 import { setUpValidationMessageLanguage, getValidationMessage, getOnlyUpdatedValues } from 'Util/helper';
 import FormErrorMessage from 'Components/Form/FormErrorMessage';
@@ -30,8 +30,7 @@ class CompanyInformationForm extends React.Component {
         city: '',
         mobile_phone: '',
         phone_number: '',
-        employee_id_prefix: '',
-        manually_changed_Prefix: false
+        employee_id_prefix: ''
     };
 
     componentWillMount() {
@@ -79,10 +78,6 @@ class CompanyInformationForm extends React.Component {
         this.setState({
             [key]: event.target.value,
         });
-
-        if (key === 'name' && !this.state.manually_changed_Prefix) {
-            this.populateEmployeeId(event.target.value);
-        }
     };
 
     /**
@@ -102,9 +97,8 @@ class CompanyInformationForm extends React.Component {
     /**
      * Get prefix for employee based on company name.
      */
-    populateEmployeeId(companyName) {
-        let shortName = companyName.match(/\b(\w)/g).join('');
-        this.setState({employee_id_prefix: shortName});
+    createRecommendedEmployeeID(companyName) {
+        return companyName.match(/\b(\w)/g).join('');
     }
 
     /**
@@ -114,7 +108,10 @@ class CompanyInformationForm extends React.Component {
         let { user, company} =  this.props;
 
         if (!user.company_settings_done) {
-            this.props.createCompany(this.state);
+            let companyInfo = clone(this.state);
+            companyInfo.employee_id_prefix = this.createRecommendedEmployeeID(this.state.name);
+            this.props.createCompany(companyInfo);
+
             return;
         }
 
@@ -139,7 +136,7 @@ class CompanyInformationForm extends React.Component {
                 newState[key] = company[key] ? company[key] : '';
             }
         });
-        newState.manually_changed_Prefix = true;
+
         this.setState(newState);
     };
 

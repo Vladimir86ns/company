@@ -788,6 +788,7 @@ module.exports = {
    "form.company.address": "Address",
    "form.company.phone_number": "Phone Number",
    "form.company.mobile_phone": "Mobile Phone",
+   "form.company.employee_id_prefix": "Employee ID Prefix",
 
    "form.user.header": "User Information",
    "form.user.first_name": "First Name",

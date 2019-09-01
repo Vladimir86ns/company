@@ -29,7 +29,9 @@ class CompanyInformationForm extends React.Component {
         country: '',
         city: '',
         mobile_phone: '',
-        phone_number: ''
+        phone_number: '',
+        employee_id_prefix: '',
+        manually_changed_Prefix: false
     };
 
     componentWillMount() {
@@ -77,6 +79,10 @@ class CompanyInformationForm extends React.Component {
         this.setState({
             [key]: event.target.value,
         });
+
+        if (key === 'name' && !this.state.manually_changed_Prefix) {
+            this.populateEmployeeId(event.target.value);
+        }
     };
 
     /**
@@ -92,6 +98,14 @@ class CompanyInformationForm extends React.Component {
             this.forceUpdate();
         }
     };
+
+    /**
+     * Get prefix for employee based on company name.
+     */
+    populateEmployeeId(companyName) {
+        let shortName = companyName.match(/\b(\w)/g).join('');
+        this.setState({employee_id_prefix: shortName});
+    }
 
     /**
      * Update or create company, if validation pass.
@@ -125,6 +139,7 @@ class CompanyInformationForm extends React.Component {
                 newState[key] = company[key] ? company[key] : '';
             }
         });
+        newState.manually_changed_Prefix = true;
         this.setState(newState);
     };
 
@@ -146,6 +161,27 @@ class CompanyInformationForm extends React.Component {
     getValidationMessage(field, validationRule) {
         return getValidationMessage(field, validationRule, this.state[field], this.validator);
     };
+
+    /**
+     * Get employee prefix field, if company already exist.
+     * 
+     * @param {Object} errorMessages 
+     */
+    getEmployeeIdPrefix(errorMessages) {
+        if (!this.props.user.company_settings_done) {
+            return (<div></div>);
+        }
+
+        return (
+            <div className="col-sm-6 col-md-6 col-xl-3">
+                <div className="form-group">
+                    <TextField id="employee_id_prefix" fullWidth label={<IntlMessages id={'form.company.employee_id_prefix'} />} value={this.state.employee_id_prefix} onChange={this.handleChange('employee_id_prefix')} autoComplete="off"/>
+                    <FormErrorMessage message={errorMessages ? errorMessages.employee_id_prefix : ''} />
+                    { this.getValidationMessage('employee_id_prefix', 'max:20') }
+                </div>
+            </div>
+        );
+    }
 
     render() {
         let { errorMessages } = this.props;
@@ -197,6 +233,7 @@ class CompanyInformationForm extends React.Component {
                         { this.getValidationMessage('mobile_phone', 'min:3|max:100') }
                     </div>
                 </div>
+                {this.getEmployeeIdPrefix()}
                 </div>
                 <Button onClick={ () => this.handleCreateOrUpdate()} className="mr-10 mb-10" color="primary">{ this.props.user.company_settings_done ? 'Update' : 'Create'}</Button>
             </form>

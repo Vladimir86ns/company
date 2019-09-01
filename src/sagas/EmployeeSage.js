@@ -109,7 +109,7 @@ function* deleteEmployeeToServer({payload}) {
 const getEmployeeRequest = (accountId, companyId) => {
     return laravelApi.get(`account/${accountId}/company/${companyId}/employees`)
         .then(res => res)
-        .catch(err => err.response);;
+        .catch(err => err.response);
 };
 
 /**
@@ -122,7 +122,7 @@ const getEmployeeRequest = (accountId, companyId) => {
 const deleteEmployeeRequest = (accountId, companyId, employeeId) => {
     return laravelApi.delete(`account/${accountId}/company/${companyId}/employee/${employeeId}/delete`)
         .then(res => res)
-        .catch(err => err.response);;
+        .catch(err => err.response);
 };
 
 /**

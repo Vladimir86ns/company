@@ -11,6 +11,8 @@ import FormErrorMessage from 'Components/Form/FormErrorMessage';
 import APP_MESSAGES from 'Constants/AppMessages';
 import { fieldNamesAndRules, RESET_TIME_VALIDATION_MESSAGE } from '../../constants';
 import moment from 'moment';
+import laravelApi from '../../../../api/index';
+import { getCompanyID } from 'Util/local-storage';
 import { DatePicker } from 'material-ui-pickers';
 
 // redux action
@@ -40,8 +42,10 @@ class EmployeeInformationForm extends React.Component {
      */
     componentWillMount() {
         if (this.props.locale) {
-			this.validator = setUpValidationMessageLanguage(this.props.locale.locale);
-		}
+            this.validator = setUpValidationMessageLanguage(this.props.locale.locale);
+        }
+
+        this.getRecommendedEmployeeId();
     };
 
     /**
@@ -52,6 +56,7 @@ class EmployeeInformationForm extends React.Component {
     componentWillUpdate(nextProps) {
         if (isEmpty(this.props.employee) && !isEmpty(nextProps.employee)) {
             this.resetState();
+            this.getRecommendedEmployeeId();
         }
     };
 
@@ -158,6 +163,19 @@ class EmployeeInformationForm extends React.Component {
         }
 
         return (typeof this.state.hire_date === moment) ? this.state.hire_date : moment(this.state.hire_date);
+    }
+
+    /**
+     * Get recommended employee id.
+     */
+    async getRecommendedEmployeeId() {
+        let data = await laravelApi.get(`account/company/${getCompanyID()}/employee/get_recommended_id`)
+            .then(res => res)
+            .catch(err => err.response);
+
+        if (data.status === 200) {
+            this.setState({employee_company_id: data.data.data.employee_company_id});
+        }
     }
 
     render() {

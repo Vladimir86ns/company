@@ -78,14 +78,14 @@ class AllEmployees extends Component {
     }
 
     /**
-     * View User Detail Hanlder
+     * View User Detail
      */
     viewEmployeeDetail(employee) {
         this.setState({ openViewUserDialog: true, selectedEmployee: employee });
     }
 
     /**
-     * Delete employee fomr API.
+     * Delete employee from API.
      */
     deleteEmployee() {
         this.props.deleteEmployeeFromApi(this.state.selectedEmployee.id);

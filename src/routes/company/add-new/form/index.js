@@ -42,8 +42,8 @@ class CompanyInformationForm extends React.Component {
         }
 
         if (this.props.locale) {
-			this.validator = setUpValidationMessageLanguage(this.props.locale.locale);
-		}
+            this.validator = setUpValidationMessageLanguage(this.props.locale.locale);
+        }
     };
 
     componentWillUpdate(nextProps) {

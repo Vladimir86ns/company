@@ -50,6 +50,7 @@ export const columnFields = [
 export const employeeDetailFields = [
     'first_name',
     'last_name',
+    'employee_company_id',
     'email',
     'country',
     'city',

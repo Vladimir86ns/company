@@ -4,7 +4,8 @@ import {
     RESET_EMPLOYEE,
     RESET_EMPLOYEES,
     CREATE_UPDATE_EMPLOYEE_FAILURE,
-    CREATE_UPDATE_EMPLOYEE_FAILURE_RESTART
+    CREATE_UPDATE_EMPLOYEE_FAILURE_RESTART,
+    RESET_STATE_EMPLOYEE_AND_FETCH_RECOMMENDED_ID,
 } from '../actions/types';
 
 // import { isEmpty, findIndex } from '../util/lodashFunctions';
@@ -12,7 +13,8 @@ import {
 const INIT_STATE = {
     employees: {},
     employee: {},
-    errorMessages: {}
+    errorMessages: {},
+    resetStateFetchID: false
 };
 
 export default (state = INIT_STATE, action) => {
@@ -40,7 +42,12 @@ export default (state = INIT_STATE, action) => {
             return { ...state, errorMessages: action.payload };
 
         case CREATE_UPDATE_EMPLOYEE_FAILURE_RESTART:
+            console.log('CREATE_UPDATE_EMPLOYEE_FAILURE_RESTART');
             return { ...state, errorMessages: {} };
+
+        case RESET_STATE_EMPLOYEE_AND_FETCH_RECOMMENDED_ID:
+            console.log('RESET_STATE_EMPLOYEE_AND_FETCH_RECOMMENDED_ID');
+            return { ...state, resetStateFetchID: !state.resetStateFetchID }
 
         default: return { ...state };
     }

@@ -8,7 +8,8 @@ import {
     HANDLE_EMPLOYEES_SUCCESS,
     HANDLE_EMPLOYEE_SUCCESS,
     CREATE_UPDATE_EMPLOYEE_FAILURE,
-    CREATE_UPDATE_EMPLOYEE_FAILURE_RESTART
+    CREATE_UPDATE_EMPLOYEE_FAILURE_RESTART,
+    RESET_STATE_EMPLOYEE_AND_FETCH_RECOMMENDED_ID,
  } from "./types";
 
 /**
@@ -85,4 +86,11 @@ export const createUpdateEmployeeFailure = (messages) => ({
  */
 export const createUpdateEmployeeFailureRestart = () => ({
     type: CREATE_UPDATE_EMPLOYEE_FAILURE_RESTART
+});
+
+/**
+ * Reset employee state, and fetch recommended id.
+ */
+export const resetStateAndFetchID = () => ({
+    type: RESET_STATE_EMPLOYEE_AND_FETCH_RECOMMENDED_ID
 });

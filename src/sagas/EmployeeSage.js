@@ -15,7 +15,8 @@ import {
     resetEmployees,
     handleEmployeesSuccess,
     handleEmployeeSuccess,
-    createUpdateEmployeeFailure
+    createUpdateEmployeeFailure,
+    resetStateAndFetchID,
 } from 'Actions';
 
 /**
@@ -36,7 +37,7 @@ function* getEmployeesFromServer() {
 };
 
 /**
- * Create employee.
+ * Create employee, then reset employees, and reset state and fetch new recommended ID.
  * 
  * @param {object} action 
  */
@@ -49,6 +50,7 @@ function* createEmployeeToServer({payload}) {
             NotificationManager.success(APP_MESSAGES.employee.createSuccess);
             yield put(handleEmployeeSuccess(response.data.data));
             yield put(resetEmployees());
+            yield put(resetStateAndFetchID());
         } else if (response.status === responseCodes.HTTP_NOT_ACCEPTABLE)  {
             NotificationManager.error(APP_MESSAGES.error.validationMessage);
             yield put(createUpdateEmployeeFailure(response.data));

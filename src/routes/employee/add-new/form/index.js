@@ -19,7 +19,8 @@ import { DatePicker } from 'material-ui-pickers';
 import {
     createEmployee,
     createUpdateEmployeeFailureRestart,
-    resetEmployee
+    resetEmployee,
+    resetStateAndFetchID
 } from 'Actions/index';
 
 class EmployeeInformationForm extends React.Component {
@@ -49,14 +50,14 @@ class EmployeeInformationForm extends React.Component {
     };
 
     /**
-     * Update state when employee has information.
+     * Reset state when new employee is created, and fetch new recommended id.
      * 
      * @param {object} nextProps 
      */
     componentWillUpdate(nextProps) {
-        if (isEmpty(this.props.employee) && !isEmpty(nextProps.employee)) {
-            this.resetState();
-            this.getRecommendedEmployeeId();
+        if (nextProps.resetStateFetchID) {
+            this.resetStateAndFetchID();
+            this.props.resetStateAndFetchID();
         }
     };
 
@@ -119,10 +120,10 @@ class EmployeeInformationForm extends React.Component {
     };
 
     /**
-     * Reset state when new employee is created.
+     * Reset state when new employee is created, and fetch new employee ID.
      *
      */
-    resetState() {
+    resetStateAndFetchID() {
         var newState = {};
 
         Object.keys(this.state).forEach((key) => {
@@ -130,6 +131,8 @@ class EmployeeInformationForm extends React.Component {
         });
 
         this.setState(newState);
+        this.getRecommendedEmployeeId();
+        this.validator.hideMessages();
     };
 
     /**
@@ -232,14 +235,15 @@ class EmployeeInformationForm extends React.Component {
 }
 
 function mapStateToProps({ employeeReducer, settings }) {
-    const { employee, errorMessages } = employeeReducer;
+    const { employee, errorMessages, resetStateFetchID } = employeeReducer;
     let { locale } = settings;
 
-    return { employee, errorMessages, locale };
+    return { employee, errorMessages, locale, resetStateFetchID };
 }
 
 export default connect(mapStateToProps, {
     createEmployee,
     createUpdateEmployeeFailureRestart,
-    resetEmployee
+    resetEmployee,
+    resetStateAndFetchID
 })(EmployeeInformationForm);
